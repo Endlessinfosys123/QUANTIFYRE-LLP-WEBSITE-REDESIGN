@@ -29,7 +29,7 @@ export const Navbar = () => {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         isScrolled
           ? "bg-white/90 backdrop-blur-xl shadow-2xl border-b border-primary/10 py-3"
-          : "bg-transparent py-6"
+          : "bg-white/50 backdrop-blur-md py-6"
       )}
     >
       <div className="container-custom flex items-center justify-between">
@@ -38,13 +38,11 @@ export const Navbar = () => {
           <motion.div
             whileHover={{ scale: 1.05 }}
             className={cn(
-              "text-2xl font-black tracking-tighter transition-all duration-500 flex items-center gap-2",
-              isScrolled ? "text-primary" : "text-white"
+              "text-2xl font-black tracking-tighter transition-all duration-500 flex items-center gap-2 text-primary"
             )}
           >
             <div className={cn(
-              "w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-500",
-              isScrolled ? "bg-primary text-white" : "bg-white text-primary"
+              "w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-500 bg-primary text-white"
             )}>
               <span className="text-xl">Q</span>
             </div>
@@ -60,9 +58,7 @@ export const Navbar = () => {
               href={link.href}
               className={cn(
                 "text-sm font-bold transition-all duration-300 relative group",
-                isScrolled 
-                  ? (pathname === link.href ? "text-primary" : "text-dark hover:text-primary")
-                  : (pathname === link.href ? "text-primary" : "text-white/80 hover:text-white")
+                pathname === link.href ? "text-primary" : "text-dark hover:text-primary"
               )}
             >
               {link.name}
@@ -82,10 +78,9 @@ export const Navbar = () => {
           <Button 
             href="/contact" 
             size="sm" 
-            variant={isScrolled ? "primary" : "outline"}
+            variant="primary"
             className={cn(
-              "px-8 font-bold transition-all duration-500 h-11",
-              !isScrolled && "border-white/20 text-white hover:bg-white/10 hover:border-white"
+              "px-8 font-bold transition-all duration-500 h-11"
             )}
           >
             Start a Project
@@ -95,8 +90,7 @@ export const Navbar = () => {
         {/* Mobile Toggle */}
         <button
           className={cn(
-            "lg:hidden p-2 transition-colors",
-            isScrolled || isMobileMenuOpen ? "text-dark" : "text-white"
+            "lg:hidden p-2 transition-colors text-dark"
           )}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >

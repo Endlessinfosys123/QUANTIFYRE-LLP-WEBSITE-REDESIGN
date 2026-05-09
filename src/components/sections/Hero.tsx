@@ -48,7 +48,7 @@ const FloatingNode = ({ icon: Icon, delay = 0, x = "0%", y = "0%", size = 40, mo
     <motion.div
       initial={{ opacity: 0, scale: 0 }}
       animate={{ 
-        opacity: [0.1, 0.3, 0.1], 
+        opacity: [0.1, 0.2, 0.1], 
         scale: [1, 1.05, 1],
       }}
       style={{ left: x, top: y, x: parallaxX, y: parallaxY }}
@@ -60,7 +60,7 @@ const FloatingNode = ({ icon: Icon, delay = 0, x = "0%", y = "0%", size = 40, mo
       }}
       className="absolute pointer-events-none z-0"
     >
-      <div className="p-4 rounded-3xl bg-primary/5 border border-primary/10 backdrop-blur-3xl text-primary/30" style={{ width: size, height: size }}>
+      <div className="p-4 rounded-3xl bg-primary/10 border border-primary/20 backdrop-blur-3xl text-primary/40" style={{ width: size, height: size }}>
         <Icon size={size - 32} strokeWidth={1} />
       </div>
     </motion.div>
@@ -86,17 +86,17 @@ export const Hero = () => {
   return (
     <section 
       onMouseMove={handleMouseMove}
-      className="relative min-h-screen flex flex-col justify-center pt-32 pb-20 overflow-hidden bg-dark"
+      className="relative min-h-screen flex flex-col justify-center pt-32 pb-20 overflow-hidden bg-white"
     >
       {/* Neural Mesh Background */}
-      <div className="absolute inset-0 z-0 neural-grid opacity-30" />
+      <div className="absolute inset-0 z-0 neural-grid opacity-40" />
       
       {/* Dynamic Glows */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.div
           animate={{
             scale: [1, 1.2, 1],
-            opacity: [0.3, 0.6, 0.3],
+            opacity: [0.1, 0.2, 0.1],
             x: [0, 50, 0],
             y: [0, -50, 0],
           }}
@@ -106,7 +106,7 @@ export const Hero = () => {
         <motion.div
           animate={{
             scale: [1.2, 1, 1.2],
-            opacity: [0.2, 0.5, 0.2],
+            opacity: [0.1, 0.2, 0.1],
             x: [0, -50, 0],
             y: [0, 50, 0],
           }}
@@ -131,19 +131,19 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-2xl shadow-2xl"
+            className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-primary/5 border border-primary/10 backdrop-blur-2xl shadow-xl"
           >
             <div className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
             </div>
-            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-white/90">
+            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-primary">
               Future-Proof Engineering
             </span>
           </motion.div>
 
           {/* Headline with Staggered Entrance */}
-          <h1 className="text-6xl md:text-9xl font-black text-white leading-[0.85] tracking-tighter">
+          <h1 className="text-6xl md:text-9xl font-black text-dark leading-[0.85] tracking-tighter">
             {headline.split(" ").map((word, i) => (
               <motion.span
                 key={i}
@@ -166,7 +166,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.4 }}
-            className="text-xl md:text-3xl text-gray-400 leading-tight max-w-4xl mx-auto font-medium tracking-tight"
+            className="text-xl md:text-3xl text-text-secondary leading-tight max-w-4xl mx-auto font-medium tracking-tight"
           >
             {subheadline}
           </motion.p>
@@ -181,7 +181,7 @@ export const Hero = () => {
             <Button href="/contact" size="lg" className="w-full sm:w-auto px-12 h-20 text-xl font-black rounded-3xl shadow-[0_20px_50px_rgba(108,63,239,0.4)] hover:shadow-[0_25px_60px_rgba(108,63,239,0.6)] transition-all">
               Build the Future <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-3 transition-transform" />
             </Button>
-            <Button href="/portfolio" variant="outline" size="lg" className="w-full sm:w-auto h-20 px-12 text-xl font-black rounded-3xl border-white/10 text-white hover:bg-white/5 backdrop-blur-xl">
+            <Button href="/portfolio" variant="outline" size="lg" className="w-full sm:w-auto h-20 px-12 text-xl font-black rounded-3xl border-primary/10 text-primary hover:bg-primary/5 backdrop-blur-xl">
               Our Legacy
             </Button>
           </motion.div>
@@ -197,11 +197,11 @@ export const Hero = () => {
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.5 + i * 0.1, ease: "circOut" }}
               whileHover={{ y: -15, scale: 1.05 }}
-              className="group relative p-10 rounded-[2.5rem] bg-white/5 border border-white/10 backdrop-blur-3xl overflow-hidden text-center"
+              className="group relative p-10 rounded-[2.5rem] bg-white border border-primary/10 shadow-xl shadow-primary/5 backdrop-blur-3xl overflow-hidden text-center"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               <div className="relative z-10 space-y-3">
-                <div className="text-5xl md:text-6xl font-black text-white tracking-tighter italic">
+                <div className="text-5xl md:text-6xl font-black text-dark tracking-tighter italic">
                   <CountUp value={stat.value} suffix={stat.suffix} />
                 </div>
                 <div className="text-[11px] font-black text-primary uppercase tracking-[0.4em]">
@@ -217,14 +217,11 @@ export const Hero = () => {
       <motion.div
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/20 flex flex-col items-center gap-2"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-primary/30 flex flex-col items-center gap-2"
       >
         <span className="text-[10px] font-black uppercase tracking-[0.5em] vertical-text">Scroll</span>
         <ChevronDown size={20} />
       </motion.div>
-
-      {/* Bottom Gradient Fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
     </section>
   );
 };
