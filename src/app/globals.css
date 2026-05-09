@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-primary: #6C3FEF;
+  --color-accent: #0EA5E9;
+  --color-dark: #0A0A0F;
+  --color-surface: #F8F7FF;
+  --color-text-primary: #0A0A0F;
+  --color-text-secondary: #6B7280;
+  --color-border: #E5E7EB;
+
+  --spacing-section: 96px;
+  --spacing-section-mobile: 60px;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #0A0A0F;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+@layer components {
+  .container-custom {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .section-padding {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+  }
+
+  @media (max-width: 768px) {
+    .section-padding {
+      padding-top: var(--spacing-section-mobile);
+      padding-bottom: var(--spacing-section-mobile);
+    }
+  }
+}
+@layer utilities {
+  .neural-grid {
+    background-image: linear-gradient(to right, rgba(108, 63, 239, 0.05) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(108, 63, 239, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .grain-overlay {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    width: 200%;
+    height: 200%;
+    background: transparent url('https://grainy-gradients.vercel.app/noise.svg') repeat 0 0;
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 9999;
+    animation: grain 8s steps(10) infinite;
+  }
+
+  @keyframes grain {
+    0%, 100% { transform:translate(0, 0) }
+    10% { transform:translate(-5%, -10%) }
+    20% { transform:translate(-15%, 5%) }
+    30% { transform:translate(7%, -25%) }
+    40% { transform:translate(-5%, 25%) }
+    50% { transform:translate(-15%, 10%) }
+    60% { transform:translate(15%, 0%) }
+    70% { transform:translate(0%, 15%) }
+    80% { transform:translate(3%, 35%) }
+    90% { transform:translate(-10%, 10%) }
+  }
+}
