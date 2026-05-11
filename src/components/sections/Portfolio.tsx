@@ -5,93 +5,123 @@ import { PROJECTS } from "@/lib/constants";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Magnetic } from "@/components/ui/Magnetic";
 
 export const Portfolio = () => {
   return (
-    <section className="section-padding bg-surface" id="portfolio">
-      <div className="container-custom">
-        <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
+    <section className="section-padding bg-white relative overflow-hidden" id="portfolio">
+      {/* Decorative Blobs */}
+      <div className="absolute top-1/4 -right-20 w-[40vw] h-[40vw] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-20 w-[40vw] h-[40vw] bg-accent/5 blur-[120px] rounded-full pointer-events-none" />
+
+      <div className="container-custom relative z-10">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-32">
+          <div className="max-w-3xl space-y-6">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="flex items-center gap-3"
+            >
+              <div className="w-12 h-px bg-primary" />
+              <span className="text-primary font-black text-xs uppercase tracking-[0.5em]">Work</span>
+            </motion.div>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-5xl md:text-7xl font-black text-dark tracking-tighter leading-none"
+            >
+              Engineering <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Digital Landmarks.</span>
+            </motion.h2>
+          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-primary font-bold text-xs uppercase tracking-[0.3em]"
+            transition={{ delay: 0.4 }}
           >
-            Portfolio
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-extrabold text-dark"
-          >
-            Featured Projects
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-text-secondary text-lg"
-          >
-            Real-world solutions built with cutting-edge technology.
-          </motion.p>
+            <Magnetic>
+              <Button href="/portfolio" variant="outline" className="h-16 px-10 rounded-2xl border-primary/20 text-primary hover:bg-primary/5 group">
+                View All Case Studies <ArrowUpRight className="ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </Button>
+            </Magnetic>
+          </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {PROJECTS.map((project, i) => (
-            <Card key={project.id} className="p-0 overflow-hidden group">
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
-                  <Link
-                    href="/portfolio"
-                    className="w-14 h-14 rounded-full bg-white text-primary flex items-center justify-center scale-0 group-hover:scale-100 transition-transform duration-500 delay-100 shadow-xl"
-                  >
-                    <ArrowUpRight size={28} />
-                  </Link>
-                </div>
-              </div>
-              <div className="p-8 space-y-4">
-                <div className="flex items-center justify-between">
-                  <Badge variant="surface">{project.industry}</Badge>
-                  <div className="flex gap-2">
-                    {project.tech.slice(0, 2).map((t) => (
-                      <span key={t} className="text-[10px] font-bold text-text-secondary uppercase tracking-widest">{t}</span>
-                    ))}
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className={i % 2 === 1 ? "md:mt-24" : ""}
+            >
+              <Card className="p-0 overflow-hidden group bg-transparent border-none shadow-none">
+                <div className="relative aspect-[16/10] overflow-hidden rounded-[3rem] bg-surface border border-primary/5 shadow-2xl shadow-primary/5">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
+                  />
+                  
+                  {/* Floating Badge on Image */}
+                  <div className="absolute top-8 left-8 z-20">
+                    <div className="px-4 py-2 rounded-full bg-white/90 backdrop-blur-md border border-white/20 shadow-xl flex items-center gap-2">
+                      <Sparkles size={14} className="text-primary" />
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-dark">{project.industry}</span>
+                    </div>
+                  </div>
+
+                  {/* Overlay Link */}
+                  <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 backdrop-blur-[2px] flex items-center justify-center">
+                    <Magnetic>
+                      <Link
+                        href="/portfolio"
+                        className="w-20 h-20 rounded-full bg-white text-primary flex items-center justify-center shadow-2xl scale-0 group-hover:scale-100 transition-transform duration-500"
+                      >
+                        <ExternalLink size={32} />
+                      </Link>
+                    </Magnetic>
                   </div>
                 </div>
-                <h3 className="text-2xl font-bold text-dark group-hover:text-primary transition-colors duration-300">
-                  {project.title}
-                </h3>
-                <p className="text-text-secondary text-sm leading-relaxed line-clamp-2">
-                  {project.description}
-                </p>
-                <Link
-                  href="/portfolio"
-                  className="inline-flex items-center gap-2 text-primary font-bold text-sm group/link pt-2"
-                >
-                  View Case Study
-                  <ArrowUpRight size={16} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
-                </Link>
-              </div>
-            </Card>
-          ))}
-        </div>
 
-        <div className="text-center">
-          <Button href="/portfolio" variant="outline" className="gap-2">
-            View All Projects <ArrowUpRight size={20} />
-          </Button>
+                <div className="pt-10 space-y-6">
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((t) => (
+                      <span key={t} className="px-3 py-1 rounded-full bg-primary/5 text-[10px] font-bold text-primary uppercase tracking-widest">{t}</span>
+                    ))}
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-4xl font-black text-dark tracking-tighter group-hover:text-primary transition-colors duration-500">
+                      {project.title}
+                    </h3>
+                    <p className="text-text-secondary text-lg leading-relaxed font-medium line-clamp-3">
+                      {project.description}
+                    </p>
+                  </div>
+
+                  <div className="pt-4">
+                    <Link
+                      href="/portfolio"
+                      className="inline-flex items-center gap-4 text-primary font-black text-sm uppercase tracking-[0.3em] group/link"
+                    >
+                      Case Study
+                      <div className="w-12 h-px bg-primary/20 group-hover/link:w-20 transition-all duration-500" />
+                    </Link>
+                  </div>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

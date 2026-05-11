@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Plus, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface AccordionItemProps {
@@ -14,26 +14,29 @@ interface AccordionItemProps {
 
 const AccordionItem = ({ question, answer, isOpen, onClick }: AccordionItemProps) => {
   return (
-    <div className="border-b border-border last:border-0 overflow-hidden">
+    <div className={cn(
+      "mb-4 rounded-[2rem] border transition-all duration-500 overflow-hidden",
+      isOpen ? "bg-primary/5 border-primary/20 shadow-xl shadow-primary/5" : "bg-white border-primary/5 hover:border-primary/20"
+    )}>
       <button
         onClick={onClick}
-        className="flex items-center justify-between w-full py-6 text-left focus:outline-none group"
+        className="flex items-center justify-between w-full p-8 md:p-10 text-left focus:outline-none group"
       >
         <span className={cn(
-          "text-lg font-semibold transition-colors duration-300",
+          "text-xl md:text-2xl font-black transition-colors duration-300 tracking-tight",
           isOpen ? "text-primary" : "text-dark group-hover:text-primary"
         )}>
           {question}
         </span>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className={cn(
-            "p-2 rounded-full transition-colors duration-300",
-            isOpen ? "bg-primary/10 text-primary" : "bg-surface text-text-secondary"
+            "w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-500",
+            isOpen ? "bg-primary text-white" : "bg-primary/5 text-primary group-hover:bg-primary/10"
           )}
         >
-          <ChevronDown size={20} />
+          {isOpen ? <Minus size={24} strokeWidth={3} /> : <Plus size={24} strokeWidth={3} />}
         </motion.div>
       </button>
       <AnimatePresence>
@@ -42,9 +45,9 @@ const AccordionItem = ({ question, answer, isOpen, onClick }: AccordionItemProps
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="pb-6 text-text-secondary leading-relaxed">
+            <div className="px-10 pb-10 text-text-secondary text-lg font-medium leading-relaxed max-w-3xl">
               {answer}
             </div>
           </motion.div>
@@ -58,7 +61,7 @@ export const Accordion = ({ items }: { items: { question: string; answer: string
   const [openIndex, setOpenIndex] = React.useState<number | null>(0);
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-border px-8">
+    <div className="space-y-4">
       {items.map((item, index) => (
         <AccordionItem
           key={index}
