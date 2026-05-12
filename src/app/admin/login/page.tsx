@@ -201,73 +201,71 @@ export default function UnifiedAuthPage() {
                       <p className="text-[#6B7280] font-medium">Switching to login mode...</p>
                     </div>
                   ) : (
-                    <>
-                      <div className="space-y-1">
+                    <form onSubmit={handleRegister} className="space-y-4">
+                      <div className="space-y-1 mb-6">
                         <h2 className="text-xl font-black text-[#111827]">Create Admin</h2>
                         <p className="text-sm text-[#6B7280] font-medium">Register a new administrative account.</p>
                       </div>
 
-                      <form onSubmit={handleRegister} className="space-y-4">
+                      <AdminInput
+                        label="Full Name"
+                        placeholder="John Doe"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        required
+                      />
+                      <AdminInput
+                        label="Work Email"
+                        type="email"
+                        placeholder="admin@quantifyre.com"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        required
+                      />
+                      <div className="grid grid-cols-2 gap-4">
                         <AdminInput
-                          label="Full Name"
-                          placeholder="John Doe"
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          required
-                        />
-                        <AdminInput
-                          label="Work Email"
-                          type="email"
-                          placeholder="admin@quantifyre.com"
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          required
-                        />
-                        <div className="grid grid-cols-2 gap-4">
-                          <AdminInput
-                            label="Password"
-                            type="password"
-                            placeholder="••••"
-                            value={formData.password}
-                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                            required
-                          />
-                          <AdminInput
-                            label="Confirm"
-                            type="password"
-                            placeholder="••••"
-                            value={formData.confirmPassword}
-                            onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                            required
-                          />
-                        </div>
-                        <AdminInput
-                          label="Registration Secret"
+                          label="Password"
                           type="password"
-                          placeholder="Optional security key"
-                          value={formData.admin_secret}
-                          onChange={(e) => setFormData({ ...formData, admin_secret: e.target.value })}
+                          placeholder="••••"
+                          value={formData.password}
+                          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                          required
                         />
+                        <AdminInput
+                          label="Confirm"
+                          type="password"
+                          placeholder="••••"
+                          value={formData.confirmPassword}
+                          onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                          required
+                        />
+                      </div>
+                      <AdminInput
+                        label="Registration Secret"
+                        type="password"
+                        placeholder="Optional security key"
+                        value={formData.admin_secret}
+                        onChange={(e) => setFormData({ ...formData, admin_secret: e.target.value })}
+                      />
 
-                        {error && (
-                          <div className="p-3 rounded-xl bg-red-50 border border-red-100 flex items-start gap-3 text-red-600">
-                            <AlertCircle size={18} className="shrink-0 mt-0.5" />
-                            <p className="text-xs font-bold">{error}</p>
-                          </div>
-                        )}
+                      {error && (
+                        <div className="p-3 rounded-xl bg-red-50 border border-red-100 flex items-start gap-3 text-red-600">
+                          <AlertCircle size={18} className="shrink-0 mt-0.5" />
+                          <p className="text-xs font-bold">{error}</p>
+                        </div>
+                      )}
 
-                        <AdminButton 
-                          type="submit" 
-                          className="w-full h-12 text-base mt-2" 
-                          isLoading={isLoading}
-                          variant="secondary"
-                          icon={<UserPlus size={18} />}
-                        >
-                          Register Now
-                        </AdminButton>
-                      </>
-                    )}
-                  </form>
+                      <AdminButton 
+                        type="submit" 
+                        className="w-full h-12 text-base mt-2" 
+                        isLoading={isLoading}
+                        variant="secondary"
+                        icon={<UserPlus size={18} />}
+                      >
+                        Register Now
+                      </AdminButton>
+                    </form>
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>
