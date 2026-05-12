@@ -39,10 +39,10 @@ export async function POST(req: NextRequest) {
 
     // Handle revalidation
     if (revalidate_path) {
-      revalidatePath(revalidate_path)
+      revalidatePath(revalidate_path, 'page')
     }
     if (revalidate_tag) {
-      revalidateTag(revalidate_tag)
+      revalidateTag(revalidate_tag, 'max')
     }
 
     return NextResponse.json({ 

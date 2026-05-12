@@ -13,11 +13,11 @@ export async function POST(req: NextRequest) {
     const { path, tag } = await req.json()
 
     if (path) {
-      revalidatePath(path)
+      revalidatePath(path, 'page')
     }
     
     if (tag) {
-      revalidateTag(tag)
+      revalidateTag(tag, 'max')
     }
 
     return NextResponse.json({ 
