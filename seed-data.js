@@ -9,8 +9,8 @@ const path = require('path');
 const COMPANY_DETAILS = {
   name: "QUANTIFYRE LLP",
   tagline: "The Future, Faster",
-  email: "Info.endlessinfosys@gmail.com",
-  phone: "+91 6356195625",
+  email: "contact.quantifyrellp@gmail.com",
+  phone: "+91 7383095625",
   address: "B-402, The Landmark, Opp. Kansar Hotel, Kudasan, Gandhinagar, Gujarat 382421",
 };
 
@@ -83,22 +83,22 @@ async function seed() {
   // 3. Services
   for (const s of SERVICES) {
     await supabase.from('services').upsert({
-        slug: s.id,
-        title: s.title,
-        icon_name: s.icon,
-        short_description: s.description,
-        is_active: true
+      slug: s.id,
+      title: s.title,
+      icon_name: s.icon,
+      short_description: s.description,
+      is_active: true
     }, { onConflict: 'slug' });
   }
 
   // 4. Projects
   for (const p of PROJECTS) {
     await supabase.from('projects').upsert({
-        slug: p.id,
-        title: p.title,
-        category: p.category,
-        description: p.description,
-        live_url: p.live_url
+      slug: p.id,
+      title: p.title,
+      category: p.category,
+      description: p.description,
+      live_url: p.live_url
     }, { onConflict: 'slug' });
   }
 
