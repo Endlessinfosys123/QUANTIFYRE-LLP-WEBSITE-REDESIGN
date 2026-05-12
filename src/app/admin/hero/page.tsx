@@ -14,10 +14,13 @@ export default function HeroManager() {
   const [data, setData] = useState({
     title: "",
     subtitle: "",
-    cta_text: "",
-    cta_link: "",
-    image_url: "",
-    bg_color: "#FFFFFF",
+    description: "",
+    badge_text: "",
+    primary_cta_text: "",
+    primary_cta_link: "",
+    secondary_cta_text: "",
+    secondary_cta_link: "",
+    bg_image_url: "",
   });
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -31,13 +34,23 @@ export default function HeroManager() {
     setIsLoading(true);
     try {
       const { data: heroData, error } = await supabase
-        .from("page_content")
-        .select("content")
-        .eq("section", "hero")
+        .from("page_sections")
+        .select("*")
+        .eq("section_id", "hero")
         .single();
 
       if (heroData) {
-        setData(heroData.content);
+        setData({
+          title: heroData.title || "",
+          subtitle: heroData.subtitle || "",
+          description: heroData.description || "",
+          badge_text: heroData.badge_text || "",
+          primary_cta_text: heroData.primary_cta_text || "",
+          primary_cta_link: heroData.primary_cta_link || "",
+          secondary_cta_text: heroData.secondary_cta_text || "",
+          secondary_cta_link: heroData.secondary_cta_link || "",
+          bg_image_url: heroData.bg_image_url || "",
+        });
       }
     } catch (err) {
       console.error("Error fetching hero data:", err);
@@ -53,10 +66,10 @@ export default function HeroManager() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          table: "page_content",
+          table: "page_sections",
           data: {
-            section: "hero",
-            content: data,
+            ...data,
+            section_id: "hero",
           },
           revalidate_path: "/",
         }),
@@ -103,31 +116,65 @@ export default function HeroManager() {
         <div className="space-y-6">
           <AdminCard title="Primary Content">
             <div className="space-y-6">
-              <AdminInput 
-                label="Main Title (H1)" 
-                value={data.title}
-                onChange={(e) => setData({ ...data, title: e.target.value })}
-                placeholder="Empowering Your Digital Future"
-              />
-              <AdminTextarea 
-                label="Subtitle / Description" 
-                value={data.subtitle}
-                onChange={(e) => setData({ ...data, subtitle: e.target.value })}
-                placeholder="Enter a compelling description..."
-              />
               <div className="grid grid-cols-2 gap-4">
                 <AdminInput 
-                  label="CTA Button Text" 
-                  value={data.cta_text}
-                  onChange={(e) => setData({ ...data, cta_text: e.target.value })}
-                  placeholder="Get Started"
+                  label="Badge Text" 
+                  value={data.badge_text}
+                  onChange={(e) => setData({ ...data, badge_text: e.target.value })}
+                  placeholder="Enterprise IT Engineering"
                 />
                 <AdminInput 
-                  label="CTA Button Link" 
-                  value={data.cta_link}
-                  onChange={(e) => setData({ ...data, cta_link: e.target.value })}
-                  placeholder="/contact"
+                  label="Main Title (H1)" 
+                  value={data.title}
+                  onChange={(e) => setData({ ...data, title: e.target.value })}
+                  placeholder="Build High-Performance Software."
                 />
+              </div>
+              <AdminInput 
+                label="Subtitle (Short)" 
+                value={data.subtitle}
+                onChange={(e) => setData({ ...data, subtitle: e.target.value })}
+                placeholder="The Future, Faster"
+              />
+              <AdminTextarea 
+                label="Description" 
+                value={data.description}
+                onChange={(e) => setData({ ...data, description: e.target.value })}
+                placeholder="Enter a compelling description..."
+              />
+              <div className="p-4 rounded-xl bg-[#F9FAFB] border border-[#E5E7EB] space-y-4">
+                <h3 className="text-[11px] font-black uppercase tracking-widest text-[#6C3FEF]">Primary CTA</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <AdminInput 
+                    label="Text" 
+                    value={data.primary_cta_text}
+                    onChange={(e) => setData({ ...data, primary_cta_text: e.target.value })}
+                    placeholder="Start a Project"
+                  />
+                  <AdminInput 
+                    label="Link" 
+                    value={data.primary_cta_link}
+                    onChange={(e) => setData({ ...data, primary_cta_link: e.target.value })}
+                    placeholder="/contact"
+                  />
+                </div>
+              </div>
+              <div className="p-4 rounded-xl bg-[#F9FAFB] border border-[#E5E7EB] space-y-4">
+                <h3 className="text-[11px] font-black uppercase tracking-widest text-[#6B7280]">Secondary CTA</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <AdminInput 
+                    label="Text" 
+                    value={data.secondary_cta_text}
+                    onChange={(e) => setData({ ...data, secondary_cta_text: e.target.value })}
+                    placeholder="View Portfolio"
+                  />
+                  <AdminInput 
+                    label="Link" 
+                    value={data.secondary_cta_link}
+                    onChange={(e) => setData({ ...data, secondary_cta_link: e.target.value })}
+                    placeholder="/portfolio"
+                  />
+                </div>
               </div>
             </div>
           </AdminCard>
@@ -137,9 +184,9 @@ export default function HeroManager() {
           <AdminCard title="Visuals & Branding">
             <div className="space-y-6">
               <ImageUpload 
-                label="Hero Image / Illustration" 
-                value={data.image_url}
-                onChange={(url) => setData({ ...data, image_url: url })}
+                label="Hero Background / Illustration" 
+                value={data.bg_image_url}
+                onChange={(url) => setData({ ...data, bg_image_url: url })}
               />
             </div>
           </AdminCard>
