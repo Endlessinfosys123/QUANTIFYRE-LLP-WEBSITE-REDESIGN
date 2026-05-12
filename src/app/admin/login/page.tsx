@@ -8,6 +8,7 @@ import { AdminInput } from "@/components/admin/ui/AdminInput";
 import { AdminCard } from "@/components/admin/ui/AdminCard";
 import { motion } from "framer-motion";
 import { Shield, AlertCircle } from "lucide-react";
+import Link from "next/link";
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
@@ -108,7 +109,11 @@ export default function AdminLoginPage() {
             </AdminButton>
           </form>
 
-          <div className="mt-8 text-center">
+          <div className="mt-8 text-center space-y-3">
+            <p className="text-xs text-[#6B7280] font-medium">
+              Don&apos;t have an account? <br />
+              <Link href="/admin/register" className="text-[#6C3FEF] font-bold hover:underline">Register New Admin</Link>
+            </p>
             <p className="text-xs text-[#6B7280] font-medium">
               Forgot password? <br />
               <span className="text-[#6C3FEF] font-bold">Contact the Super Admin</span>
