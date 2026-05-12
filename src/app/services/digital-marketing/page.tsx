@@ -88,6 +88,6 @@ export default function DigitalMarketingPage() {
       </section>
 
       <CTA />
-    </main>in>
+    </main>
   );
 }
