@@ -1,7 +1,5 @@
 "use client";
 
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { motion } from "framer-motion";
 import { Services } from "@/components/sections/Services";
 import { Network, Database, Cloud, Lock } from "lucide-react";
@@ -9,7 +7,6 @@ import { Network, Database, Cloud, Lock } from "lucide-react";
 export default function ServicesPage() {
   return (
     <main className="bg-white min-h-screen">
-      <Navbar />
       
       {/* ENTERPRISE SERVICES HERO - Cloud Infrastructure Visual */}
       <section className="relative pt-40 pb-32 overflow-hidden bg-surface tech-grid border-b border-border">
@@ -100,7 +97,6 @@ export default function ServicesPage() {
          <Services />
       </div>
 
-      <Footer />
     </main>
   );
 }

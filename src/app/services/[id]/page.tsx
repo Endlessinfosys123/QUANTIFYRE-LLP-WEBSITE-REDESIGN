@@ -1,7 +1,5 @@
 import { SERVICES } from "@/lib/constants";
 import { notFound } from "next/navigation";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { CTA } from "@/components/sections/CTA";
 import { Brain, Code2, Monitor, BarChart3, Smartphone, PenTool, CheckSquare2, Layers, Cpu, Terminal, Network } from "lucide-react";
 
@@ -23,7 +21,6 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
 
   return (
     <main className="bg-white min-h-screen">
-      <Navbar />
 
       {/* INDIVIDUAL SERVICE HERO - ENTERPRISE STRUCTURED */}
       <section className="relative pt-48 pb-24 overflow-hidden bg-surface tech-grid border-b border-border">
@@ -143,7 +140,6 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
       </section>
 
       <CTA />
-      <Footer />
     </main>
   );
 }

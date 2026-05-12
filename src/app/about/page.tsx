@@ -1,7 +1,5 @@
 "use client";
 
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { motion } from "framer-motion";
 import { Users, Target, Shield, Server, Activity, GitBranch } from "lucide-react";
 import { STATS } from "@/lib/constants";
@@ -10,7 +8,6 @@ import { cn } from "@/lib/utils";
 export default function AboutPage() {
   return (
     <main className="bg-white min-h-screen">
-      <Navbar />
       
       {/* ENTERPRISE ABOUT HERO - Company Command Center */}
       <section className="relative pt-40 pb-20 overflow-hidden min-h-[90vh] bg-surface tech-grid border-b border-border flex items-center">
@@ -146,7 +143,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <Footer />
     </main>
   );
 }

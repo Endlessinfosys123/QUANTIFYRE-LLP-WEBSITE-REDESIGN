@@ -1,7 +1,5 @@
 "use client";
 
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { motion } from "framer-motion";
 import { Blog as BlogSection } from "@/components/sections/Blog";
 import { BLOG_POSTS } from "@/lib/constants";
@@ -15,7 +13,6 @@ export default function BlogPage() {
 
   return (
     <main className="bg-white min-h-screen">
-      <Navbar />
       
       {/* ENTERPRISE BLOG HERO - Data-Driven Insights Dashboard */}
       <section className="pt-40 pb-20 container-custom">
@@ -107,7 +104,6 @@ export default function BlogPage() {
         <BlogSection />
       </div>
 
-      <Footer />
     </main>
   );
 }

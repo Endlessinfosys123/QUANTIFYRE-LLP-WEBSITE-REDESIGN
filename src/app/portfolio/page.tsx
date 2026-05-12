@@ -1,7 +1,5 @@
 "use client";
 
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { motion } from "framer-motion";
 import { Portfolio as PortfolioSection } from "@/components/sections/Portfolio";
 import { PROJECTS } from "@/lib/constants";
@@ -10,7 +8,6 @@ import Image from "next/image";
 export default function PortfolioPage() {
   return (
     <main className="bg-white min-h-screen">
-      <Navbar />
       
       {/* ENTERPRISE PORTFOLIO HERO - Device Mockup Gallery */}
       <section className="relative pt-40 pb-20 overflow-hidden bg-surface tech-grid border-b border-border min-h-screen flex items-center">
@@ -93,7 +90,6 @@ export default function PortfolioPage() {
         <PortfolioSection />
       </div>
 
-      <Footer />
     </main>
   );
 }
