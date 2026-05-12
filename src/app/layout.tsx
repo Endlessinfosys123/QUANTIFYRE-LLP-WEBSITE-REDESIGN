@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import { ConditionalLayout } from "@/components/layout/ConditionalLayout";
 import { SplashProvider } from "@/components/ui/SplashProvider";
 import { PageTransitionLoader } from "@/components/ui/PageTransitionLoader";
 
@@ -28,9 +27,9 @@ export default function RootLayout({
         <PageTransitionLoader />
         {/* Full-Screen Splash Screen — shown once on first visit */}
         <SplashProvider>
-          <Navbar />
-          <main className="flex-grow">{children}</main>
-          <Footer />
+          <ConditionalLayout>
+            {children}
+          </ConditionalLayout>
         </SplashProvider>
       </body>
     </html>

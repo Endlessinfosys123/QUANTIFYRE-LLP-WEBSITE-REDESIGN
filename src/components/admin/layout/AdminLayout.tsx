@@ -4,12 +4,15 @@ import React from "react";
 import { AdminSidebar } from "./AdminSidebar";
 import { AdminHeader } from "./AdminHeader";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { AdminSkeleton } from "../ui/AdminSkeleton";
 
 export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const { status } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
+
+  const isAuthPage = pathname === "/admin/login" || pathname === "/admin/register";
 
   if (status === "loading") {
     return (
@@ -24,6 +27,11 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </div>
     );
+  }
+
+  // If we are on login/register, just render the children without sidebar/header
+  if (isAuthPage) {
+    return <>{children}</>;
   }
 
   if (status === "unauthenticated") {
