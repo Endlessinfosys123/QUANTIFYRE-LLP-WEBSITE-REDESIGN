@@ -10,6 +10,7 @@ import { AdminModal } from "@/components/admin/ui/AdminModal";
 import { AdminConfirmDialog } from "@/components/admin/ui/AdminConfirmDialog";
 import { AdminToast } from "@/components/admin/ui/AdminToast";
 import { AdminSelect } from "@/components/admin/ui/AdminSelect";
+import { AdminTextarea } from "@/components/admin/ui/AdminTextarea";
 import { RichTextEditor } from "@/components/admin/modules/RichTextEditor";
 import { ImageUpload } from "@/components/admin/modules/ImageUpload";
 import { 
