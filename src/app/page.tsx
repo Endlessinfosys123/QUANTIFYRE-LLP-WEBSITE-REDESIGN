@@ -27,15 +27,15 @@ async function getPageData() {
   }, {}) || {};
 
   return {
-    hero: sectionMap.hero,
-    whyUs: sectionMap.why_us,
-    sisterBrand: sectionMap.sister_brand,
-    cta: sectionMap.cta,
-    services,
-    testimonials,
-    blogPosts,
-    faqs,
-    stats
+    hero: sectionMap.hero || undefined,
+    whyUs: sectionMap.why_us || undefined,
+    sisterBrand: sectionMap.sister_brand || undefined,
+    cta: sectionMap.cta || undefined,
+    services: services || undefined,
+    testimonials: testimonials || undefined,
+    blogPosts: blogPosts || undefined,
+    faqs: faqs || undefined,
+    stats: stats || undefined
   };
 }
 
