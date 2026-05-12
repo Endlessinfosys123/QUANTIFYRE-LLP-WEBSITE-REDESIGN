@@ -8,8 +8,38 @@ export const Hero = () => {
   return (
     <section className="relative pt-40 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-white tech-grid min-h-screen flex items-center">
       {/* Subtle Glows */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none animate-morph-blob" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-[100px] pointer-events-none animate-morph-blob delay-300" />
+
+      {/* Cartoon Floating Badges */}
+      <motion.div
+        animate={{ y: [0, -16, 0], rotate: [0, -4, 4, 0] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-40 left-[8%] hidden xl:flex items-center gap-2 bg-white border-2 border-border rounded-2xl px-4 py-3 shadow-lg text-sm font-black text-dark pointer-events-none"
+      >
+        <span className="text-xl">⚡</span> AI-Powered
+      </motion.div>
+      <motion.div
+        animate={{ y: [0, 14, 0], rotate: [0, 3, -3, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+        className="absolute bottom-48 left-[5%] hidden xl:flex items-center gap-2 bg-white border-2 border-border rounded-2xl px-4 py-3 shadow-lg text-sm font-black text-dark pointer-events-none"
+      >
+        <span className="text-xl">🛡️</span> Enterprise Grade
+      </motion.div>
+      <motion.div
+        animate={{ y: [0, -12, 0], rotate: [0, 4, -4, 0] }}
+        transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+        className="absolute top-48 right-[5%] hidden xl:flex items-center gap-2 bg-white border-2 border-border rounded-2xl px-4 py-3 shadow-lg text-sm font-black text-dark pointer-events-none"
+      >
+        <span className="text-xl">🚀</span> Fast Delivery
+      </motion.div>
+      <motion.div
+        animate={{ y: [0, 18, 0], rotate: [0, -3, 3, 0] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+        className="absolute bottom-44 right-[6%] hidden xl:flex items-center gap-2 bg-white border-2 border-border rounded-2xl px-4 py-3 shadow-lg text-sm font-black text-dark pointer-events-none"
+      >
+        <span className="text-xl">💡</span> Innovative Tech
+      </motion.div>
 
       <div className="container-custom relative z-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">

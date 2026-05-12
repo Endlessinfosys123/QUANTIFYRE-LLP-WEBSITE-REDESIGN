@@ -129,6 +129,103 @@ p {
     80% { transform:translate(3%, 35%) }
     90% { transform:translate(-10%, 10%) }
   }
+
+  /* ============================
+     CARTOON ANIMATION KEYFRAMES
+     ============================ */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33%       { transform: translateY(-14px) rotate(-2deg); }
+    66%       { transform: translateY(-7px) rotate(2deg); }
+  }
+
+  @keyframes float-reverse {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33%       { transform: translateY(14px) rotate(2deg); }
+    66%       { transform: translateY(7px) rotate(-2deg); }
+  }
+
+  @keyframes bounce-cartoon {
+    0%, 100% { transform: translateY(0) scaleX(1) scaleY(1); animation-timing-function: cubic-bezier(0.8,0,1,1); }
+    30%       { transform: translateY(-24px) scaleX(0.94) scaleY(1.07); }
+    50%       { transform: translateY(0) scaleX(1.1) scaleY(0.9); animation-timing-function: cubic-bezier(0,0,0.2,1); }
+    70%       { transform: translateY(-10px) scaleX(0.97) scaleY(1.03); }
+  }
+
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(-3deg); }
+    50%       { transform: rotate(3deg); }
+  }
+
+  @keyframes rubberband {
+    0%   { transform: scale(1, 1); }
+    30%  { transform: scale(1.25, 0.75); }
+    40%  { transform: scale(0.75, 1.25); }
+    50%  { transform: scale(1.15, 0.85); }
+    65%  { transform: scale(0.95, 1.05); }
+    75%  { transform: scale(1.05, 0.95); }
+    100% { transform: scale(1, 1); }
+  }
+
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  @keyframes morph-blob {
+    0%,100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; transform: rotate(0deg); }
+    25%      { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; transform: rotate(5deg); }
+    50%      { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; transform: rotate(-5deg); }
+    75%      { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: rotate(0deg); }
+  }
+
+  @keyframes draw-stroke {
+    from { stroke-dashoffset: 1000; opacity: 0; }
+    to   { stroke-dashoffset: 0;    opacity: 1; }
+  }
+
+  @keyframes pop-in {
+    0%   { opacity: 0; transform: scale(0.5) rotate(-10deg); }
+    60%  { transform: scale(1.1) rotate(3deg); }
+    80%  { transform: scale(0.95) rotate(-1deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+
+  @keyframes shimmer {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(200%); }
+  }
+
+  @keyframes pulse-ring {
+    0%   { transform: scale(0.8); opacity: 0.8; }
+    100% { transform: scale(2.4); opacity: 0; }
+  }
+
+  @keyframes typewriter-cursor {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  /* Utility classes for cartoon animations */
+  .animate-float          { animation: float 5s ease-in-out infinite; }
+  .animate-float-reverse  { animation: float-reverse 6s ease-in-out infinite; }
+  .animate-bounce-cartoon { animation: bounce-cartoon 2s ease infinite; }
+  .animate-wiggle         { animation: wiggle 0.4s ease-in-out infinite; }
+  .animate-rubberband     { animation: rubberband 1s cubic-bezier(0.36,0.07,0.19,0.97) both; }
+  .animate-spin-slow      { animation: spin-slow 12s linear infinite; }
+  .animate-morph-blob     { animation: morph-blob 7s ease-in-out infinite; }
+  .animate-pop-in         { animation: pop-in 0.6s cubic-bezier(0.36,0.07,0.19,0.97) both; }
+  .animate-shimmer        { animation: shimmer 1.2s ease-in-out infinite; }
+  .animate-pulse-ring     { animation: pulse-ring 1.5s cubic-bezier(0.4,0,0.6,1) infinite; }
+  .animate-cursor         { animation: typewriter-cursor 1s step-end infinite; }
+
+  /* Delay utilities */
+  .delay-100  { animation-delay: 0.1s; }
+  .delay-200  { animation-delay: 0.2s; }
+  .delay-300  { animation-delay: 0.3s; }
+  .delay-500  { animation-delay: 0.5s; }
+  .delay-700  { animation-delay: 0.7s; }
+  .delay-1000 { animation-delay: 1s; }
 }
 
 ::selection {
