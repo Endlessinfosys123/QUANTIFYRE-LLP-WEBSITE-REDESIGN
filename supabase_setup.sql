@@ -152,9 +152,11 @@ CREATE TABLE IF NOT EXISTS public.nav_links (
 CREATE TABLE IF NOT EXISTS public.media (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     url TEXT NOT NULL,
-    file_name TEXT,
+    filename TEXT NOT NULL,
+    original_name TEXT,
     file_type TEXT,
     file_size INT,
+    uploaded_by TEXT,
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
