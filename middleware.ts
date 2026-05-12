@@ -7,7 +7,14 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token,
+      authorized: ({ token, req }) => {
+        const { pathname } = req.nextUrl
+        // Allow access to login and register pages without a token
+        if (pathname.startsWith("/admin/login") || pathname.startsWith("/admin/register")) {
+          return true
+        }
+        return !!token
+      },
     },
   }
 )
