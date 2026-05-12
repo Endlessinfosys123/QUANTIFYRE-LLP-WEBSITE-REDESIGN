@@ -10,7 +10,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Magnetic } from "@/components/ui/Magnetic";
 
-export const Blog = () => {
+export const Blog = ({ data }: { data?: any[] }) => {
+  const displayPosts = data && data.length > 0 ? data : BLOG_POSTS;
   return (
     <section className="section-padding bg-white relative overflow-hidden">
       {/* Background Decorative Blob */}
@@ -53,9 +54,9 @@ export const Blog = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-          {BLOG_POSTS.map((post, i) => (
+          {displayPosts.map((post, i) => (
             <motion.div
-              key={post.id}
+              key={post.id || i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -64,7 +65,7 @@ export const Blog = () => {
               <Card className="p-0 overflow-hidden group bg-transparent border-none shadow-none flex flex-col h-full">
                 <div className="relative aspect-[16/10] overflow-hidden rounded-[2.5rem] bg-surface border border-primary/5 shadow-2xl shadow-primary/5">
                   <Image
-                    src={post.image}
+                    src={post.image_url || post.image || "https://placehold.co/800x600/6C3FEF/FFFFFF?text=Article"}
                     alt={post.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
@@ -78,10 +79,12 @@ export const Blog = () => {
                 
                 <div className="pt-8 space-y-6 flex flex-col flex-grow">
                   <div className="flex items-center gap-4 text-[10px] font-black text-primary uppercase tracking-[0.2em]">
-                    <span className="px-3 py-1 rounded-lg bg-primary/5">{post.date}</span>
+                    <span className="px-3 py-1 rounded-lg bg-primary/5">
+                      {post.created_at ? new Date(post.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : post.date}
+                    </span>
                     <span className="w-1 h-1 rounded-full bg-primary/20" />
                     <span className="flex items-center gap-1.5 opacity-60">
-                      <Clock size={12} /> {post.readTime}
+                      <Clock size={12} /> {post.read_time || post.readTime || "5 min"}
                     </span>
                   </div>
                   
@@ -96,7 +99,7 @@ export const Blog = () => {
 
                   <div className="pt-6">
                     <Link
-                      href="/blog"
+                      href={post.slug ? `/blog/${post.slug}` : "/blog"}
                       className="inline-flex items-center gap-4 text-primary font-black text-sm uppercase tracking-[0.3em] group/link"
                     >
                       Read Article

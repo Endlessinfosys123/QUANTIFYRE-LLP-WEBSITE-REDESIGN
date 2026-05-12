@@ -6,7 +6,11 @@ import { COMPANY_DETAILS } from "@/lib/constants";
 import { ExternalLink, Sparkles } from "lucide-react";
 import { Magnetic } from "@/components/ui/Magnetic";
 
-export const SisterBrand = () => {
+export const SisterBrand = ({ data }: { data?: any }) => {
+  const name = data?.title || COMPANY_DETAILS.sisterBrand.name;
+  const description = data?.description || "Our elite digital agency brand specialized in high-performance graphic design, social media growth, and full-spectrum digital marketing.";
+  const url = data?.primary_cta_link || COMPANY_DETAILS.sisterBrand.url;
+  const badge = data?.badge_text || "Sister Brand";
   return (
     <section className="section-padding bg-white relative overflow-hidden">
       <div className="container-custom">
@@ -43,13 +47,13 @@ export const SisterBrand = () => {
                 className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-primary/5 border border-primary/10 text-primary text-xs font-black uppercase tracking-[0.4em]"
               >
                 <Sparkles size={14} />
-                Sister Brand
+                {badge}
               </motion.div>
               <h2 className="text-5xl md:text-7xl font-black text-dark tracking-tighter leading-[0.9]">
-                Meet <span className="text-primary">{COMPANY_DETAILS.sisterBrand.name}.</span>
+                {name.toLowerCase().includes("meet") ? name : <>Meet <span className="text-primary">{name}.</span></>}
               </h2>
               <p className="text-text-secondary text-2xl font-medium leading-relaxed">
-                Our elite digital agency brand specialized in high-performance graphic design, social media growth, and full-spectrum digital marketing.
+                {description}
               </p>
             </div>
           </div>
@@ -57,7 +61,7 @@ export const SisterBrand = () => {
           <div className="relative z-10 flex-shrink-0">
             <Magnetic>
               <Button
-                href={COMPANY_DETAILS.sisterBrand.url}
+                href={url}
                 size="lg"
                 className="gap-4 px-16 h-24 text-2xl font-black rounded-3xl shadow-xl shadow-primary/20 hover:shadow-primary/40"
               >

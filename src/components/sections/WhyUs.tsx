@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { motion } from "framer-motion";
 import { Zap, ShieldCheck, Clock, Users, Globe, FileText, CheckCircle2 } from "lucide-react";
 import { WHY_CHOOSE_US } from "@/lib/constants";
@@ -15,7 +16,10 @@ const iconMap = {
   FileText,
 };
 
-export const WhyUs = () => {
+export const WhyUs = ({ data }: { data?: any }) => {
+  const title = data?.title || "Why Leaders Choose QUANTIFYRE.";
+  const description = data?.description || "We merge creative vision with engineering precision to build software that doesn't just work—it dominates.";
+  const badge = data?.badge_text || "Advantage";
   return (
     <section className="section-padding bg-surface overflow-hidden relative">
       {/* Background Pattern */}
@@ -85,7 +89,7 @@ export const WhyUs = () => {
                 className="flex items-center gap-3"
               >
                 <div className="w-12 h-px bg-primary" />
-                <span className="text-primary font-black text-xs uppercase tracking-[0.5em]">Advantage</span>
+                <span className="text-primary font-black text-xs uppercase tracking-[0.5em]">{badge}</span>
               </motion.div>
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
@@ -94,8 +98,16 @@ export const WhyUs = () => {
                 transition={{ delay: 0.2 }}
                 className="text-5xl md:text-7xl font-black text-dark tracking-tighter leading-none"
               >
-                Why Leaders <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Choose QUANTIFYRE.</span>
+                {title.includes('<br />') ? (
+                  title.split('<br />').map((line: string, i: number) => (
+                    <React.Fragment key={i}>
+                      {line}
+                      {i < title.split('<br />').length - 1 && <br />}
+                    </React.Fragment>
+                  ))
+                ) : (
+                  title
+                )}
               </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -104,7 +116,7 @@ export const WhyUs = () => {
                 transition={{ delay: 0.4 }}
                 className="text-text-secondary text-xl font-medium leading-relaxed max-w-xl"
               >
-                We merge creative vision with engineering precision to build software that doesn't just work—it dominates.
+                {description}
               </motion.p>
             </div>
 

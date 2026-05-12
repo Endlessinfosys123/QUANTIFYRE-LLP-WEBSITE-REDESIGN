@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { ArrowRight, Sparkles } from "lucide-react";
@@ -38,7 +39,14 @@ function CartoonStar({ size = 24, color = "#f59e0b", delay = 0 }: { size?: numbe
   );
 }
 
-export const CTA = () => {
+export const CTA = ({ data }: { data?: any }) => {
+  const title = data?.title || "Let's Engineer Your Digital Legacy.";
+  const description = data?.description || "The future waits for no one. Partner with QUANTIFYRE to build intelligent systems that scale with your ambition.";
+  const badge = data?.badge_text || "Unlimited Potential";
+  const primaryText = data?.primary_cta_text || "Start the Mission";
+  const primaryLink = data?.primary_cta_link || "/contact";
+  const secondaryText = data?.secondary_cta_text || "Free Strategy Call 📞";
+  const secondaryLink = data?.secondary_cta_link || "/contact";
   return (
     <section className="section-padding bg-white relative overflow-hidden">
 
@@ -82,18 +90,29 @@ export const CTA = () => {
               <motion.span animate={{ rotate: [0, 15, -15, 0] }} transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2 }}>
                 <Sparkles size={16} />
               </motion.span>
-              Unlimited Potential
+              {badge}
             </motion.div>
             
             <h2 className="text-5xl md:text-8xl font-black text-dark leading-[0.9] tracking-tighter max-w-5xl mx-auto">
-              Let&apos;s Engineer Your{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
-                Digital Legacy.
-              </span>
+              {title.includes('<br />') ? (
+                title.split('<br />').map((line: string, i: number) => (
+                  <React.Fragment key={i}>
+                    {line}
+                    {i < title.split('<br />').length - 1 && <br />}
+                  </React.Fragment>
+                ))
+              ) : title.includes("Engineer Your") ? (
+                <>
+                  Let&apos;s Engineer Your{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+                    Digital Legacy.
+                  </span>
+                </>
+              ) : title}
             </h2>
             
             <p className="text-text-secondary text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed font-medium">
-              The future waits for no one. Partner with QUANTIFYRE to build intelligent systems that scale with your ambition.
+              {description}
             </p>
           </div>
 
@@ -104,7 +123,7 @@ export const CTA = () => {
               transition={{ type: "spring", stiffness: 300, damping: 15 }}
             >
               <Button
-                href="/contact"
+                href={primaryLink}
                 size="lg"
                 className="w-full sm:w-auto px-16 h-20 text-xl font-black rounded-2xl shadow-[0_20px_50px_-10px_rgba(99,102,241,0.4)] hover:shadow-[0_30px_70px_-10px_rgba(99,102,241,0.6)] relative overflow-hidden group"
               >
@@ -114,7 +133,7 @@ export const CTA = () => {
                     transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 2.5 }}
                     className="mr-3 text-xl"
                   >🚀</motion.span>
-                  Start the Mission
+                  {primaryText}
                   <ArrowRight size={22} className="ml-3 group-hover:translate-x-2 transition-transform duration-200" />
                 </span>
                 <span className="absolute inset-0 pointer-events-none">
@@ -129,12 +148,12 @@ export const CTA = () => {
               transition={{ type: "spring", stiffness: 300, damping: 15 }}
             >
               <Button
-                href="/contact"
+                href={secondaryLink}
                 variant="outline"
                 size="lg"
                 className="w-full sm:w-auto h-20 px-12 text-xl font-black rounded-2xl border-2 border-primary/20 text-primary hover:bg-primary/5"
               >
-                Free Strategy Call 📞
+                {secondaryText}
               </Button>
             </motion.div>
           </div>

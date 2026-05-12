@@ -5,7 +5,8 @@ import { FAQS } from "@/lib/constants";
 import { Accordion } from "@/components/ui/Accordion";
 import { Sparkles } from "lucide-react";
 
-export const FAQ = () => {
+export const FAQ = ({ data }: { data?: any[] }) => {
+  const displayFaqs = data && data.length > 0 ? data : FAQS;
   return (
     <section className="section-padding bg-white relative overflow-hidden" id="faq">
       <div className="container-custom relative z-10">
@@ -31,7 +32,7 @@ export const FAQ = () => {
         </div>
 
         <div className="max-w-5xl mx-auto">
-          <Accordion items={FAQS} />
+          <Accordion items={displayFaqs} />
         </div>
       </div>
     </section>

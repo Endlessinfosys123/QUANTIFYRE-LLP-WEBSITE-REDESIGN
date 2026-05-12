@@ -5,7 +5,8 @@ import { TESTIMONIALS } from "@/lib/constants";
 import { Card } from "@/components/ui/Card";
 import { Star, Quote, Sparkles } from "lucide-react";
 
-export const Testimonials = () => {
+export const Testimonials = ({ data }: { data?: any[] }) => {
+  const displayTestimonials = data && data.length > 0 ? data : TESTIMONIALS;
   return (
     <section className="section-padding bg-surface relative overflow-hidden">
       {/* Decorative Elements */}
@@ -34,7 +35,7 @@ export const Testimonials = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-          {TESTIMONIALS.map((t, i) => (
+          {displayTestimonials.map((t, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 30 }}
@@ -49,23 +50,23 @@ export const Testimonials = () => {
                 
                 <div className="space-y-8 relative z-10 h-full flex flex-col">
                   <div className="flex gap-1.5">
-                    {[...Array(t.rating)].map((_, i) => (
+                    {[...Array(t.rating || 5)].map((_, i) => (
                       <Star key={i} size={18} className="text-primary" fill="currentColor" />
                     ))}
                   </div>
                   
                   <p className="text-dark text-xl font-medium leading-relaxed italic flex-grow">
-                    "{t.quote}"
+                    "{t.content || t.quote}"
                   </p>
                   
                   <div className="pt-8 border-t border-primary/5 flex items-center gap-6">
                     <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center font-black text-white text-2xl shadow-xl shadow-primary/20">
-                      {t.author[0]}
+                      {(t.client_name || t.author)?.[0]}
                     </div>
                     <div>
-                      <h4 className="text-xl font-black text-dark tracking-tight">{t.author}</h4>
+                      <h4 className="text-xl font-black text-dark tracking-tight">{t.client_name || t.author}</h4>
                       <p className="text-[10px] text-primary font-black uppercase tracking-[0.3em]">
-                        {t.role} • {t.company}
+                        {t.client_role || t.role} • {t.client_company || t.company}
                       </p>
                     </div>
                   </div>
