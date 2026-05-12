@@ -4,7 +4,13 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { ArrowRight, Code2, Database, LayoutTemplate, Sparkles, Terminal } from "lucide-react";
 
-export const Hero = () => {
+export const Hero = ({ data, stats }: { data?: any, stats?: any[] }) => {
+  const heroTitle = data?.title || "Build High-Performance Software.";
+  const heroSubtitle = data?.subtitle || "We are a technology agency building scalable web applications, enterprise ERPs, and AI-driven automation systems for modern businesses.";
+  const heroBadge = data?.badge_text || "Enterprise IT Engineering";
+  const primaryCTA = data?.primary_cta_text || "Start a Project";
+  const secondaryCTA = data?.secondary_cta_text || "View Capabilities";
+
   return (
     <section className="relative pt-40 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-white tech-grid min-h-screen flex items-center">
       {/* Subtle Glows */}
@@ -52,7 +58,7 @@ export const Hero = () => {
               className="inline-flex items-center gap-3 px-4 py-2 rounded-lg bg-surface border border-border shadow-sm text-primary font-bold text-xs uppercase tracking-widest"
             >
               <Sparkles size={14} className="text-accent" />
-              Enterprise IT Engineering
+              {heroBadge}
             </motion.div>
             
             <div className="space-y-6">
@@ -62,9 +68,12 @@ export const Hero = () => {
                 transition={{ delay: 0.1 }}
                 className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-dark tracking-tighter leading-[0.95] text-balance"
               >
-                Build High-<br />
-                Performance <br />
-                <span className="text-primary">Software.</span>
+                {heroTitle.split('<br />').map((line: string, i: number) => (
+                  <React.Fragment key={i}>
+                    {line}
+                    {i < heroTitle.split('<br />').length - 1 && <br />}
+                  </React.Fragment>
+                ))}
               </motion.h1>
               
               <motion.p
@@ -73,7 +82,7 @@ export const Hero = () => {
                 transition={{ delay: 0.2 }}
                 className="text-xl text-text-secondary font-medium max-w-lg leading-relaxed text-pretty"
               >
-                We are a technology agency building scalable web applications, enterprise ERPs, and AI-driven automation systems for modern businesses.
+                {heroSubtitle}
               </motion.p>
             </div>
 
@@ -83,11 +92,11 @@ export const Hero = () => {
               transition={{ delay: 0.3 }}
               className="flex flex-col sm:flex-row items-center gap-4 pt-4"
             >
-              <Button href="/contact" size="lg" className="w-full sm:w-auto px-10 h-16 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 hover:shadow-primary/30">
-                Start a Project <ArrowRight className="ml-2" size={20} />
+              <Button href={data?.primary_cta_link || "/contact"} size="lg" className="w-full sm:w-auto px-10 h-16 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 hover:shadow-primary/30">
+                {primaryCTA} <ArrowRight className="ml-2" size={20} />
               </Button>
-              <Button href="/portfolio" variant="outline" size="lg" className="w-full sm:w-auto px-10 h-16 rounded-xl font-bold text-lg bg-white shadow-sm hover:bg-surface">
-                View Capabilities
+              <Button href={data?.secondary_cta_link || "/portfolio"} variant="outline" size="lg" className="w-full sm:w-auto px-10 h-16 rounded-xl font-bold text-lg bg-white shadow-sm hover:bg-surface">
+                {secondaryCTA}
               </Button>
             </motion.div>
 
@@ -106,7 +115,9 @@ export const Hero = () => {
                  ))}
                </div>
                <div>
-                 <span className="text-dark font-black">50+</span> Businesses Trust Us
+                 <span className="text-dark font-black">
+                   {stats?.find(s => s.label.includes("Business"))?.value || "50+"}
+                 </span> Businesses Trust Us
                </div>
             </motion.div>
           </div>

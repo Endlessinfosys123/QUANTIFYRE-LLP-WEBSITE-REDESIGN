@@ -15,7 +15,11 @@ const iconMap = {
   PenTool,
 };
 
-export const Services = () => {
+import { SERVICES as STATIC_SERVICES } from "@/lib/constants";
+
+export const Services = ({ data }: { data?: any[] }) => {
+  const displayServices = data && data.length > 0 ? data : STATIC_SERVICES;
+
   return (
     <section className="section-padding bg-surface tech-grid relative" id="services">
       <div className="container-custom relative z-10">
@@ -42,8 +46,8 @@ export const Services = () => {
 
         {/* Bento Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[400px]">
-          {SERVICES.map((service, i) => {
-            const Icon = iconMap[service.icon as keyof typeof iconMap] || Code2;
+          {displayServices.map((service, i) => {
+            const Icon = iconMap[service.icon_name as keyof typeof iconMap] || iconMap[service.icon as keyof typeof iconMap] || Code2;
             
             // Make the first two items span 2 columns on large screens for the Bento effect
             const isLarge = i === 0 || i === 3;
@@ -75,19 +79,19 @@ export const Services = () => {
                     </h3>
                     
                     <p className="text-text-secondary font-medium leading-relaxed line-clamp-3">
-                      {service.description}
+                      {service.short_description || service.description}
                     </p>
                  </div>
 
                  {/* Interactive Footer */}
                  <div className="relative z-10 mt-auto pt-6 border-t border-border flex items-center justify-between">
                     <div className="flex -space-x-2">
-                      {service.tech.slice(0, 3).map((tech, idx) => (
+                      {(service.tech || []).slice(0, 3).map((tech: string, idx: number) => (
                         <div key={idx} className="px-3 py-1 bg-white border border-border rounded-md text-[10px] font-bold text-dark shadow-sm z-10 relative hover:z-20 hover:-translate-y-1 transition-transform cursor-default" title={tech}>
                           {tech}
                         </div>
                       ))}
-                      {service.tech.length > 3 && (
+                      {service.tech && service.tech.length > 3 && (
                         <div className="w-6 h-6 rounded-full bg-surface border border-border flex items-center justify-center text-[8px] font-bold text-text-secondary z-0 relative">
                           +{service.tech.length - 3}
                         </div>
@@ -95,7 +99,7 @@ export const Services = () => {
                     </div>
                     
                     <Link
-                      href={`/services/${service.id}`}
+                      href={`/services/${service.slug || service.id}`}
                       className="w-10 h-10 rounded-xl bg-surface border border-border flex items-center justify-center text-dark group-hover:bg-primary group-hover:border-primary group-hover:text-white transition-colors"
                     >
                       <ArrowRight size={18} className="group-hover:-rotate-45 transition-transform" />

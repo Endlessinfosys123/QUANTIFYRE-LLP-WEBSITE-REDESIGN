@@ -12,7 +12,7 @@ import { signOut, useSession } from "next-auth/react";
 
 const MENU_ITEMS = [
   { label: "Dashboard", icon: LayoutDashboard, href: "/admin", category: "main" },
-  { label: "Page Content", icon: FileText, href: "/admin/content", category: "content" },
+  { label: "Page Sections", icon: Layers, href: "/admin/sections", category: "content" },
   { label: "Hero Manager", icon: Zap, href: "/admin/hero", category: "content" },
   { label: "Services", icon: Layers, href: "/admin/services", category: "content" },
   { label: "Portfolio", icon: Briefcase, href: "/admin/portfolio", category: "content" },
@@ -20,12 +20,10 @@ const MENU_ITEMS = [
   { label: "Testimonials", icon: MessageSquare, href: "/admin/testimonials", category: "content" },
   { label: "FAQ Manager", icon: HelpCircle, href: "/admin/faq", category: "content" },
   { label: "Stats Counters", icon: TrendingUp, href: "/admin/stats", category: "content" },
-  { label: "Theme & Colors", icon: Palette, href: "/admin/theme", category: "site" },
+  { label: "Global Settings", icon: Palette, href: "/admin/settings", category: "site" },
   { label: "Navigation", icon: Compass, href: "/admin/navigation", category: "site" },
   { label: "Media Library", icon: Image, href: "/admin/media", category: "site" },
   { label: "Contact Info", icon: Phone, href: "/admin/contact-info", category: "site" },
-  { label: "SEO Manager", icon: Search, href: "/admin/seo", category: "advanced" },
-  { label: "Page Sections", icon: Layers, href: "/admin/sections", category: "advanced" },
   { label: "Admin Users", icon: Users, href: "/admin/users", category: "advanced" },
   { label: "Analytics", icon: BarChart3, href: "/admin/analytics", category: "analytics" },
 ];
