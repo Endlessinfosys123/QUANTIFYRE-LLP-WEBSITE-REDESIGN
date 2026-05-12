@@ -16,11 +16,11 @@ export const COMPANY_DETAILS = {
 
 export const NAV_LINKS = [
   { name: "Home", href: "/" },
+  { name: "About Us", href: "/about" },
   { name: "Services", href: "/services" },
   { name: "Portfolio", href: "/portfolio" },
-  { name: "About", href: "/about" },
-  { name: "Blog", href: "/blog" },
-  { name: "Contact", href: "/contact" },
+  { name: "Blogs", href: "/blog" },
+  { name: "Contact Us", href: "/contact" },
 ];
 
 export const SERVICES = [

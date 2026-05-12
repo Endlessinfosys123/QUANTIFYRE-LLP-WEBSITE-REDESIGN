@@ -1,130 +1,65 @@
 "use client";
 
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 import { motion } from "framer-motion";
-import { SERVICES } from "@/lib/constants";
-import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Brain, Code2, Monitor, BarChart3, Smartphone, PenTool, CheckCircle2, ArrowRight } from "lucide-react";
-import Link from "next/link";
-
-const iconMap = {
-  Brain,
-  Code2,
-  Monitor,
-  BarChart3,
-  Smartphone,
-  PenTool,
-};
+import { Services } from "@/components/sections/Services";
 
 export default function ServicesPage() {
   return (
-    <div className="pt-24 min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-dark py-24 relative overflow-hidden">
+    <main className="bg-white min-h-screen">
+      <Navbar />
+      
+      {/* UNIQUE SERVICES HERO */}
+      <section className="relative pt-40 pb-20 overflow-hidden min-h-[70vh] flex flex-col justify-center border-b border-primary/5">
+        {/* Abstract 3D Architecture Background */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[50vw] h-[50vw] opacity-10 pointer-events-none">
+           <div className="absolute inset-0 border-[40px] border-primary rounded-full blur-[80px]" />
+           <motion.div 
+             animate={{ rotate: 360 }}
+             transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+             className="w-full h-full border-[2px] border-primary/50 border-dashed rounded-full"
+           />
+        </div>
+
         <div className="container-custom relative z-10">
-          <div className="max-w-3xl space-y-6">
-            <motion.span
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-primary font-bold text-sm uppercase tracking-[0.3em]"
+          <div className="max-w-4xl space-y-8">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="flex items-center gap-4"
             >
-              Our Services
-            </motion.span>
+              <div className="w-16 h-1 bg-primary" />
+              <span className="text-primary font-black uppercase tracking-widest text-sm">Capabilities Index</span>
+            </motion.div>
+            
             <motion.h1
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-5xl md:text-7xl font-extrabold text-white leading-[1.1]"
+              transition={{ delay: 0.1, duration: 0.8 }}
+              className="text-6xl md:text-8xl font-black text-dark tracking-tighter leading-tight text-balance"
             >
-              Building the <span className="text-primary">Future</span> of Enterprise Software
+              Engineering <br/> Architecture.
             </motion.h1>
+
             <motion.p
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-xl text-gray-400 leading-relaxed"
+              transition={{ delay: 0.3 }}
+              className="text-xl md:text-2xl text-text-secondary font-medium leading-relaxed max-w-2xl text-pretty"
             >
-              From bespoke AI automation to enterprise-grade cloud platforms, we deliver end-to-end digital excellence.
+              Explore our comprehensive suite of services. From intelligent automation to high-scale enterprise software, we provide end-to-end digital transformation.
             </motion.p>
           </div>
         </div>
       </section>
 
-      {/* Services Detailed Grid */}
-      <section className="py-24 bg-white">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 gap-20">
-            {SERVICES.map((service, i) => {
-              const Icon = iconMap[service.icon as keyof typeof iconMap];
-              return (
-                <motion.div
-                  key={service.id}
-                  id={service.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  className={cn(
-                    "flex flex-col lg:flex-row gap-12 items-center",
-                    i % 2 === 1 ? "lg:flex-row-reverse" : ""
-                  )}
-                >
-                  {/* Left: Content */}
-                  <div className="flex-1 space-y-8">
-                    <div className="w-16 h-16 rounded-2xl bg-surface flex items-center justify-center text-primary shadow-sm">
-                      <Icon size={32} />
-                    </div>
-                    <div className="space-y-4">
-                      <h2 className="text-3xl md:text-4xl font-extrabold text-dark">{service.title}</h2>
-                      <p className="text-text-secondary text-lg leading-relaxed">
-                        {service.description}
-                      </p>
-                    </div>
+      {/* Reusing the Services Component but removing its internal top padding/headings since the Hero covers it */}
+      <div className="-mt-32 relative z-20">
+         <Services />
+      </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {service.deliverables.map((item) => (
-                        <div key={item} className="flex items-center gap-3 text-dark font-medium">
-                          <CheckCircle2 size={18} className="text-primary" />
-                          <span>{item}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="pt-4 flex flex-wrap gap-2">
-                      {service.tech.map((t) => (
-                        <span key={t} className="px-4 py-1.5 bg-surface text-primary text-xs font-bold rounded-full uppercase tracking-widest border border-primary/5">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="pt-6">
-                      <Button href="/contact" className="gap-2">
-                        Get Started with {service.title} <ArrowRight size={20} />
-                      </Button>
-                    </div>
-                  </div>
-
-                  {/* Right: Illustration Placeholder */}
-                  <div className="flex-1 w-full">
-                    <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-                      <Image
-                        src={`https://placehold.co/800x600/6C3FEF/FFFFFF?text=${service.title}`}
-                        alt={service.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-    </div>
+      <Footer />
+    </main>
   );
 }
-
-// Utility to fix missing import in this file
-import { cn } from "@/lib/utils";
-import Image from "next/image";

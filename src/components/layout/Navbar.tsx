@@ -57,7 +57,7 @@ export const Navbar = () => {
               <Link
                 href={link.href}
                 className={cn(
-                  "px-5 py-2 text-sm font-bold transition-all duration-300 relative group text-dark/70 hover:text-primary",
+                  "px-3 xl:px-5 py-2 text-sm font-bold transition-all duration-300 relative group text-dark/70 hover:text-primary whitespace-nowrap",
                   pathname === link.href && "text-primary"
                 )}
               >
