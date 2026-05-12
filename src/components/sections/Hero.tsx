@@ -1,250 +1,165 @@
 "use client";
 
-import * as React from "react";
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
-import { ArrowRight, Sparkles, Brain, Cpu, Rocket, ChevronDown, Activity, Zap } from "lucide-react";
-import { STATS } from "@/lib/constants";
-import { Magnetic } from "@/components/ui/Magnetic";
-
-const CountUp = ({ value, suffix }: { value: number; suffix: string }) => {
-  const [count, setCount] = React.useState(0);
-  const [hasAnimated, setHasAnimated] = React.useState(false);
-
-  React.useEffect(() => {
-    if (hasAnimated) return;
-    
-    let start = 0;
-    const end = value;
-    const duration = 2.5;
-    const increment = end / (duration * 60);
-
-    const timer = setInterval(() => {
-      start += increment;
-      if (start >= end) {
-        setCount(end);
-        setHasAnimated(true);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 1000 / 60);
-
-    return () => clearInterval(timer);
-  }, [value, hasAnimated]);
-
-  return (
-    <span>
-      {count}
-      {suffix}
-    </span>
-  );
-};
-
-const TiltCard = ({ children, className }: { children: React.ReactNode; className?: string }) => {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-};
+import { ArrowRight, Code2, Database, LayoutTemplate, Sparkles, Terminal } from "lucide-react";
 
 export const Hero = () => {
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, 150]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-  
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    mouseX.set(e.clientX);
-    mouseY.set(e.clientY);
-  };
-
-  const headline = "Engineering the Intelligence of Tomorrow.";
-  const subheadline = "QUANTIFYRE LLP is a premier AI-First engineering firm. We craft bespoke automation, high-performance software, and digital-first legacies that redefine industry standards.";
-
   return (
-    <section 
-      onMouseMove={handleMouseMove}
-      className="relative min-h-[110vh] flex flex-col justify-center pt-32 pb-20 overflow-hidden bg-white"
-    >
-      {/* Animated Fluid Blobs */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{
-            x: [0, 100, 0],
-            y: [0, 50, 0],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute -top-[20%] -left-[10%] w-[60vw] h-[60vw] bg-primary/10 blur-[120px] rounded-full"
-        />
-        <motion.div
-          animate={{
-            x: [0, -80, 0],
-            y: [0, 120, 0],
-            scale: [1.2, 1, 1.2],
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute top-[20%] -right-[10%] w-[50vw] h-[50vw] bg-accent/10 blur-[100px] rounded-full"
-        />
-        <motion.div
-          animate={{
-            x: [0, 50, 0],
-            y: [0, -100, 0],
-          }}
-          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-          className="absolute -bottom-[10%] left-[20%] w-[40vw] h-[40vw] bg-primary/5 blur-[150px] rounded-full"
-        />
-      </div>
+    <section className="relative pt-40 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-white tech-grid min-h-screen flex items-center">
+      {/* Subtle Glows */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 z-0 neural-grid opacity-50" />
-
-      <div className="container-custom relative z-10">
-        <motion.div 
-          style={{ y: y1, opacity }}
-          className="max-w-6xl mx-auto text-center space-y-12"
-        >
-          {/* High-End Badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center gap-4 px-8 py-3 rounded-2xl bg-white border border-primary/10 shadow-2xl shadow-primary/5 backdrop-blur-xl"
-          >
-            <div className="flex -space-x-2">
-              <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-[10px] text-white border-2 border-white"><Zap size={10} fill="currentColor" /></div>
-              <div className="w-6 h-6 rounded-full bg-accent flex items-center justify-center text-[10px] text-white border-2 border-white"><Activity size={10} /></div>
-            </div>
-            <span className="text-[12px] font-black uppercase tracking-[0.4em] text-primary italic">
-              Level Up Your Business
-            </span>
-          </motion.div>
-
-          {/* Headline with Mask Reveal */}
-          <h1 className="text-7xl md:text-[10rem] font-black text-dark leading-[0.82] tracking-tighter perspective-1000">
-            {headline.split(" ").map((word, i) => (
-              <span key={i} className="inline-block overflow-hidden mr-6 pb-4">
-                <motion.span
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  transition={{
-                    duration: 1.5,
-                    delay: 0.5 + i * 0.1,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  className="inline-block"
-                >
-                  {word === "Intelligence" ? (
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
-                      {word}
-                    </span>
-                  ) : word}
-                </motion.span>
-              </span>
-            ))}
-          </h1>
-
-          {/* Sub-headline */}
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 1.5, ease: "easeOut" }}
-            className="text-xl md:text-3xl text-text-secondary leading-tight max-w-4xl mx-auto font-medium tracking-tight"
-          >
-            {subheadline}
-          </motion.p>
-
-          {/* Premium CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 2 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-10 pt-8"
-          >
-            <Magnetic>
-              <Button href="/contact" size="lg" className="w-full sm:w-auto px-16 h-24 text-2xl font-black rounded-3xl shadow-[0_30px_60px_-15px_rgba(99,102,241,0.4)] hover:shadow-[0_40px_80px_-15px_rgba(99,102,241,0.6)] transition-all">
-                Forge the Future <ArrowRight className="ml-4 w-8 h-8" />
-              </Button>
-            </Magnetic>
-            <Magnetic>
-              <Button href="/portfolio" variant="outline" size="lg" className="w-full sm:w-auto h-24 px-16 text-2xl font-black rounded-3xl border-primary/20 text-primary hover:bg-primary/5 backdrop-blur-xl">
-                Explore Legacy
-              </Button>
-            </Magnetic>
-          </motion.div>
-        </motion.div>
-
-        {/* 3D Tilt Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-40 max-w-7xl mx-auto">
-          {STATS.map((stat, i) => (
-            <TiltCard key={stat.label}>
-              <motion.div
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1, delay: 0.8 + i * 0.1 }}
-                className="group relative p-12 rounded-[3rem] bg-white border border-primary/5 shadow-2xl shadow-primary/5 backdrop-blur-3xl overflow-hidden text-center"
-                style={{ transform: "translateZ(50px)" }}
+      <div className="container-custom relative z-10 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          
+          {/* Left: Typography & CTAs */}
+          <div className="max-w-2xl space-y-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="inline-flex items-center gap-3 px-4 py-2 rounded-lg bg-surface border border-border shadow-sm text-primary font-bold text-xs uppercase tracking-widest"
+            >
+              <Sparkles size={14} className="text-accent" />
+              Enterprise IT Engineering
+            </motion.div>
+            
+            <div className="space-y-6">
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-dark tracking-tighter leading-[0.95] text-balance"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                <div className="relative z-10 space-y-4">
-                  <div className="text-6xl md:text-7xl font-black text-dark tracking-tighter italic">
-                    <CountUp value={stat.value} suffix={stat.suffix} />
-                  </div>
-                  <div className="text-[12px] font-black text-primary uppercase tracking-[0.5em] opacity-60">
-                    {stat.label}
+                Build High-<br />
+                Performance <br />
+                <span className="text-primary">Software.</span>
+              </motion.h1>
+              
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-xl text-text-secondary font-medium max-w-lg leading-relaxed text-pretty"
+              >
+                We are a technology agency building scalable web applications, enterprise ERPs, and AI-driven automation systems for modern businesses.
+              </motion.p>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="flex flex-col sm:flex-row items-center gap-4 pt-4"
+            >
+              <Button href="/contact" size="lg" className="w-full sm:w-auto px-10 h-16 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 hover:shadow-primary/30">
+                Start a Project <ArrowRight className="ml-2" size={20} />
+              </Button>
+              <Button href="/portfolio" variant="outline" size="lg" className="w-full sm:w-auto px-10 h-16 rounded-xl font-bold text-lg bg-white shadow-sm hover:bg-surface">
+                View Capabilities
+              </Button>
+            </motion.div>
+
+            {/* Trust Indicators */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="pt-10 flex items-center gap-8 text-sm font-bold text-text-secondary"
+            >
+               <div className="flex -space-x-3">
+                 {[...Array(4)].map((_, i) => (
+                    <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-surface flex items-center justify-center shadow-sm">
+                      <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="avatar" className="w-full h-full rounded-full object-cover" />
+                    </div>
+                 ))}
+               </div>
+               <div>
+                 <span className="text-dark font-black">50+</span> Businesses Trust Us
+               </div>
+            </motion.div>
+          </div>
+
+          {/* Right: Concrete Tech Visual (Dashboard Mockup) */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, rotateX: 10 }}
+            animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+            transition={{ delay: 0.2, duration: 1, ease: "easeOut" }}
+            className="relative lg:h-[600px] w-full perspective-1000"
+          >
+             {/* Main Dashboard Window */}
+             <div className="absolute inset-0 bg-white rounded-2xl border border-border shadow-2xl overflow-hidden flex flex-col z-10">
+               {/* Browser/Window Header */}
+               <div className="h-10 bg-surface border-b border-border flex items-center px-4 gap-2">
+                 <div className="flex gap-1.5">
+                   <div className="w-3 h-3 rounded-full bg-red-400" />
+                   <div className="w-3 h-3 rounded-full bg-amber-400" />
+                   <div className="w-3 h-3 rounded-full bg-green-400" />
+                 </div>
+                 <div className="mx-auto bg-white border border-border rounded text-[10px] font-mono px-4 py-1 text-text-secondary flex items-center gap-2">
+                   <Terminal size={10} /> quantifyre-admin.production
+                 </div>
+               </div>
+               {/* Dashboard Content */}
+               <div className="flex-1 p-6 grid grid-cols-3 gap-4 bg-surface/30">
+                 {/* Sidebar */}
+                 <div className="col-span-1 space-y-4">
+                   <div className="h-24 bg-white border border-border rounded-xl shadow-sm p-4">
+                      <div className="w-8 h-8 rounded bg-primary/10 flex items-center justify-center mb-2"><Database size={16} className="text-primary"/></div>
+                      <div className="h-2 w-1/2 bg-surface rounded" />
+                   </div>
+                   <div className="h-48 bg-white border border-border rounded-xl shadow-sm p-4 space-y-3">
+                      {[...Array(4)].map((_, i) => <div key={i} className="h-8 bg-surface rounded-lg" />)}
+                   </div>
+                 </div>
+                 {/* Main Area */}
+                 <div className="col-span-2 space-y-4">
+                   <div className="h-32 bg-white border border-border rounded-xl shadow-sm p-4 flex flex-col justify-between">
+                     <div className="flex justify-between items-center">
+                       <div className="h-3 w-1/3 bg-surface rounded" />
+                       <div className="h-6 w-16 bg-primary/10 rounded-full" />
+                     </div>
+                     <div className="flex items-end gap-2 h-12">
+                       {[40, 70, 45, 90, 65, 80, 50].map((h, i) => (
+                         <div key={i} className="w-full bg-primary/20 rounded-t-sm" style={{ height: `${h}%` }} />
+                       ))}
+                     </div>
+                   </div>
+                   <div className="h-40 bg-white border border-border rounded-xl shadow-sm p-4 relative overflow-hidden group">
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
+                      <div className="relative z-10 flex items-center gap-4">
+                         <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center border border-border">
+                           <Code2 size={24} className="text-primary" />
+                         </div>
+                         <div>
+                           <div className="text-sm font-bold text-dark">System Architecture</div>
+                           <div className="text-xs text-text-secondary mt-1">Next.js 14 • Node.js • PostgreSQL</div>
+                         </div>
+                      </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+             {/* Floating Decorative Elements */}
+             <motion.div 
+               animate={{ y: [0, -15, 0] }} 
+               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+               className="absolute -right-8 top-1/4 w-40 bg-white p-4 rounded-xl shadow-xl border border-border z-20"
+             >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600"><LayoutTemplate size={16}/></div>
+                  <div>
+                    <div className="text-xs font-bold text-dark">UI Component</div>
+                    <div className="text-[10px] text-text-secondary">Compiled successfully</div>
                   </div>
                 </div>
-              </motion.div>
-            </TiltCard>
-          ))}
+             </motion.div>
+          </motion.div>
+
         </div>
       </div>
-
-      {/* Unique Scroll Down */}
-      <motion.div
-        animate={{ y: [0, 15, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
-      >
-        <div className="w-px h-24 bg-gradient-to-b from-primary/0 via-primary/50 to-primary/0" />
-        <span className="text-[10px] font-black uppercase tracking-[1em] text-primary/40 rotate-180 [writing-mode:vertical-lr]">Discover</span>
-      </motion.div>
     </section>
   );
 };

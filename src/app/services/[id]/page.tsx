@@ -3,9 +3,8 @@ import { notFound } from "next/navigation";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CTA } from "@/components/sections/CTA";
-import { Brain, Code2, Monitor, BarChart3, Smartphone, PenTool, CheckCircle2, Sparkles } from "lucide-react";
+import { Brain, Code2, Monitor, BarChart3, Smartphone, PenTool, CheckSquare2, Layers, Cpu } from "lucide-react";
 
-// Server component to generate static params for all services
 export async function generateStaticParams() {
   return SERVICES.map((service) => ({
     id: service.id,
@@ -13,91 +12,108 @@ export async function generateStaticParams() {
 }
 
 const iconMap = {
-  Brain,
-  Code2,
-  Monitor,
-  BarChart3,
-  Smartphone,
-  PenTool,
+  Brain, Code2, Monitor, BarChart3, Smartphone, PenTool,
 };
 
 export default function ServiceDetailPage({ params }: { params: { id: string } }) {
   const service = SERVICES.find((s) => s.id === params.id);
-
-  if (!service) {
-    notFound();
-  }
-
-  const Icon = iconMap[service.icon as keyof typeof iconMap] || Sparkles;
+  if (!service) notFound();
+  
+  const Icon = iconMap[service.icon as keyof typeof iconMap] || Layers;
 
   return (
     <main className="bg-white min-h-screen">
       <Navbar />
 
-      {/* INDIVIDUAL SERVICE HERO */}
-      <section className="relative pt-48 pb-24 overflow-hidden bg-surface border-b border-primary/5">
-        <div className="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none" />
-        
+      {/* INDIVIDUAL SERVICE HERO - ENTERPRISE STRUCTURED */}
+      <section className="relative pt-48 pb-24 overflow-hidden bg-surface tech-grid border-b border-border">
         <div className="container-custom relative z-10">
-          <div className="max-w-4xl space-y-8">
-            <div className="inline-flex items-center gap-4 px-6 py-3 rounded-full bg-white shadow-xl shadow-primary/5 border border-primary/10">
-               <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                 <Icon size={16} />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+             
+             {/* Text Content */}
+             <div className="max-w-2xl space-y-8">
+               <div className="inline-flex items-center gap-3 px-4 py-2 rounded-lg bg-white border border-border shadow-sm text-primary font-bold text-xs uppercase tracking-widest">
+                 Capabilities / {service.title}
                </div>
-               <span className="text-primary font-black uppercase tracking-widest text-xs">Capabilities / {service.title}</span>
-            </div>
-            
-            <h1 className="text-6xl md:text-8xl font-black text-dark tracking-tighter leading-[0.9] text-balance">
-              {service.title}
-            </h1>
-            
-            <p className="text-2xl text-text-secondary font-medium leading-relaxed max-w-2xl text-pretty">
-              {service.description}
-            </p>
+               
+               <h1 className="text-6xl md:text-8xl font-black text-dark tracking-tighter leading-[0.9] text-balance">
+                 {service.title}
+               </h1>
+               
+               <p className="text-xl text-text-secondary font-medium leading-relaxed text-pretty">
+                 {service.description}
+               </p>
+             </div>
+
+             {/* Concrete Icon/Visual Box */}
+             <div className="relative w-full aspect-square max-w-md mx-auto lg:ml-auto perspective-1000">
+                <div className="absolute inset-0 bg-white rounded-[3rem] border border-border shadow-2xl flex items-center justify-center rotate-y-[-10deg] rotate-x-[10deg] transform-style-3d">
+                   {/* Blueprint background inside the box */}
+                   <div className="absolute inset-0 rounded-[3rem] tech-grid opacity-50" />
+                   
+                   <div className="relative z-10 w-48 h-48 bg-surface border border-border rounded-3xl shadow-lg flex items-center justify-center text-primary">
+                     <Icon size={80} strokeWidth={1.5} />
+                   </div>
+
+                   {/* Floating Tech Badges */}
+                   <div className="absolute -left-8 top-1/4 bg-white border border-border px-4 py-2 rounded-lg shadow-xl font-bold text-dark text-sm flex items-center gap-2 transform translate-z-[50px]">
+                      <Cpu size={16} className="text-primary" /> Architecture
+                   </div>
+                   <div className="absolute -right-8 bottom-1/4 bg-white border border-border px-4 py-2 rounded-lg shadow-xl font-bold text-dark text-sm flex items-center gap-2 transform translate-z-[80px]">
+                      <Code2 size={16} className="text-accent" /> Implementation
+                   </div>
+                </div>
+             </div>
+
           </div>
         </div>
       </section>
 
-      {/* SERVICE DETAILS */}
-      <section className="section-padding bg-white">
+      {/* STRUCTURED SERVICE DETAILS */}
+      <section className="section-padding bg-white relative">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
             
-            {/* Left Content */}
+            {/* Left Content (Deliverables Checklist) */}
             <div className="lg:col-span-8 space-y-16">
                <div className="space-y-8">
-                  <h2 className="text-4xl font-black text-dark tracking-tighter">What We Deliver</h2>
+                  <h2 className="text-4xl font-black text-dark tracking-tighter flex items-center gap-4">
+                     <div className="w-8 h-8 rounded bg-primary text-white flex items-center justify-center">
+                        <Layers size={18} />
+                     </div>
+                     Deliverables & Scope
+                  </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {service.deliverables.map((item, i) => (
-                      <div key={i} className="bg-surface border border-primary/5 p-8 rounded-3xl flex items-start gap-4">
-                        <CheckCircle2 className="text-primary shrink-0 mt-1" size={24} />
-                        <span className="text-lg font-bold text-dark">{item}</span>
+                      <div key={i} className="bg-surface border border-border p-8 rounded-2xl flex items-start gap-4 hover:border-primary/50 transition-colors">
+                        <CheckSquare2 className="text-primary shrink-0 mt-1" size={24} />
+                        <span className="text-lg font-bold text-dark leading-snug">{item}</span>
                       </div>
                     ))}
                   </div>
                </div>
-
-               <div className="p-12 rounded-[3rem] bg-dark text-white relative overflow-hidden">
-                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 blur-[80px] rounded-full pointer-events-none" />
-                 <h3 className="text-3xl font-black mb-6 relative z-10">Ready to leverage {service.title}?</h3>
-                 <p className="text-lg text-white/70 mb-8 relative z-10 max-w-xl text-pretty">
-                   Our engineering team is ready to audit your current setup and build a roadmap for implementation.
-                 </p>
-                 <a href="/contact" className="inline-block px-10 py-4 bg-primary text-white font-bold rounded-2xl relative z-10 hover:bg-primary-light transition-colors shadow-xl shadow-primary/20">
-                   Schedule Consultation
-                 </a>
-               </div>
             </div>
 
-            {/* Right Sidebar (Tech Stack) */}
+            {/* Right Sidebar (Tech Stack Dashboard-style) */}
             <div className="lg:col-span-4">
-              <div className="sticky top-32 p-10 rounded-[3rem] bg-surface border border-primary/5 shadow-2xl shadow-primary/5">
-                <h3 className="text-2xl font-black text-dark mb-8 tracking-tight">Technology Stack</h3>
-                <div className="flex flex-col gap-4">
+              <div className="sticky top-32 p-8 rounded-[2rem] bg-white border border-border shadow-xl">
+                <div className="flex items-center gap-3 mb-8 pb-6 border-b border-border">
+                  <div className="w-3 h-3 rounded-full bg-red-400" />
+                  <div className="w-3 h-3 rounded-full bg-amber-400" />
+                  <div className="w-3 h-3 rounded-full bg-green-400" />
+                  <h3 className="text-lg font-black text-dark ml-2">Tech Stack.config</h3>
+                </div>
+                
+                <div className="space-y-3">
                   {service.tech.map((t, i) => (
-                    <div key={i} className="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-border">
-                      <div className="w-2 h-2 rounded-full bg-primary" />
-                      <span className="font-bold text-dark">{t}</span>
+                    <div key={i} className="group flex items-center justify-between bg-surface p-4 rounded-xl border border-border hover:border-primary transition-colors cursor-default">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-white border border-border flex items-center justify-center font-black text-dark text-xs">
+                          {t.charAt(0)}
+                        </div>
+                        <span className="font-bold text-dark">{t}</span>
+                      </div>
+                      <div className="w-2 h-2 rounded-full bg-border group-hover:bg-primary transition-colors" />
                     </div>
                   ))}
                 </div>
