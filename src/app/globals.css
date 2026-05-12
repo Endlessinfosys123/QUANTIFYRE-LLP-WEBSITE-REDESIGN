@@ -3,14 +3,14 @@
 @theme {
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   
-  --color-primary: #6366f1;
-  --color-primary-light: #818cf8;
-  --color-accent: #0ea5e9;
-  --color-dark: #0f172a;
-  --color-surface: #f8fafc;
-  --color-text-primary: #0f172a;
+  --color-primary: #22c55e;
+  --color-primary-light: #dcfce7;
+  --color-accent: #10b981;
+  --color-dark: #1e293b;
+  --color-surface: #f0fdf4;
+  --color-text-primary: #1e293b;
   --color-text-secondary: #64748b;
-  --color-border: #e2e8f0;
+  --color-border: #dcfce7;
 
   --spacing-section: 120px;
   --spacing-section-mobile: 80px;
@@ -18,9 +18,9 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #0f172a;
-  --primary: #6366f1;
-  --accent: #0ea5e9;
+  --foreground: #1e293b;
+  --primary: #22c55e;
+  --accent: #10b981;
 }
 
 body {

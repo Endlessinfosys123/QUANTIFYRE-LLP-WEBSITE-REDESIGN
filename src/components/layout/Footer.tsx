@@ -9,8 +9,8 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand Column */}
           <div className="space-y-6">
-            <Link href="/" className="text-2xl font-extrabold tracking-tighter text-primary">
-              QUANTIFYRE
+            <Link href="/" className="block">
+              <img src="/logo-footer.png" alt="QUANTIFYRE" className="h-12 w-auto object-contain" />
             </Link>
             <p className="text-text-secondary text-sm leading-relaxed max-w-xs">
               {COMPANY_DETAILS.tagline}. AI-Powered Digital Transformation & Software Engineering Firm helping high-growth enterprises scale faster.

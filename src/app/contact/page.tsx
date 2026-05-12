@@ -28,7 +28,7 @@ const COUNTRY_CODES = [
 function PaperPlaneSVG() {
   return (
     <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-8 h-8">
-      <path d="M4 24L44 6L32 44L24 28L4 24Z" fill="#6366f1" stroke="#3730a3" strokeWidth="2" strokeLinejoin="round"/>
+      <path d="M4 24L44 6L32 44L24 28L4 24Z" fill="var(--primary)" stroke="var(--color-dark)" strokeWidth="2" strokeLinejoin="round"/>
       <path d="M24 28L32 20" stroke="white" strokeWidth="2" strokeLinecap="round"/>
     </svg>
   );
@@ -228,7 +228,7 @@ export default function ContactPage() {
                         key={i}
                         className="absolute w-3 h-3 rounded-full pointer-events-none"
                         style={{
-                          background: ["#6366f1","#0ea5e9","#f59e0b","#ec4899","#22c55e"][i % 5],
+                          background: ["var(--primary)","#0ea5e9","#f59e0b","#ec4899","#22c55e"][i % 5],
                           left: `${8 + (i * 7) % 84}%`,
                           top: `${15 + (i * 9) % 70}%`,
                         }}

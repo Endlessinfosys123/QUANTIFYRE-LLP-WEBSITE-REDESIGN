@@ -40,13 +40,13 @@ function CartoonRocketLaunch() {
       transition={{ delay: 2.2, duration: 0.8, ease: [0.6, -0.05, 0.8, 1] }}
     >
       {/* Body */}
-      <path d="M40 8C40 8 24 24 24 48H56C56 24 40 8 40 8Z" fill="#6366f1" stroke="#3730a3" strokeWidth="2.5" strokeLinejoin="round"/>
-      <rect x="28" y="48" width="24" height="22" rx="3" fill="#818cf8" stroke="#3730a3" strokeWidth="2"/>
+      <path d="M40 8C40 8 24 24 24 48H56C56 24 40 8 40 8Z" fill="var(--primary)" stroke="var(--color-dark)" strokeWidth="2.5" strokeLinejoin="round"/>
+      <rect x="28" y="48" width="24" height="22" rx="3" fill="var(--color-accent)" stroke="var(--color-dark)" strokeWidth="2"/>
       {/* Fins */}
       <path d="M24 58L14 66L24 72V58Z" fill="#f59e0b" stroke="#b45309" strokeWidth="1.5" strokeLinejoin="round"/>
       <path d="M56 58L66 66L56 72V58Z" fill="#f59e0b" stroke="#b45309" strokeWidth="1.5" strokeLinejoin="round"/>
       {/* Window */}
-      <circle cx="40" cy="32" r="8" fill="white" stroke="#3730a3" strokeWidth="2"/>
+      <circle cx="40" cy="32" r="8" fill="white" stroke="var(--color-dark)" strokeWidth="2"/>
       <circle cx="40" cy="32" r="5" fill="#bae6fd"/>
       <circle cx="38" cy="30" r="1.5" fill="white" opacity="0.8"/>
       {/* Flame */}
@@ -174,30 +174,18 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
         {/* Logo + Rocket */}
         <div className="relative flex flex-col items-center">
           <motion.div
-            initial={{ scale: 0, rotate: -20 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.1 }}
-            className="flex items-center gap-5 mb-6"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 150, damping: 20, delay: 0.1 }}
+            className="flex flex-col items-center gap-6 mb-8"
           >
-            <QuantifyreLogoMark />
+            <img src="/logo.png" alt="QUANTIFYRE" className="h-20 md:h-28 w-auto object-contain" />
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.9, type: "spring" }}
-            >
-              <div className="text-5xl md:text-6xl font-black text-dark tracking-tighter leading-none">
-                QUANTIFYRE
-              </div>
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ delay: 1.2, duration: 0.5 }}
-                className="h-1 bg-gradient-to-r from-primary to-accent rounded-full mt-1"
-              />
-              <div className="text-sm font-black text-primary uppercase tracking-[0.4em] mt-2">
-                The Future, Faster
-              </div>
-            </motion.div>
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ delay: 1.0, duration: 0.8 }}
+              className="h-1.5 bg-gradient-to-r from-primary to-accent rounded-full"
+            />
           </motion.div>
 
           {/* Rocket */}

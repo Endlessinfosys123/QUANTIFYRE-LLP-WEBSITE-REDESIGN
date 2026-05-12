@@ -38,15 +38,15 @@ export const Navbar = () => {
         <Magnetic>
           <Link href="/" className="flex items-center gap-3 group">
             <motion.div
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/30 transition-transform"
+              whileHover={{ scale: 1.05 }}
+              className="relative"
             >
-              <span className="text-2xl font-black italic">Q</span>
+              <img 
+                src="/logo.png" 
+                alt="QUANTIFYRE" 
+                className="h-10 w-auto object-contain" 
+              />
             </motion.div>
-            <div className="flex flex-col">
-              <span className="text-xl font-black tracking-tighter text-dark leading-none">QUANTIFYRE</span>
-              <span className="text-[9px] font-black tracking-[0.3em] text-primary uppercase">Innovation</span>
-            </div>
           </Link>
         </Magnetic>
 
