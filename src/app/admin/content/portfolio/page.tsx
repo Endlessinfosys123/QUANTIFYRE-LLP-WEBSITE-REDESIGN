@@ -18,37 +18,6 @@ import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-// ... (sensors/etc)
-
-  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: 'thumbnail_url' | 'full_image_url') => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
-      const filePath = `projects/${fileName}`;
-
-      toast.loading("Uploading image...");
-
-      const { error: uploadError, data } = await supabase.storage
-        .from('portfolio-assets')
-        .upload(filePath, file);
-
-      if (uploadError) throw uploadError;
-
-      const { data: { publicUrl } } = supabase.storage
-        .from('portfolio-assets')
-        .getPublicUrl(filePath);
-
-      setEditForm({ ...editForm, [field]: publicUrl });
-      toast.dismiss();
-      toast.success("Image uploaded successfully");
-    } catch (error: any) {
-      toast.dismiss();
-      toast.error("Upload failed: " + error.message);
-    }
-  };
 import { 
   DndContext, 
   closestCenter,
