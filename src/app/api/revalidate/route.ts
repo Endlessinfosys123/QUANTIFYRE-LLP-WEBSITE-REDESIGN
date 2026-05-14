@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { revalidateTag } from 'next/cache'
+import { revalidateTag, revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 
 export async function POST(request: NextRequest) {
   const secret = request.nextUrl.searchParams.get('secret') || request.headers.get('x-revalidate-secret')
   const tag = request.nextUrl.searchParams.get('tag')
+  const path = request.nextUrl.searchParams.get('path')
 
   let authorized = false;
 
@@ -18,8 +19,6 @@ export async function POST(request: NextRequest) {
     const supabase = await createClient();
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {
-      // Basic check: is the user logged in? 
-      // In a real scenario, check for 'admin' role in profiles table
       authorized = true;
     }
   }
@@ -28,14 +27,23 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }
 
-  if (!tag) {
-    return NextResponse.json({ message: 'Missing tag' }, { status: 400 })
+  if (!tag && !path) {
+    return NextResponse.json({ message: 'Missing tag or path' }, { status: 400 })
   }
 
   try {
-    revalidateTag(tag)
+    if (tag) {
+      // Next.js 16 requires a second argument for revalidateTag
+      revalidateTag(tag, 'max')
+    }
+    
+    if (path) {
+      revalidatePath(path)
+    }
+
     return NextResponse.json({ revalidated: true, now: Date.now() })
   } catch (err) {
+    console.error('Revalidation error:', err)
     return NextResponse.json({ message: 'Error revalidating' }, { status: 500 })
   }
 }
