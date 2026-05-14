@@ -9,13 +9,14 @@ interface ButtonProps extends HTMLMotionProps<"button"> {
   variant?: "primary" | "secondary" | "outline" | "ghost";
   size?: "sm" | "md" | "lg";
   href?: string;
+  target?: string;
   className?: string;
   children: React.ReactNode;
 }
 
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = "primary", size = "md", href, className, children, ...props }, ref) => {
+  ({ variant = "primary", size = "md", href, target, className, children, ...props }, ref) => {
     const variants = {
       primary: "bg-primary text-white hover:bg-primary/90 shadow-md",
       secondary: "bg-accent text-white hover:bg-accent/90 shadow-md",
@@ -42,7 +43,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     if (href) {
       return (
-        <Link href={href} className={baseStyles}>
+        <Link href={href} target={target} className={baseStyles}>
           <Shimmer />
           <span className="relative z-10">{children}</span>
         </Link>
