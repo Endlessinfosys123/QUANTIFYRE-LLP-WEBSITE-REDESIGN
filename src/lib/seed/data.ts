@@ -262,7 +262,7 @@ export const SEED_DATA = {
       slug: 'school-erp',
       category: 'Education',
       description: 'Multi-school management platform with RBAC, ADO.NET, SQL Server TDE',
-      tags: ['.NET', 'SQL Server', 'React'],
+      technologies: ['.NET', 'SQL Server', 'React'],
       is_featured: true,
     },
     {
@@ -270,7 +270,7 @@ export const SEED_DATA = {
       slug: 'quantifyre-iris',
       category: 'Marketing',
       description: 'AI agency management dashboard with campaign, lead, and budget tracking',
-      tags: ['Next.js', 'OpenAI', 'Supabase'],
+      technologies: ['Next.js', 'OpenAI', 'Supabase'],
       is_featured: true,
     },
     {
@@ -278,7 +278,7 @@ export const SEED_DATA = {
       slug: 'revive-motors',
       category: 'Automotive',
       description: 'Django-based automotive management platform',
-      tags: ['Django', 'Python', 'PostgreSQL'],
+      technologies: ['Django', 'Python', 'PostgreSQL'],
       is_featured: true,
     },
   ],
