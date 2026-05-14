@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS public.services (
 -- ============================================
 CREATE TABLE IF NOT EXISTS public.process_steps (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-  step_number int NOT NULL,
+  step_number int UNIQUE NOT NULL,
   title text NOT NULL,
   description text,
   icon text,
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS public.process_steps (
 -- ============================================
 CREATE TABLE IF NOT EXISTS public.tech_stack (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-  name text NOT NULL,
+  name text UNIQUE NOT NULL,
   category text NOT NULL, -- 'Frontend'|'Backend'|'AI_ML'|'Mobile'|'Database'|'Cloud'
   logo_url text,
   show_in_ticker boolean DEFAULT true,
@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS public.blog_posts (
 -- ============================================
 CREATE TABLE IF NOT EXISTS public.faqs (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-  question text NOT NULL,
+  question text UNIQUE NOT NULL,
   answer text NOT NULL,
   order_index int DEFAULT 0,
   is_active boolean DEFAULT true,
@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS public.faqs (
 CREATE TABLE IF NOT EXISTS public.why_choose_us (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   icon text,
-  title text NOT NULL,
+  title text UNIQUE NOT NULL,
   description text,
   order_index int DEFAULT 0,
   is_active boolean DEFAULT true,
@@ -204,7 +204,7 @@ CREATE TABLE IF NOT EXISTS public.why_choose_us (
 CREATE TABLE IF NOT EXISTS public.about_stats (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   value text NOT NULL,
-  label text NOT NULL,
+  label text UNIQUE NOT NULL,
   suffix text,
   icon text,
   order_index int DEFAULT 0,
@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS public.about_mission_vision (
 -- ============================================
 CREATE TABLE IF NOT EXISTS public.cta_sections (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-  page text NOT NULL, -- 'global' | 'home' | 'about' | etc.
+  page text UNIQUE NOT NULL, -- 'global' | 'home' | 'about' | etc.
   section_label text,
   heading text,
   subtext text,
@@ -251,7 +251,7 @@ CREATE TABLE IF NOT EXISTS public.sister_brand (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   section_label text,
   heading text,
-  brand_name text,
+  brand_name text UNIQUE,
   description text,
   cta_label text,
   cta_link text,
@@ -282,7 +282,7 @@ CREATE TABLE IF NOT EXISTS public.contact_form_config (
 -- ============================================
 CREATE TABLE IF NOT EXISTS public.contact_form_fields (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-  field_key text NOT NULL,
+  field_key text UNIQUE NOT NULL,
   label text NOT NULL,
   placeholder text,
   field_type text NOT NULL, -- 'text'|'email'|'phone'|'textarea'|'checkbox_group'|'select'

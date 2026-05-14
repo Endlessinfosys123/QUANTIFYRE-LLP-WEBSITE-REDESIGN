@@ -32,7 +32,8 @@ export default function SeedManagerPage() {
         setStatus('success');
         toast.success("Database synchronized with seed data");
       } else {
-        setLogs(prev => [...prev, `❌ Error: ${data.error}`]);
+        const serverLogs = data.logs || [];
+        setLogs(prev => [...prev, ...serverLogs, `❌ Error: ${data.error}`]);
         setStatus('error');
         toast.error("Seeding protocol failed");
       }

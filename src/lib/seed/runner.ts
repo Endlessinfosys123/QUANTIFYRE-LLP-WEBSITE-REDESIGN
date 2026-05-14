@@ -19,6 +19,11 @@ export async function runSeed() {
       if (table === 'about_mission_vision') conflictTarget = 'type';
       if (table === 'blog_posts') conflictTarget = 'slug';
       if (table === 'portfolio_projects') conflictTarget = 'slug';
+      if (table === 'process_steps') conflictTarget = 'step_number';
+      if (table === 'faqs') conflictTarget = 'question';
+      if (table === 'tech_stack') conflictTarget = 'name';
+      if (table === 'cta_sections') conflictTarget = 'page';
+      if (table === 'contact_form_fields') conflictTarget = 'field_key';
 
       const { error } = await (supabase.from(table as any) as any)
         .upsert(SEED_DATA[table], { onConflict: conflictTarget });
