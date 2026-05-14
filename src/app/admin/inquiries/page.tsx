@@ -8,7 +8,7 @@ import { AdminButton } from "@/components/admin/ui/AdminButton";
 import { 
   Mail, Search, Archive, Trash2, 
   CheckCircle2, Clock, User, Phone,
-  MessageSquare, ArrowLeft, Send
+  MessageSquare, ArrowLeft, Send, Terminal
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
