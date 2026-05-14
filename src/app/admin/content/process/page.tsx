@@ -281,13 +281,13 @@ function SortableStepRow({ step, onEdit, onDelete }: any) {
       <AdminTableCell>
         <div className="flex items-center justify-end gap-2">
           <button 
-            onClick={() => handleEdit(step)}
+            onClick={() => onEdit(step)}
             className="p-2 text-[#A0A0B0] hover:text-[#6C3FEF] hover:bg-[#6C3FEF10] rounded-lg transition-all"
           >
             <Edit size={16} />
           </button>
           <button 
-            onClick={() => handleDelete(step.id)}
+            onClick={() => onDelete(step.id)}
             className="p-2 text-[#3F3F46] hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
           >
             <Trash2 size={16} />
