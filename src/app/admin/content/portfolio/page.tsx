@@ -10,12 +10,45 @@ import { AdminBadge } from "@/components/admin/ui/AdminBadge";
 import { 
   Plus, Edit, Trash2, Save, 
   ArrowLeft, ExternalLink, Briefcase,
-  Layers, Calendar, User, Globe, GripVertical
+  Layers, Calendar, User, Globe, GripVertical,
+  Upload, Image as ImageIcon
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+
+// ... (sensors/etc)
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: 'thumbnail_url' | 'full_image_url') => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `projects/${fileName}`;
+
+      toast.loading("Uploading image...");
+
+      const { error: uploadError, data } = await supabase.storage
+        .from('portfolio-assets')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('portfolio-assets')
+        .getPublicUrl(filePath);
+
+      setEditForm({ ...editForm, [field]: publicUrl });
+      toast.dismiss();
+      toast.success("Image uploaded successfully");
+    } catch (error: any) {
+      toast.dismiss();
+      toast.error("Upload failed: " + error.message);
+    }
+  };
 import { 
   DndContext, 
   closestCenter,
@@ -41,6 +74,36 @@ export default function PortfolioManagerPage() {
   const [saving, setSaving] = useState(false);
 
   const supabase = createClient();
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: 'thumbnail_url' | 'full_image_url') => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `projects/${fileName}`;
+
+      toast.loading("Uploading image...");
+
+      const { error: uploadError } = await supabase.storage
+        .from('portfolio-assets')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('portfolio-assets')
+        .getPublicUrl(filePath);
+
+      setEditForm({ ...editForm, [field]: publicUrl });
+      toast.dismiss();
+      toast.success("Image uploaded successfully");
+    } catch (error: any) {
+      toast.dismiss();
+      toast.error("Upload failed: " + error.message);
+    }
+  };
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -216,25 +279,61 @@ export default function PortfolioManagerPage() {
           </div>
 
           <div className="space-y-8">
+          <div className="space-y-8">
             <AdminCard title="Visual Assets" subtitle="Project screenshots">
-              <div className="space-y-6">
-                <AdminInput 
-                  label="Thumbnail URL" 
-                  value={editForm.thumbnail_url} 
-                  onChange={e => setEditForm({ ...editForm, thumbnail_url: e.target.value })} 
-                />
-                {editForm.thumbnail_url && (
-                  <div className="aspect-video rounded-xl border border-[#1E1E2E] overflow-hidden bg-[#0A0A0F]">
-                    <img src={editForm.thumbnail_url} alt="" className="w-full h-full object-cover" />
+              <div className="space-y-8">
+                {/* Thumbnail Section */}
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-[#A0A0B0]">Thumbnail (Mockup)</label>
+                    <span className="text-[9px] font-bold text-[#6C3FEF] bg-[#6C3FEF10] px-2 py-0.5 rounded">1600 x 1000 px</span>
                   </div>
-                )}
-                <AdminInput 
-                  label="Full Image URL" 
-                  value={editForm.full_image_url} 
-                  onChange={e => setEditForm({ ...editForm, full_image_url: e.target.value })} 
-                />
+                  <div className="flex gap-2">
+                    <div className="flex-1">
+                      <AdminInput 
+                        placeholder="Image URL"
+                        value={editForm.thumbnail_url} 
+                        onChange={e => setEditForm({ ...editForm, thumbnail_url: e.target.value })} 
+                      />
+                    </div>
+                    <label className="cursor-pointer bg-[#1E1E2E] hover:bg-[#2A2A3E] text-white p-3 rounded-xl transition-colors flex items-center justify-center">
+                      <Upload size={18} />
+                      <input type="file" className="hidden" accept="image/*" onChange={(e) => handleUpload(e, 'thumbnail_url')} />
+                    </label>
+                  </div>
+                  {editForm.thumbnail_url && (
+                    <div className="aspect-[16/10] rounded-xl border border-[#1E1E2E] overflow-hidden bg-[#0A0A0F] group relative">
+                      <img src={editForm.thumbnail_url} alt="" className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <ImageIcon className="text-white/50" size={32} />
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Full Image Section */}
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-[#A0A0B0]">Full Page Image</label>
+                    <span className="text-[9px] font-bold text-[#6C3FEF] bg-[#6C3FEF10] px-2 py-0.5 rounded">1920 x 1080 px</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <div className="flex-1">
+                      <AdminInput 
+                        placeholder="Image URL"
+                        value={editForm.full_image_url} 
+                        onChange={e => setEditForm({ ...editForm, full_image_url: e.target.value })} 
+                      />
+                    </div>
+                    <label className="cursor-pointer bg-[#1E1E2E] hover:bg-[#2A2A3E] text-white p-3 rounded-xl transition-colors flex items-center justify-center">
+                      <Upload size={18} />
+                      <input type="file" className="hidden" accept="image/*" onChange={(e) => handleUpload(e, 'full_image_url')} />
+                    </label>
+                  </div>
+                </div>
               </div>
             </AdminCard>
+          </div>
           </div>
         </div>
       </div>
