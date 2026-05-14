@@ -8,29 +8,52 @@ import { Shield, AlertCircle, LogIn, ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 
 export default function LoginPage() {
+  const [mode, setMode] = useState<"login" | "register">("login");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const router = useRouter();
   const supabase = createClient();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
 
     try {
-      const { error: authError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      if (mode === "login") {
+        const { error: authError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
 
-      if (authError) {
-        setError(authError.message);
+        if (authError) {
+          setError(authError.message);
+        } else {
+          router.push("/admin/dashboard");
+          router.refresh();
+        }
       } else {
-        router.push("/admin/dashboard");
-        router.refresh();
+        // Registration Logic
+        const { error: signUpError } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              full_name: fullName,
+              role: 'admin' // Default to admin for now, or use a separate table
+            }
+          }
+        });
+
+        if (signUpError) {
+          setError(signUpError.message);
+        } else {
+          setError("Registration successful! Please check your email for verification if enabled, or sign in now.");
+          setMode("login");
+        }
       }
     } catch (err) {
       setError("An unexpected error occurred.");
@@ -71,11 +94,33 @@ export default function LoginPage() {
         <div className="bg-[#13131F] border border-[#1E1E2E] rounded-3xl overflow-hidden shadow-2xl shadow-black/50">
           <div className="p-8">
             <div className="space-y-1 mb-8">
-              <h2 className="text-xl font-black text-white">System Access</h2>
-              <p className="text-sm text-[#A0A0B0] font-medium">Authentication required to access the AI core.</p>
+              <h2 className="text-xl font-black text-white">
+                {mode === "login" ? "System Access" : "Create Account"}
+              </h2>
+              <p className="text-sm text-[#A0A0B0] font-medium">
+                {mode === "login" 
+                  ? "Authentication required to access the AI core." 
+                  : "Register a new identity to manage the system."}
+              </p>
             </div>
 
-            <form onSubmit={handleLogin} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {mode === "register" && (
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-[#A0A0B0] ml-1">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="John Doe"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    className="w-full h-12 bg-[#0A0A0F] border border-[#1E1E2E] rounded-xl px-4 text-sm focus:outline-none focus:border-[#6C3FEF] transition-colors placeholder:text-[#3F3F46]"
+                    required
+                  />
+                </div>
+              )}
+
               <div className="space-y-2">
                 <label className="text-[10px] font-black uppercase tracking-widest text-[#A0A0B0] ml-1">
                   Email Identity
@@ -108,7 +153,11 @@ export default function LoginPage() {
                 <motion.div 
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
-                  className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 flex items-start gap-3 text-red-400"
+                  className={`p-3 rounded-xl border flex items-start gap-3 ${
+                    error.includes("successful") 
+                      ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400" 
+                      : "bg-red-500/10 border-red-500/20 text-red-400"
+                  }`}
                 >
                   <AlertCircle size={16} className="shrink-0 mt-0.5" />
                   <p className="text-xs font-bold">{error}</p>
@@ -124,10 +173,23 @@ export default function LoginPage() {
                   <Loader2 size={18} className="animate-spin" />
                 ) : (
                   <>
-                    Sign In to Dashboard
+                    {mode === "login" ? "Sign In to Dashboard" : "Create Identity"}
                     <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   </>
                 )}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setMode(mode === "login" ? "register" : "login");
+                  setError("");
+                }}
+                className="w-full text-center text-[10px] font-black text-[#A0A0B0] uppercase tracking-widest hover:text-[#6C3FEF] transition-colors"
+              >
+                {mode === "login" 
+                  ? "Don't have an account? Register identity" 
+                  : "Already have an identity? Sign in"}
               </button>
             </form>
           </div>
