@@ -50,16 +50,14 @@ export default function PortfolioManagerPage() {
 
     try {
       const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}-${Math.floor(Math.random() * 1000)}.${fileExt}`;
+      const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `projects/${fileName}`;
 
       toast.loading("Uploading image...");
 
       const { error: uploadError } = await supabase.storage
         .from('portfolio-assets')
-        .upload(filePath, file, {
-          upsert: true
-        });
+        .upload(filePath, file);
 
       if (uploadError) throw uploadError;
 
@@ -71,9 +69,8 @@ export default function PortfolioManagerPage() {
       toast.dismiss();
       toast.success("Image uploaded successfully");
     } catch (error: any) {
-      console.error("Upload error details:", error);
       toast.dismiss();
-      toast.error("Upload failed: " + (error.message || "Unknown error"));
+      toast.error("Upload failed: " + error.message);
     }
   };
 
