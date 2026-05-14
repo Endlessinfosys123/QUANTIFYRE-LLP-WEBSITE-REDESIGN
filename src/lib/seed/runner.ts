@@ -24,6 +24,10 @@ export async function runSeed() {
       if (table === 'tech_stack') conflictTarget = 'name';
       if (table === 'cta_sections') conflictTarget = 'page';
       if (table === 'contact_form_fields') conflictTarget = 'field_key';
+      if (table === 'about_stats') conflictTarget = 'label';
+      if (table === 'why_choose_us') conflictTarget = 'title';
+      if (table === 'sister_brand') conflictTarget = 'brand_name';
+      if (table === 'nav_items') conflictTarget = 'label';
 
       const { error } = await (supabase.from(table as any) as any)
         .upsert(SEED_DATA[table], { onConflict: conflictTarget });

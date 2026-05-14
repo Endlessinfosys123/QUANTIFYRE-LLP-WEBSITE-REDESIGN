@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS public.site_config (
 -- ============================================
 CREATE TABLE IF NOT EXISTS public.nav_items (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-  label text NOT NULL,
+  label text UNIQUE NOT NULL,
   href text NOT NULL,
   order_index int DEFAULT 0,
   is_cta boolean DEFAULT false,
