@@ -1,49 +1,47 @@
--- QUANTIFYRE LLP — DATABASE ALIGNMENT & DE-DUPLICATION v2.3
--- This script fixes the MIN(uuid) issue and ensures all constraints exist.
+-- QUANTIFYRE LLP — DATABASE ALIGNMENT & DE-DUPLICATION v2.4
+-- This script fixes the missing 'updated_at' column errors and ensures schema integrity.
 
 DO $$ 
 BEGIN 
-    -- 1. Patch missing columns
+    -- 1. Patch missing columns across various tables
+    
+    -- [services]
     IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='services' AND column_name='detail_page_badge') THEN
         ALTER TABLE public.services ADD COLUMN detail_page_badge text;
     END IF;
+
+    -- [testimonials]
     IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='testimonials' AND column_name='author_company') THEN
         ALTER TABLE public.testimonials ADD COLUMN author_company text;
     END IF;
+
+    -- [blog_posts]
     IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='blog_posts' AND column_name='is_published') THEN
         ALTER TABLE public.blog_posts ADD COLUMN is_published boolean DEFAULT false;
     END IF;
 
-    -- 2. Robust De-duplication using ROW_NUMBER()
-    -- This keeps the most recent record for each duplicate set
+    -- [faqs] (Ensuring updated_at exists)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='faqs' AND column_name='updated_at') THEN
+        ALTER TABLE public.faqs ADD COLUMN updated_at timestamptz DEFAULT now();
+    END IF;
 
-    -- nav_items
-    DELETE FROM public.nav_items WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY label ORDER BY updated_at DESC) as row_num FROM public.nav_items) t WHERE row_num > 1);
-    
-    -- process_steps
-    DELETE FROM public.process_steps WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY step_number ORDER BY updated_at DESC) as row_num FROM public.process_steps) t WHERE row_num > 1);
-    
-    -- faqs
-    DELETE FROM public.faqs WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY question ORDER BY updated_at DESC) as row_num FROM public.faqs) t WHERE row_num > 1);
-    
-    -- tech_stack
-    DELETE FROM public.tech_stack WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY name ORDER BY updated_at DESC) as row_num FROM public.tech_stack) t WHERE row_num > 1);
-    
-    -- cta_sections
-    DELETE FROM public.cta_sections WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY page ORDER BY updated_at DESC) as row_num FROM public.cta_sections) t WHERE row_num > 1);
-    
-    -- contact_form_fields
-    DELETE FROM public.contact_form_fields WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY field_key ORDER BY updated_at DESC) as row_num FROM public.contact_form_fields) t WHERE row_num > 1);
-    
-    -- about_stats
-    DELETE FROM public.about_stats WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY label ORDER BY updated_at DESC) as row_num FROM public.about_stats) t WHERE row_num > 1);
-    
-    -- why_choose_us
-    DELETE FROM public.why_choose_us WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY title ORDER BY updated_at DESC) as row_num FROM public.why_choose_us) t WHERE row_num > 1);
-    
-    -- sister_brand
-    DELETE FROM public.sister_brand WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY brand_name ORDER BY updated_at DESC) as row_num FROM public.sister_brand) t WHERE row_num > 1);
+    -- [tech_stack] (Ensuring updated_at exists)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='tech_stack' AND column_name='updated_at') THEN
+        ALTER TABLE public.tech_stack ADD COLUMN updated_at timestamptz DEFAULT now();
+    END IF;
 
+    -- 2. Cleanup Duplicates
+    -- We use 'ORDER BY id' to avoid issues with missing timestamp columns
+
+    DELETE FROM public.nav_items WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY label ORDER BY id) as row_num FROM public.nav_items) t WHERE row_num > 1);
+    DELETE FROM public.process_steps WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY step_number ORDER BY id) as row_num FROM public.process_steps) t WHERE row_num > 1);
+    DELETE FROM public.faqs WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY question ORDER BY id) as row_num FROM public.faqs) t WHERE row_num > 1);
+    DELETE FROM public.tech_stack WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY name ORDER BY id) as row_num FROM public.tech_stack) t WHERE row_num > 1);
+    DELETE FROM public.cta_sections WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY page ORDER BY id) as row_num FROM public.cta_sections) t WHERE row_num > 1);
+    DELETE FROM public.contact_form_fields WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY field_key ORDER BY id) as row_num FROM public.contact_form_fields) t WHERE row_num > 1);
+    DELETE FROM public.about_stats WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY label ORDER BY id) as row_num FROM public.about_stats) t WHERE row_num > 1);
+    DELETE FROM public.why_choose_us WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY title ORDER BY id) as row_num FROM public.why_choose_us) t WHERE row_num > 1);
+    DELETE FROM public.sister_brand WHERE id IN (SELECT id FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY brand_name ORDER BY id) as row_num FROM public.sister_brand) t WHERE row_num > 1);
 
     -- 3. Add UNIQUE Constraints
     IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'nav_items_label_key') THEN
