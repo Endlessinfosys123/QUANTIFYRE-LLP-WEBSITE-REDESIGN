@@ -391,52 +391,135 @@ ALTER TABLE public.portfolio_page_config ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.admin_activity_log ENABLE ROW LEVEL SECURITY;
 
 -- Public read access for most tables
+DROP POLICY IF EXISTS "Public read site_config" ON public.site_config;
 CREATE POLICY "Public read site_config" ON public.site_config FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read nav_items" ON public.nav_items;
 CREATE POLICY "Public read nav_items" ON public.nav_items FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read footer_links" ON public.footer_links;
 CREATE POLICY "Public read footer_links" ON public.footer_links FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read hero_sections" ON public.hero_sections;
 CREATE POLICY "Public read hero_sections" ON public.hero_sections FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read services" ON public.services;
 CREATE POLICY "Public read services" ON public.services FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read process_steps" ON public.process_steps;
 CREATE POLICY "Public read process_steps" ON public.process_steps FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read tech_stack" ON public.tech_stack;
 CREATE POLICY "Public read tech_stack" ON public.tech_stack FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read portfolio_projects" ON public.portfolio_projects;
 CREATE POLICY "Public read portfolio_projects" ON public.portfolio_projects FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read testimonials" ON public.testimonials;
 CREATE POLICY "Public read testimonials" ON public.testimonials FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read blog_posts" ON public.blog_posts;
 CREATE POLICY "Public read blog_posts" ON public.blog_posts FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read faqs" ON public.faqs;
 CREATE POLICY "Public read faqs" ON public.faqs FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read why_choose_us" ON public.why_choose_us;
 CREATE POLICY "Public read why_choose_us" ON public.why_choose_us FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read about_stats" ON public.about_stats;
 CREATE POLICY "Public read about_stats" ON public.about_stats FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read about_mission_vision" ON public.about_mission_vision;
 CREATE POLICY "Public read about_mission_vision" ON public.about_mission_vision FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read cta_sections" ON public.cta_sections;
 CREATE POLICY "Public read cta_sections" ON public.cta_sections FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read sister_brand" ON public.sister_brand;
 CREATE POLICY "Public read sister_brand" ON public.sister_brand FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read contact_form_config" ON public.contact_form_config;
 CREATE POLICY "Public read contact_form_config" ON public.contact_form_config FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read contact_form_fields" ON public.contact_form_fields;
 CREATE POLICY "Public read contact_form_fields" ON public.contact_form_fields FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read blog_page_config" ON public.blog_page_config;
 CREATE POLICY "Public read blog_page_config" ON public.blog_page_config FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Public read portfolio_page_config" ON public.portfolio_page_config;
 CREATE POLICY "Public read portfolio_page_config" ON public.portfolio_page_config FOR SELECT TO anon, authenticated USING (true);
 
 -- Contact Inquiries: Anon can insert, Admin can do all
+DROP POLICY IF EXISTS "Anon insert inquiries" ON public.contact_inquiries;
 CREATE POLICY "Anon insert inquiries" ON public.contact_inquiries FOR INSERT TO anon WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Admin full access inquiries" ON public.contact_inquiries;
 CREATE POLICY "Admin full access inquiries" ON public.contact_inquiries FOR ALL TO authenticated USING (true);
 
 -- Admin full access for all tables
+DROP POLICY IF EXISTS "Admin full access site_config" ON public.site_config;
 CREATE POLICY "Admin full access site_config" ON public.site_config FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access nav_items" ON public.nav_items;
 CREATE POLICY "Admin full access nav_items" ON public.nav_items FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access footer_links" ON public.footer_links;
 CREATE POLICY "Admin full access footer_links" ON public.footer_links FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access hero_sections" ON public.hero_sections;
 CREATE POLICY "Admin full access hero_sections" ON public.hero_sections FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access services" ON public.services;
 CREATE POLICY "Admin full access services" ON public.services FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access process_steps" ON public.process_steps;
 CREATE POLICY "Admin full access process_steps" ON public.process_steps FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access tech_stack" ON public.tech_stack;
 CREATE POLICY "Admin full access tech_stack" ON public.tech_stack FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access portfolio_projects" ON public.portfolio_projects;
 CREATE POLICY "Admin full access portfolio_projects" ON public.portfolio_projects FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access testimonials" ON public.testimonials;
 CREATE POLICY "Admin full access testimonials" ON public.testimonials FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access blog_posts" ON public.blog_posts;
 CREATE POLICY "Admin full access blog_posts" ON public.blog_posts FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access faqs" ON public.faqs;
 CREATE POLICY "Admin full access faqs" ON public.faqs FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access why_choose_us" ON public.why_choose_us;
 CREATE POLICY "Admin full access why_choose_us" ON public.why_choose_us FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access about_stats" ON public.about_stats;
 CREATE POLICY "Admin full access about_stats" ON public.about_stats FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access about_mission_vision" ON public.about_mission_vision;
 CREATE POLICY "Admin full access about_mission_vision" ON public.about_mission_vision FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access cta_sections" ON public.cta_sections;
 CREATE POLICY "Admin full access cta_sections" ON public.cta_sections FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access sister_brand" ON public.sister_brand;
 CREATE POLICY "Admin full access sister_brand" ON public.sister_brand FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access contact_form_config" ON public.contact_form_config;
 CREATE POLICY "Admin full access contact_form_config" ON public.contact_form_config FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access contact_form_fields" ON public.contact_form_fields;
 CREATE POLICY "Admin full access contact_form_fields" ON public.contact_form_fields FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access blog_page_config" ON public.blog_page_config;
 CREATE POLICY "Admin full access blog_page_config" ON public.blog_page_config FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access portfolio_page_config" ON public.portfolio_page_config;
 CREATE POLICY "Admin full access portfolio_page_config" ON public.portfolio_page_config FOR ALL TO authenticated USING (true);
+
+DROP POLICY IF EXISTS "Admin full access admin_activity_log" ON public.admin_activity_log;
 CREATE POLICY "Admin full access admin_activity_log" ON public.admin_activity_log FOR ALL TO authenticated USING (true);
 
 -- ============================================
