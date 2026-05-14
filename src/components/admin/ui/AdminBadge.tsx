@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 interface AdminBadgeProps {
   children: React.ReactNode;
-  variant?: "success" | "warning" | "error" | "info" | "neutral" | "primary";
+  variant?: "success" | "warning" | "error" | "info" | "neutral" | "primary" | "secondary";
   className?: string;
 }
 
@@ -15,6 +15,7 @@ export const AdminBadge = ({ children, variant = "neutral", className }: AdminBa
     info: "bg-blue-500/10 text-blue-500 border-blue-500/20",
     neutral: "bg-[#1E1E2E] text-[#A0A0B0] border-[#3F3F46]",
     primary: "bg-[#6C3FEF]/10 text-[#6C3FEF] border-[#6C3FEF]/20",
+    secondary: "bg-[#13131F] text-[#3F3F46] border-[#1E1E2E]",
   };
 
   return (
