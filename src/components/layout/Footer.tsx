@@ -1,114 +1,138 @@
-import Link from "next/link";
-import { Mail, Phone, MapPin, Instagram, Linkedin, X, ArrowRight } from "lucide-react";
-import { COMPANY_DETAILS, NAV_LINKS, SERVICES } from "@/lib/constants";
+"use client";
 
-export const Footer = () => {
+import React from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { 
+  Instagram, Linkedin, Twitter, 
+  Mail, Phone, MapPin, ArrowUpRight 
+} from "lucide-react";
+
+interface FooterProps {
+  links: any[];
+  config: Record<string, string>;
+}
+
+export const Footer = ({ links, config }: FooterProps) => {
+  const currentYear = new Date().getFullYear();
+
+  const socialLinks = [
+    { icon: Linkedin, href: config.linkedin_url, label: "LinkedIn" },
+    { icon: Instagram, href: config.instagram_url, label: "Instagram" },
+    { icon: Twitter, href: config.twitter_url, label: "Twitter" },
+  ].filter(link => link.href && link.href !== "#");
+
+  const columns = {
+    company: links.filter(l => l.column_name === 'company'),
+    services: links.filter(l => l.column_name === 'services'),
+    legal: links.filter(l => l.column_name === 'legal'),
+  };
+
   return (
-    <footer className="bg-white border-t border-border pt-20 pb-10">
-      <div className="container-custom">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          {/* Brand Column */}
-          <div className="space-y-6">
-            <Link href="/" className="block">
-              <img src="/logo-footer.png" alt="QUANTIFYRE" className="h-12 w-auto object-contain" />
+    <footer className="bg-dark text-white pt-24 pb-12 relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+      
+      <div className="container-custom relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-20">
+          {/* Brand Info */}
+          <div className="lg:col-span-4 space-y-8">
+            <Link href="/" className="inline-block">
+              <img src={config.logo_footer || "/logo-footer.png"} alt="QUANTIFYRE" className="h-12 w-auto" />
             </Link>
-            <p className="text-text-secondary text-sm leading-relaxed max-w-xs">
-              {COMPANY_DETAILS.tagline}. AI-Powered Digital Transformation & Software Engineering Firm helping high-growth enterprises scale faster.
+            <p className="text-white/60 text-lg leading-relaxed max-w-sm">
+              {config.footer_description || "AI-Powered Digital Transformation & Software Engineering Firm."}
             </p>
             <div className="flex items-center gap-4">
-              <Link href={COMPANY_DETAILS.linkedin} className="w-10 h-10 rounded-full bg-surface flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300 shadow-sm">
-                <Linkedin size={18} />
-              </Link>
-              <Link href={COMPANY_DETAILS.instagram} className="w-10 h-10 rounded-full bg-surface flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300 shadow-sm">
-                <Instagram size={18} />
-              </Link>
-              <Link href="#" className="w-10 h-10 rounded-full bg-surface flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300 shadow-sm">
-                <X size={18} />
-              </Link>
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary hover:border-primary transition-all duration-300 group"
+                >
+                  <social.icon size={20} className="group-hover:scale-110 transition-transform" />
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-dark font-bold mb-6">Company</h4>
+          {/* Links Columns */}
+          <div className="lg:col-span-2 space-y-8">
+            <h4 className="text-sm font-black uppercase tracking-widest text-primary">Company</h4>
             <ul className="space-y-4">
-              {NAV_LINKS.map((link) => (
-                <li key={link.name}>
-                  <Link href={link.href} className="text-text-secondary hover:text-primary text-sm transition-colors flex items-center gap-2 group">
-                    <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link href="#" className="text-text-secondary hover:text-primary text-sm transition-colors flex items-center gap-2 group">
-                  <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-text-secondary hover:text-primary text-sm transition-colors flex items-center gap-2 group">
-                  <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
-                  Privacy Policy
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Services Column */}
-          <div>
-            <h4 className="text-dark font-bold mb-6">Services</h4>
-            <ul className="space-y-4">
-              {SERVICES.map((service) => (
-                <li key={service.id}>
-                  <Link href="/services" className="text-text-secondary hover:text-primary text-sm transition-colors flex items-center gap-2 group">
-                    <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
-                    {service.title}
+              {columns.company.map((link: any) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="text-white/50 hover:text-white transition-colors flex items-center gap-2 group">
+                    {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact Column */}
-          <div>
-            <h4 className="text-dark font-bold mb-6">Contact</h4>
+          <div className="lg:col-span-3 space-y-8">
+            <h4 className="text-sm font-black uppercase tracking-widest text-primary">Capabilities</h4>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <Mail size={18} className="text-primary shrink-0 mt-0.5" />
-                <a href={`mailto:${COMPANY_DETAILS.email}`} className="text-text-secondary hover:text-primary text-sm transition-colors break-all">
-                  {COMPANY_DETAILS.email}
-                </a>
+              {/* Fallback or dynamic services from footer_links */}
+              {columns.services.map((link: any) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="text-white/50 hover:text-white transition-colors flex items-center gap-2 group">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div className="lg:col-span-3 space-y-8">
+            <h4 className="text-sm font-black uppercase tracking-widest text-primary">Contact</h4>
+            <ul className="space-y-6">
+              <li className="flex gap-4">
+                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                  <Mail size={18} className="text-primary" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-white/40 mb-1">Email Us</p>
+                  <a href={`mailto:${config.email}`} className="text-white font-bold hover:text-primary transition-colors">
+                    {config.email}
+                  </a>
+                </div>
               </li>
-              <li className="flex items-start gap-3">
-                <Phone size={18} className="text-primary shrink-0 mt-0.5" />
-                <a href={`tel:${COMPANY_DETAILS.phone}`} className="text-text-secondary hover:text-primary text-sm transition-colors">
-                  {COMPANY_DETAILS.phone}
-                </a>
+              <li className="flex gap-4">
+                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                  <Phone size={18} className="text-primary" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-white/40 mb-1">Call Us</p>
+                  <a href={`tel:${config.phone_primary}`} className="text-white font-bold hover:text-primary transition-colors">
+                    {config.phone_primary}
+                  </a>
+                </div>
               </li>
-              <li className="flex items-start gap-3">
-                <MapPin size={18} className="text-primary shrink-0 mt-0.5" />
-                <span className="text-text-secondary text-sm">
-                  {COMPANY_DETAILS.address}
-                </span>
-              </li>
-              <li className="pt-2">
-                <span className="text-xs font-bold text-dark uppercase tracking-widest block mb-2">International Presence</span>
-                <p className="text-text-secondary text-[11px] leading-relaxed uppercase tracking-tighter">
-                  🇦🇪 Dubai | 🇬🇧 London | 🇨🇦 Canada | 🇦🇺 Australia
-                </p>
+              <li className="flex gap-4">
+                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                  <MapPin size={18} className="text-primary" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-white/40 mb-1">Our Base</p>
+                  <p className="text-white font-bold">{config.address_short || "Gandhinagar, India"}</p>
+                </div>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
-          <p className="text-text-secondary text-xs">
-            © 2025 {COMPANY_DETAILS.name} (LLPIN: {COMPANY_DETAILS.llpin}). All Rights Reserved.
+        {/* Bottom Bar */}
+        <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+          <p className="text-white/40 text-sm font-medium">
+            {config.copyright_text || `© ${currentYear} QUANTIFYRE LLP. All Rights Reserved.`}
           </p>
-          <p className="text-primary font-bold text-sm tracking-widest uppercase italic">
-            "{COMPANY_DETAILS.tagline}"
-          </p>
+          <div className="flex items-center gap-8">
+            <Link href="/privacy" className="text-white/40 text-sm hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="text-white/40 text-sm hover:text-white transition-colors">Terms of Service</Link>
+          </div>
         </div>
       </div>
     </footer>

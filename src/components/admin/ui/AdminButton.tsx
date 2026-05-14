@@ -1,60 +1,56 @@
 import React from "react";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
+import Link from "next/link";
 
 interface AdminButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "danger" | "outline" | "ghost";
+  variant?: "primary" | "secondary" | "outline" | "danger" | "ghost";
   size?: "sm" | "md" | "lg";
   isLoading?: boolean;
   icon?: React.ReactNode;
   href?: string;
-  target?: string;
 }
 
 export const AdminButton = ({
   children,
-  className,
   variant = "primary",
   size = "md",
-  isLoading = false,
+  isLoading,
   icon,
-  disabled,
   href,
-  target,
+  className,
+  disabled,
   ...props
 }: AdminButtonProps) => {
-  const variants = {
-    primary: "bg-[#6C3FEF] text-white hover:bg-[#5a32d4] shadow-sm",
-    secondary: "bg-[#F3F0FF] text-[#6C3FEF] hover:bg-[#e9e4ff]",
-    danger: "bg-[#EF4444] text-white hover:bg-[#dc2626]",
-    outline: "border-2 border-[#6C3FEF] text-[#6C3FEF] bg-transparent hover:bg-[#F3F0FF]",
-    ghost: "text-[#6B7280] hover:bg-gray-100",
+  const sizeStyles = {
+    sm: "px-4 py-1.5 text-[10px]",
+    md: "px-6 py-2.5 text-xs",
+    lg: "px-8 py-3.5 text-sm",
   };
 
-  const sizes = {
-    sm: "px-3 py-1.5 text-xs",
-    md: "px-5 py-2.5 text-sm",
-    lg: "px-8 py-4 text-base",
-  };
-
-  const commonClasses = cn(
-    "inline-flex items-center justify-center gap-2 font-bold rounded-lg transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none",
-    variants[variant],
-    sizes[size],
-    className
+  const baseStyles = cn(
+    "inline-flex items-center justify-center gap-2 rounded-xl font-black uppercase tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed",
+    sizeStyles[size]
   );
+  
+  const variants = {
+    primary: "bg-[#6C3FEF] text-white hover:bg-[#5B35D1] shadow-lg shadow-[#6C3FEF20]",
+    secondary: "bg-[#13131F] text-white border border-[#1E1E2E] hover:border-[#6C3FEF]",
+    outline: "bg-transparent border border-[#1E1E2E] text-[#A0A0B0] hover:text-white hover:border-[#6C3FEF]",
+    danger: "bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500 hover:text-white",
+    ghost: "bg-transparent text-[#A0A0B0] hover:text-white hover:bg-[#1E1E2E]",
+  };
 
   const content = (
     <>
-      {isLoading ? <Loader2 className="animate-spin" size={18} /> : icon}
+      {isLoading ? <Loader2 className="animate-spin" size={16} /> : icon}
       {children}
     </>
   );
 
   if (href) {
     return (
-      <Link href={href} target={target} className={commonClasses}>
+      <Link href={href} className={cn(baseStyles, variants[variant], className)}>
         {content}
       </Link>
     );
@@ -62,8 +58,8 @@ export const AdminButton = ({
 
   return (
     <button
-      className={commonClasses}
-      disabled={disabled || isLoading}
+      className={cn(baseStyles, variants[variant], className)}
+      disabled={isLoading || disabled}
       {...props}
     >
       {content}

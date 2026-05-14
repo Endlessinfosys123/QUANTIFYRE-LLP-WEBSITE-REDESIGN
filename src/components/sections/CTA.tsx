@@ -40,13 +40,14 @@ function CartoonStar({ size = 24, color = "#f59e0b", delay = 0 }: { size?: numbe
 }
 
 export const CTA = ({ data }: { data?: any }) => {
-  const title = data?.title || "Let's Engineer Your Digital Legacy.";
-  const description = data?.description || "The future waits for no one. Partner with QUANTIFYRE to build intelligent systems that scale with your ambition.";
-  const badge = data?.badge_text || "Unlimited Potential";
-  const primaryText = data?.primary_cta_text || "Start the Mission";
-  const primaryLink = data?.primary_cta_link || "/contact";
-  const secondaryText = data?.secondary_cta_text || "Free Strategy Call 📞";
-  const secondaryLink = data?.secondary_cta_link || "/contact";
+  const badge = data?.section_label || "Unlimited Potential";
+  const title = data?.heading || "Let's Engineer Your Digital Legacy.";
+  const description = data?.subtext || "The future waits for no one. Partner with QUANTIFYRE to build intelligent systems that scale with your ambition.";
+  const primaryText = data?.btn1_label || "Start the Mission";
+  const primaryLink = data?.btn1_link || "/contact";
+  const secondaryText = data?.btn2_label || "Free Strategy Call 📞";
+  const secondaryLink = data?.btn2_link || "/contact";
+
   return (
     <section className="section-padding bg-white relative overflow-hidden">
 
@@ -94,21 +95,7 @@ export const CTA = ({ data }: { data?: any }) => {
             </motion.div>
             
             <h2 className="text-5xl md:text-8xl font-black text-dark leading-[0.9] tracking-tighter max-w-5xl mx-auto">
-              {title.includes('<br />') ? (
-                title.split('<br />').map((line: string, i: number) => (
-                  <React.Fragment key={i}>
-                    {line}
-                    {i < title.split('<br />').length - 1 && <br />}
-                  </React.Fragment>
-                ))
-              ) : title.includes("Engineer Your") ? (
-                <>
-                  Let&apos;s Engineer Your{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
-                    Digital Legacy.
-                  </span>
-                </>
-              ) : title}
+              {title}
             </h2>
             
             <p className="text-text-secondary text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed font-medium">
@@ -142,20 +129,22 @@ export const CTA = ({ data }: { data?: any }) => {
               </Button>
             </motion.div>
 
-            <motion.div
-              whileHover={{ scale: 1.05, y: -4 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 300, damping: 15 }}
-            >
-              <Button
-                href={secondaryLink}
-                variant="outline"
-                size="lg"
-                className="w-full sm:w-auto h-20 px-12 text-xl font-black rounded-2xl border-2 border-primary/20 text-primary hover:bg-primary/5"
+            {secondaryText && (
+              <motion.div
+                whileHover={{ scale: 1.05, y: -4 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 300, damping: 15 }}
               >
-                {secondaryText}
-              </Button>
-            </motion.div>
+                <Button
+                  href={secondaryLink}
+                  variant="outline"
+                  size="lg"
+                  className="w-full sm:w-auto h-20 px-12 text-xl font-black rounded-2xl border-2 border-primary/20 text-primary hover:bg-primary/5"
+                >
+                  {secondaryText}
+                </Button>
+              </motion.div>
+            )}
           </div>
 
           {/* Floating cartoon rocket in corner */}

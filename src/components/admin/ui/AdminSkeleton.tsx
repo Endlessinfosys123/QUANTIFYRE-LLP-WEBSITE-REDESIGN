@@ -10,9 +10,9 @@ export const AdminSkeleton = ({ className, variant = "rect" }: AdminSkeletonProp
   return (
     <div
       className={cn(
-        "animate-pulse bg-gray-200",
+        "animate-pulse bg-[#13131F] border border-[#1E1E2E]",
         variant === "text" && "h-4 w-3/4 rounded",
-        variant === "rect" && "rounded-lg",
+        variant === "rect" && "rounded-2xl",
         variant === "circle" && "rounded-full",
         className
       )}

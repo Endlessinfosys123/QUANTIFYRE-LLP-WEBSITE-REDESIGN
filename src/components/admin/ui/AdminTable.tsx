@@ -12,18 +12,18 @@ export const AdminTable = ({ headers, children, className }: AdminTableProps) =>
     <div className={cn("w-full overflow-x-auto", className)}>
       <table className="w-full text-left border-collapse">
         <thead>
-          <tr className="border-b border-[#E5E7EB]">
+          <tr className="border-b border-[#1E1E2E] bg-[#0A0A0F]">
             {headers.map((header, i) => (
               <th
                 key={i}
-                className="px-6 py-4 text-[13px] font-semibold text-[#374151] uppercase tracking-wider"
+                className="px-6 py-4 text-[10px] font-black text-[#A0A0B0] uppercase tracking-widest"
               >
                 {header}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-[#E5E7EB]">{children}</tbody>
+        <tbody className="divide-y divide-[#1E1E2E] bg-[#13131F]">{children}</tbody>
       </table>
     </div>
   );
@@ -42,7 +42,7 @@ export const AdminTableRow = ({
     <tr
       onClick={onClick}
       className={cn(
-        "group transition-colors hover:bg-[#F9F9FF]",
+        "group transition-colors hover:bg-[#1E1E2E]/50",
         onClick && "cursor-pointer",
         className
       )}
@@ -60,7 +60,7 @@ export const AdminTableCell = ({
   className?: string;
 }) => {
   return (
-    <td className={cn("px-6 py-4 text-sm text-[#111827]", className)}>
+    <td className={cn("px-6 py-4 text-sm text-white", className)}>
       {children}
     </td>
   );

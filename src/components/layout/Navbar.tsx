@@ -6,11 +6,15 @@ import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { NAV_LINKS } from "@/lib/constants";
 import { Button } from "@/components/ui/Button";
 import { Magnetic } from "@/components/ui/Magnetic";
 
-export const Navbar = () => {
+interface NavbarProps {
+  items: any[];
+  config: Record<string, string>;
+}
+
+export const Navbar = ({ items, config }: NavbarProps) => {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const pathname = usePathname();
@@ -23,6 +27,10 @@ export const Navbar = () => {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const logoUrl = config.logo_header || "/logo.png";
+  const ctaItem = items.find(item => item.is_cta);
+  const navLinks = items.filter(item => !item.is_cta);
 
   return (
     <header
@@ -42,8 +50,8 @@ export const Navbar = () => {
               className="relative"
             >
               <img 
-                src="/logo.png" 
-                alt="QUANTIFYRE" 
+                src={logoUrl} 
+                alt={config.site_name || "QUANTIFYRE"} 
                 className="h-10 w-auto object-contain" 
               />
             </motion.div>
@@ -52,8 +60,8 @@ export const Navbar = () => {
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-1">
-          {NAV_LINKS.map((link) => (
-            <Magnetic key={link.name}>
+          {navLinks.map((link) => (
+            <Magnetic key={link.label}>
               <Link
                 href={link.href}
                 className={cn(
@@ -61,7 +69,7 @@ export const Navbar = () => {
                   pathname === link.href && "text-primary"
                 )}
               >
-                {link.name}
+                {link.label}
                 {pathname === link.href && (
                   <motion.span 
                     layoutId="nav-pill"
@@ -77,15 +85,17 @@ export const Navbar = () => {
 
         {/* Right Actions */}
         <div className="hidden lg:flex items-center gap-6">
-          <Magnetic>
-            <Button 
-              href="/contact" 
-              size="sm" 
-              className="px-8 font-bold h-12 rounded-2xl shadow-xl shadow-primary/20 hover:shadow-primary/40"
-            >
-              Let's Talk <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
-          </Magnetic>
+          {ctaItem && (
+            <Magnetic>
+              <Button 
+                href={ctaItem.href} 
+                size="sm" 
+                className="px-8 font-bold h-12 rounded-2xl shadow-xl shadow-primary/20 hover:shadow-primary/40"
+              >
+                {ctaItem.label} <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </Magnetic>
+          )}
         </div>
 
         {/* Mobile Toggle */}
@@ -106,10 +116,10 @@ export const Navbar = () => {
             exit={{ opacity: 0, scale: 0.95 }}
             className="fixed inset-0 z-40 bg-white/95 backdrop-blur-3xl lg:hidden flex flex-col pt-24 px-8"
           >
-            <div className="flex flex-col gap-8">
-              {NAV_LINKS.map((link, i) => (
+            <div className="flex flex-col gap-8 overflow-y-auto pb-20">
+              {navLinks.map((link, i) => (
                 <motion.div
-                  key={link.name}
+                  key={link.label}
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1, ease: "easeOut" }}
@@ -122,20 +132,22 @@ export const Navbar = () => {
                       pathname === link.href ? "text-primary" : "text-dark"
                     )}
                   >
-                    {link.name}
+                    {link.label}
                   </Link>
                 </motion.div>
               ))}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="pt-10 mt-auto pb-10"
-              >
-                <Button href="/contact" className="w-full justify-between py-8 text-2xl h-20 rounded-3xl" onClick={() => setIsMobileMenuOpen(false)}>
-                  Start a Project <ArrowRight size={28} />
-                </Button>
-              </motion.div>
+              {ctaItem && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  className="pt-10"
+                >
+                  <Button href={ctaItem.href} className="w-full justify-between py-8 text-2xl h-20 rounded-3xl" onClick={() => setIsMobileMenuOpen(false)}>
+                    {ctaItem.label} <ArrowRight size={28} />
+                  </Button>
+                </motion.div>
+              )}
             </div>
           </motion.div>
         )}

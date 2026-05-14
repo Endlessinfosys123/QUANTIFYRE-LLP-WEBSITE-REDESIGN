@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { Zap, ShieldCheck, Clock, Users, Globe, FileText, CheckCircle2 } from "lucide-react";
 import { WHY_CHOOSE_US } from "@/lib/constants";
 import Image from "next/image";
-import { Card } from "@/components/ui/Card";
 
 const iconMap = {
   Zap,
@@ -16,10 +15,14 @@ const iconMap = {
   FileText,
 };
 
-export const WhyUs = ({ data }: { data?: any }) => {
+export const WhyUs = ({ data, stats }: { data?: any, stats?: any[] }) => {
   const title = data?.title || "Why Leaders Choose QUANTIFYRE.";
   const description = data?.description || "We merge creative vision with engineering precision to build software that doesn't just work—it dominates.";
   const badge = data?.badge_text || "Advantage";
+  
+  const successRate = stats?.find(s => s.label.toLowerCase().includes("success"))?.value || "100%";
+  const projectsCount = stats?.find(s => s.label.toLowerCase().includes("project"))?.value || "250+";
+
   return (
     <section className="section-padding bg-surface overflow-hidden relative">
       {/* Background Pattern */}
@@ -56,7 +59,7 @@ export const WhyUs = ({ data }: { data?: any }) => {
                   <CheckCircle2 size={24} />
                 </div>
                 <div>
-                  <div className="text-3xl font-black text-dark">100%</div>
+                  <div className="text-3xl font-black text-dark">{successRate}</div>
                   <div className="text-[10px] font-bold text-primary uppercase tracking-widest">Success Rate</div>
                 </div>
               </div>
@@ -72,8 +75,8 @@ export const WhyUs = ({ data }: { data?: any }) => {
                   <Globe size={24} />
                 </div>
                 <div>
-                  <div className="text-3xl font-black text-dark">Global</div>
-                  <div className="text-[10px] font-bold text-accent uppercase tracking-widest">Operations</div>
+                  <div className="text-3xl font-black text-dark">{projectsCount}</div>
+                  <div className="text-[10px] font-bold text-accent uppercase tracking-widest">Global Projects</div>
                 </div>
               </div>
             </motion.div>
@@ -98,16 +101,7 @@ export const WhyUs = ({ data }: { data?: any }) => {
                 transition={{ delay: 0.2 }}
                 className="text-5xl md:text-7xl font-black text-dark tracking-tighter leading-none"
               >
-                {title.includes('<br />') ? (
-                  title.split('<br />').map((line: string, i: number) => (
-                    <React.Fragment key={i}>
-                      {line}
-                      {i < title.split('<br />').length - 1 && <br />}
-                    </React.Fragment>
-                  ))
-                ) : (
-                  title
-                )}
+                {title}
               </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -122,7 +116,7 @@ export const WhyUs = ({ data }: { data?: any }) => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               {WHY_CHOOSE_US.map((feature, i) => {
-                const Icon = iconMap[feature.icon as keyof typeof iconMap];
+                const Icon = iconMap[feature.icon as keyof typeof iconMap] || Zap;
                 return (
                   <motion.div
                     key={feature.title}

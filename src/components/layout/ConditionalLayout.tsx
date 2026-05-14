@@ -5,7 +5,19 @@ import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import React from "react";
 
-export const ConditionalLayout = ({ children }: { children: React.ReactNode }) => {
+interface ConditionalLayoutProps {
+  children: React.ReactNode;
+  navItems: any[];
+  footerLinks: any[];
+  config: Record<string, string>;
+}
+
+export const ConditionalLayout = ({ 
+  children, 
+  navItems, 
+  footerLinks, 
+  config 
+}: ConditionalLayoutProps) => {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
 
@@ -15,9 +27,9 @@ export const ConditionalLayout = ({ children }: { children: React.ReactNode }) =
 
   return (
     <>
-      <Navbar />
+      <Navbar items={navItems} config={config} />
       <main className="flex-grow">{children}</main>
-      <Footer />
+      <Footer links={footerLinks} config={config} />
     </>
   );
 };

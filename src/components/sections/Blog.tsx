@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BLOG_POSTS } from "@/lib/constants";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -11,7 +10,8 @@ import Link from "next/link";
 import { Magnetic } from "@/components/ui/Magnetic";
 
 export const Blog = ({ data }: { data?: any[] }) => {
-  const displayPosts = data && data.length > 0 ? data : BLOG_POSTS;
+  const displayPosts = data && data.length > 0 ? data : [];
+  
   return (
     <section className="section-padding bg-white relative overflow-hidden">
       {/* Background Decorative Blob */}
@@ -65,7 +65,7 @@ export const Blog = ({ data }: { data?: any[] }) => {
               <Card className="p-0 overflow-hidden group bg-transparent border-none shadow-none flex flex-col h-full">
                 <div className="relative aspect-[16/10] overflow-hidden rounded-[2.5rem] bg-surface border border-primary/5 shadow-2xl shadow-primary/5">
                   <Image
-                    src={post.image_url || post.image || "https://placehold.co/800x600/6C3FEF/FFFFFF?text=Article"}
+                    src={post.cover_image || "https://placehold.co/800x600/6C3FEF/FFFFFF?text=Article"}
                     alt={post.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
@@ -80,11 +80,11 @@ export const Blog = ({ data }: { data?: any[] }) => {
                 <div className="pt-8 space-y-6 flex flex-col flex-grow">
                   <div className="flex items-center gap-4 text-[10px] font-black text-primary uppercase tracking-[0.2em]">
                     <span className="px-3 py-1 rounded-lg bg-primary/5">
-                      {post.created_at ? new Date(post.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : post.date}
+                      {new Date(post.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>
                     <span className="w-1 h-1 rounded-full bg-primary/20" />
                     <span className="flex items-center gap-1.5 opacity-60">
-                      <Clock size={12} /> {post.read_time || post.readTime || "5 min"}
+                      <Clock size={12} /> 5 min read
                     </span>
                   </div>
                   
@@ -99,7 +99,7 @@ export const Blog = ({ data }: { data?: any[] }) => {
 
                   <div className="pt-6">
                     <Link
-                      href={post.slug ? `/blog/${post.slug}` : "/blog"}
+                      href={`/blog/${post.slug}`}
                       className="inline-flex items-center gap-4 text-primary font-black text-sm uppercase tracking-[0.3em] group/link"
                     >
                       Read Article

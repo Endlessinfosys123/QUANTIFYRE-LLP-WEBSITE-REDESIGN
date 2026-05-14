@@ -6,11 +6,18 @@ import { Button } from "@/components/ui/Button";
 import { ArrowRight, Code2, Database, LayoutTemplate, Sparkles, Terminal } from "lucide-react";
 
 export const Hero = ({ data, stats }: { data?: any, stats?: any[] }) => {
-  const heroTitle = data?.title || "Build High-Performance Software.";
-  const heroSubtitle = data?.subtitle || "We are a technology agency building scalable web applications, enterprise ERPs, and AI-driven automation systems for modern businesses.";
   const heroBadge = data?.badge_text || "Enterprise IT Engineering";
-  const primaryCTA = data?.primary_cta_text || "Start a Project";
-  const secondaryCTA = data?.secondary_cta_text || "View Capabilities";
+  const heroTitle = data?.heading_line1 || "Build High-Performance Software.";
+  const heroSubtitle = data?.subtext || "We are a technology agency building scalable web applications, enterprise ERPs, and AI-driven automation systems for modern businesses.";
+  const primaryCTA = data?.cta1_label || "Start a Project";
+  const primaryLink = data?.cta1_link || "/contact";
+  
+  const systemBadges = data?.extra_json?.system_badges || [
+    { text: "AI-Powered", emoji: "⚡" },
+    { text: "Enterprise Grade", emoji: "🛡️" },
+    { text: "Fast Delivery", emoji: "🚀" },
+    { text: "Innovative Tech", emoji: "💡" }
+  ];
 
   return (
     <section className="relative pt-40 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-white tech-grid min-h-screen flex items-center">
@@ -18,35 +25,33 @@ export const Hero = ({ data, stats }: { data?: any, stats?: any[] }) => {
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none animate-morph-blob" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-[100px] pointer-events-none animate-morph-blob delay-300" />
 
-      {/* Cartoon Floating Badges */}
-      <motion.div
-        animate={{ y: [0, -16, 0], rotate: [0, -4, 4, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-40 left-[8%] hidden xl:flex items-center gap-2 bg-white border-2 border-border rounded-2xl px-4 py-3 shadow-lg text-sm font-black text-dark pointer-events-none"
-      >
-        <span className="text-xl">⚡</span> AI-Powered
-      </motion.div>
-      <motion.div
-        animate={{ y: [0, 14, 0], rotate: [0, 3, -3, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
-        className="absolute bottom-48 left-[5%] hidden xl:flex items-center gap-2 bg-white border-2 border-border rounded-2xl px-4 py-3 shadow-lg text-sm font-black text-dark pointer-events-none"
-      >
-        <span className="text-xl">🛡️</span> Enterprise Grade
-      </motion.div>
-      <motion.div
-        animate={{ y: [0, -12, 0], rotate: [0, 4, -4, 0] }}
-        transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-        className="absolute top-48 right-[5%] hidden xl:flex items-center gap-2 bg-white border-2 border-border rounded-2xl px-4 py-3 shadow-lg text-sm font-black text-dark pointer-events-none"
-      >
-        <span className="text-xl">🚀</span> Fast Delivery
-      </motion.div>
-      <motion.div
-        animate={{ y: [0, 18, 0], rotate: [0, -3, 3, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-        className="absolute bottom-44 right-[6%] hidden xl:flex items-center gap-2 bg-white border-2 border-border rounded-2xl px-4 py-3 shadow-lg text-sm font-black text-dark pointer-events-none"
-      >
-        <span className="text-xl">💡</span> Innovative Tech
-      </motion.div>
+      {/* Dynamic Floating Badges */}
+      {systemBadges.slice(0, 4).map((badge: any, i: number) => {
+        const positions = [
+          "top-40 left-[8%]",
+          "bottom-48 left-[5%]",
+          "top-48 right-[5%]",
+          "bottom-44 right-[6%]"
+        ];
+        const animationVariants = [
+          { y: [0, -16, 0], rotate: [0, -4, 4, 0] },
+          { y: [0, 14, 0], rotate: [0, 3, -3, 0] },
+          { y: [0, -12, 0], rotate: [0, 4, -4, 0] },
+          { y: [0, 18, 0], rotate: [0, -3, 3, 0] }
+        ];
+
+        return (
+          <motion.div
+            key={i}
+            animate={animationVariants[i]}
+            transition={{ duration: 5 + i, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
+            className={`absolute ${positions[i]} hidden xl:flex items-center gap-2 bg-white border-2 border-border rounded-2xl px-4 py-3 shadow-lg text-sm font-black text-dark pointer-events-none`}
+          >
+            <span className="text-xl">{typeof badge === 'string' ? '✨' : badge.emoji}</span> 
+            {typeof badge === 'string' ? badge : badge.text}
+          </motion.div>
+        );
+      })}
 
       <div className="container-custom relative z-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -93,11 +98,11 @@ export const Hero = ({ data, stats }: { data?: any, stats?: any[] }) => {
               transition={{ delay: 0.3 }}
               className="flex flex-col sm:flex-row items-center gap-4 pt-4"
             >
-              <Button href={data?.primary_cta_link || "/contact"} size="lg" className="w-full sm:w-auto px-10 h-16 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 hover:shadow-primary/30">
+              <Button href={primaryLink} size="lg" className="w-full sm:w-auto px-10 h-16 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 hover:shadow-primary/30">
                 {primaryCTA} <ArrowRight className="ml-2" size={20} />
               </Button>
-              <Button href={data?.secondary_cta_link || "/portfolio"} variant="outline" size="lg" className="w-full sm:w-auto px-10 h-16 rounded-xl font-bold text-lg bg-white shadow-sm hover:bg-surface">
-                {secondaryCTA}
+              <Button href="/portfolio" variant="outline" size="lg" className="w-full sm:w-auto px-10 h-16 rounded-xl font-bold text-lg bg-white shadow-sm hover:bg-surface">
+                View Capabilities
               </Button>
             </motion.div>
 
@@ -117,7 +122,7 @@ export const Hero = ({ data, stats }: { data?: any, stats?: any[] }) => {
                </div>
                <div>
                  <span className="text-dark font-black">
-                   {stats?.find(s => s.label.includes("Business"))?.value || "50+"}
+                   {stats?.find(s => s.label.toLowerCase().includes("business"))?.value || "50+"}
                  </span> Businesses Trust Us
                </div>
             </motion.div>

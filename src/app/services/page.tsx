@@ -1,10 +1,11 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { Services } from "@/components/sections/Services";
+import { getServices } from "@/lib/supabase/data";
 import { Network, Database, Cloud, Lock } from "lucide-react";
+import * as motion from "framer-motion/client";
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await getServices();
+
   return (
     <main className="bg-white min-h-screen">
       
@@ -92,9 +93,8 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Reusing the Services Component (which is now a Bento Grid) */}
       <div className="relative z-20">
-         <Services />
+         <Services data={services} />
       </div>
 
     </main>

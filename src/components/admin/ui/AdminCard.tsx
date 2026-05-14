@@ -5,34 +5,29 @@ interface AdminCardProps {
   children: React.ReactNode;
   title?: string;
   subtitle?: string;
-  headerAction?: React.ReactNode;
-  footer?: React.ReactNode;
   className?: string;
-  noPadding?: boolean;
+  headerAction?: React.ReactNode;
+  icon?: React.ReactNode;
 }
 
-export const AdminCard = ({
-  children,
-  title,
-  subtitle,
-  headerAction,
-  footer,
-  className,
-  noPadding = false,
-}: AdminCardProps) => {
+export const AdminCard = ({ children, title, subtitle, className, headerAction, icon }: AdminCardProps) => {
   return (
-    <div className={cn("bg-white border border-[#E5E7EB] rounded-xl shadow-sm overflow-hidden", className)}>
-      {(title || subtitle || headerAction) && (
-        <div className="px-6 py-4 border-b border-[#E5E7EB] flex items-center justify-between gap-4">
-          <div>
-            {title && <h3 className="text-lg font-semibold text-[#111827]">{title}</h3>}
-            {subtitle && <p className="text-sm text-[#6B7280]">{subtitle}</p>}
+    <div className={cn("bg-[#13131F] border border-[#1E1E2E] rounded-3xl overflow-hidden shadow-2xl shadow-black/20", className)}>
+      {(title || headerAction || icon) && (
+        <div className="px-6 py-5 border-b border-[#1E1E2E] flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            {icon && <div className="text-[#6C3FEF]">{icon}</div>}
+            <div>
+              {title && <h3 className="text-sm font-black text-white uppercase tracking-widest">{title}</h3>}
+              {subtitle && <p className="text-[10px] font-bold text-[#A0A0B0] uppercase tracking-wider mt-0.5">{subtitle}</p>}
+            </div>
           </div>
-          {headerAction && <div>{headerAction}</div>}
+          {headerAction}
         </div>
       )}
-      <div className={cn(!noPadding && "p-6")}>{children}</div>
-      {footer && <div className="px-6 py-4 bg-[#F9F9FF] border-t border-[#E5E7EB]">{footer}</div>}
+      <div className="p-6">
+        {children}
+      </div>
     </div>
   );
 };

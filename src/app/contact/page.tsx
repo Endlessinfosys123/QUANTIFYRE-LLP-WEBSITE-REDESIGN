@@ -58,10 +58,30 @@ export default function ContactPage() {
     }));
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setFormState("loading");
-    setTimeout(() => setFormState("success"), 2000);
+    
+    try {
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      
+      const { error } = await supabase.from('inquiries').insert({
+        name: form.name,
+        email: form.email,
+        phone: `${selectedCountry.code}${form.phone}`,
+        message: form.message,
+        services: form.services,
+        status: 'new'
+      });
+
+      if (error) throw error;
+      setFormState("success");
+    } catch (err) {
+      console.error("Submission error:", err);
+      alert("Failed to send inquiry. Please try again.");
+      setFormState("idle");
+    }
   };
 
   const inputBase =

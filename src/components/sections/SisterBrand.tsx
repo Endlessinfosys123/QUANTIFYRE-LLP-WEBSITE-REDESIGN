@@ -2,15 +2,17 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
-import { COMPANY_DETAILS } from "@/lib/constants";
 import { ExternalLink, Sparkles } from "lucide-react";
 import { Magnetic } from "@/components/ui/Magnetic";
 
 export const SisterBrand = ({ data }: { data?: any }) => {
-  const name = data?.title || COMPANY_DETAILS.sisterBrand.name;
+  const name = data?.brand_name || "EndlessInfosys";
+  const badge = data?.section_label || "Sister Brand";
+  const heading = data?.heading || `Meet ${name}.`;
   const description = data?.description || "Our elite digital agency brand specialized in high-performance graphic design, social media growth, and full-spectrum digital marketing.";
-  const url = data?.primary_cta_link || COMPANY_DETAILS.sisterBrand.url;
-  const badge = data?.badge_text || "Sister Brand";
+  const ctaLabel = data?.cta_label || "Go Beyond";
+  const ctaLink = data?.cta_link || "https://endlessinfosys.com";
+
   return (
     <section className="section-padding bg-white relative overflow-hidden">
       <div className="container-custom">
@@ -50,7 +52,7 @@ export const SisterBrand = ({ data }: { data?: any }) => {
                 {badge}
               </motion.div>
               <h2 className="text-5xl md:text-7xl font-black text-dark tracking-tighter leading-[0.9]">
-                {name.toLowerCase().includes("meet") ? name : <>Meet <span className="text-primary">{name}.</span></>}
+                {heading}
               </h2>
               <p className="text-text-secondary text-2xl font-medium leading-relaxed">
                 {description}
@@ -61,11 +63,11 @@ export const SisterBrand = ({ data }: { data?: any }) => {
           <div className="relative z-10 flex-shrink-0">
             <Magnetic>
               <Button
-                href={url}
+                href={ctaLink}
                 size="lg"
                 className="gap-4 px-16 h-24 text-2xl font-black rounded-3xl shadow-xl shadow-primary/20 hover:shadow-primary/40"
               >
-                Go Beyond <ExternalLink size={24} />
+                {ctaLabel} <ExternalLink size={24} />
               </Button>
             </Magnetic>
           </div>

@@ -1,0 +1,56 @@
+import { createAdminClient } from '../supabase/server';
+import { SEED_DATA } from './data';
+
+export async function runSeed() {
+  const supabase = await createAdminClient();
+  const results: Record<string, { status: 'success' | 'error'; message?: string }> = {};
+
+  const tables = Object.keys(SEED_DATA) as (keyof typeof SEED_DATA)[];
+
+  for (const table of tables) {
+    try {
+      console.log(`Seeding table: ${table}...`);
+      
+      // UPSERT logic: if it has a 'key' (like site_config) or 'slug' or 'page' or 'type', use that as conflict target
+      let conflictTarget = 'id';
+      if (table === 'site_config') conflictTarget = 'key';
+      if (table === 'hero_sections') conflictTarget = 'page';
+      if (table === 'services') conflictTarget = 'slug';
+      if (table === 'about_mission_vision') conflictTarget = 'type';
+      if (table === 'blog_posts') conflictTarget = 'slug';
+      if (table === 'portfolio_projects') conflictTarget = 'slug';
+
+      const { error } = await (supabase.from(table as any) as any)
+        .upsert(SEED_DATA[table], { onConflict: conflictTarget });
+
+      if (error) {
+        console.error(`Error seeding ${table}:`, error);
+        results[table] = { status: 'error', message: error.message };
+      } else {
+        results[table] = { status: 'success' };
+      }
+    } catch (err: any) {
+      console.error(`Unexpected error seeding ${table}:`, err);
+      results[table] = { status: 'error', message: err.message };
+    }
+  }
+
+  return results;
+}
+
+export async function resetTable(table: string) {
+  const supabase = await createAdminClient();
+  
+  // Wipe table
+  const { error: deleteError } = await supabase.from(table).delete().neq('id', '00000000-0000-0000-0000-000000000000');
+  if (deleteError) return { status: 'error', message: deleteError.message };
+
+  // Re-seed if exists in SEED_DATA
+  if (table in SEED_DATA) {
+    const data = SEED_DATA[table as keyof typeof SEED_DATA];
+    const { error: seedError } = await (supabase.from(table as any) as any).insert(data);
+    if (seedError) return { status: 'error', message: seedError.message };
+  }
+
+  return { status: 'success' };
+}
