@@ -4,7 +4,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
 import { SplashScreen } from "@/components/ui/SplashScreen";
 
-export function SplashProvider({ children }: { children: React.ReactNode }) {
+export function SplashProvider({ 
+  children,
+  config 
+}: { 
+  children: React.ReactNode;
+  config?: Record<string, any>;
+}) {
   const [showSplash, setShowSplash] = useState(true);
 
   const handleComplete = useCallback(() => {

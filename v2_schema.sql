@@ -442,7 +442,8 @@ CREATE POLICY "Admin full access admin_activity_log" ON public.admin_activity_lo
 -- ============================================
 -- REALTIME
 -- ============================================
-ALTER PUBLICATION supabase_realtime ADD TABLE 
+-- Using SET TABLE to replace the entire list and ensure idempotency
+ALTER PUBLICATION supabase_realtime SET TABLE 
   public.site_config,
   public.nav_items,
   public.hero_sections,
