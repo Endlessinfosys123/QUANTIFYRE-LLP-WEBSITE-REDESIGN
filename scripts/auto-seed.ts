@@ -1,5 +1,5 @@
 import { watch } from 'chokidar';
-import { runSeed } from './src/lib/seed/runner';
+import { runSeed } from '../src/lib/seed/runner';
 import { resolve } from 'path';
 
 const DATA_FILE = resolve('src/lib/seed/data.ts');
