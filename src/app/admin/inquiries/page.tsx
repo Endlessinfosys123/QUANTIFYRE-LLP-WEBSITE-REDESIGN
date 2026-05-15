@@ -26,6 +26,22 @@ export default function InquiriesManagerPage() {
 
   useEffect(() => {
     fetchInquiries();
+
+    // REAL-TIME PROTOCOL: Subscribe to new inquiries
+    const channel = supabase
+      .channel('inquiry-updates')
+      .on('postgres_changes', { 
+        event: '*', 
+        schema: 'public', 
+        table: 'contact_inquiries' 
+      }, () => {
+        fetchInquiries();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const fetchInquiries = async () => {

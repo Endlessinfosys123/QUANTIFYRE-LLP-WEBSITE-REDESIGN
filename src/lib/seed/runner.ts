@@ -28,6 +28,11 @@ export async function runSeed() {
       if (table === 'why_choose_us') conflictTarget = 'title';
       if (table === 'sister_brand') conflictTarget = 'brand_name';
       if (table === 'nav_items') conflictTarget = 'label';
+      if (table === 'testimonials') conflictTarget = 'id';
+      if (table === 'contact_form_config') conflictTarget = 'id';
+      if (table === 'footer_links') conflictTarget = 'id';
+      if (table === 'blog_page_config') conflictTarget = 'id';
+      if (table === 'portfolio_page_config') conflictTarget = 'id';
 
       const { error } = await (supabase.from(table as any) as any)
         .upsert(SEED_DATA[table], { onConflict: conflictTarget });

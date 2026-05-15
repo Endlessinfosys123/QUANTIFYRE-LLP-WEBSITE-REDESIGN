@@ -1,3 +1,4 @@
+export const revalidate = 0;
 import { motion } from "framer-motion";
 import { 
   getHeroSection, getStats, getWhyChooseUs, 

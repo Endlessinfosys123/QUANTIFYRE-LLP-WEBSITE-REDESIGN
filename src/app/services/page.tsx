@@ -1,3 +1,4 @@
+export const revalidate = 0;
 import { Services } from "@/components/sections/Services";
 import { getServices } from "@/lib/supabase/data";
 import { Network, Database, Cloud, Lock } from "lucide-react";

@@ -201,6 +201,7 @@ export const SEED_DATA = {
   ],
   testimonials: [
     {
+      id: '00000000-0000-0000-0000-000000000010',
       quote: 'QUANTIFYRE transformed our operations with a custom ERP that actually works. Delivered on time, zero bugs.',
       author_name: 'Rajesh M.',
       author_role: 'Director',
@@ -208,6 +209,7 @@ export const SEED_DATA = {
       avatar_initial: 'R',
     },
     {
+      id: '00000000-0000-0000-0000-000000000011',
       quote: 'Their AI automation saved us 30+ hours per week. Genuinely impressed by the depth of their technical knowledge.',
       author_name: 'Priya S.',
       author_role: 'Founder',
@@ -215,6 +217,7 @@ export const SEED_DATA = {
       avatar_initial: 'P',
     },
     {
+      id: '00000000-0000-0000-0000-000000000012',
       quote: 'Professional, responsive, and brilliant designers. Our website traffic doubled in 2 months.',
       author_name: 'Harshil C.',
       author_role: 'CEO',
@@ -338,6 +341,7 @@ export const SEED_DATA = {
   ],
   contact_form_config: [
     {
+      id: '00000000-0000-0000-0000-000000000020',
       form_heading: 'New Project Request',
       submit_btn_label: '🚀Launch Your Project',
       trust_text: '🔒 End-to-end encrypted · No spam, ever · NDA available on request',
@@ -365,4 +369,34 @@ export const SEED_DATA = {
     },
     { field_key: 'project_details', label: '💬Project Details *', placeholder: 'Tell us about your project', field_type: 'textarea', is_required: true, max_length: 300, order_index: 4 },
   ],
+  footer_links: [
+    { id: '00000000-0000-0000-0000-000000000030', column_name: 'company', label: 'About Us', href: '/about', order_index: 0 },
+    { id: '00000000-0000-0000-0000-000000000031', column_name: 'company', label: 'Services', href: '/services', order_index: 1 },
+    { id: '00000000-0000-0000-0000-000000000032', column_name: 'company', label: 'Portfolio', href: '/portfolio', order_index: 2 },
+    { id: '00000000-0000-0000-0000-000000000033', column_name: 'company', label: 'Contact', href: '/contact', order_index: 3 },
+    { id: '00000000-0000-0000-0000-000000000034', column_name: 'services', label: 'AI Automation', href: '/services/ai-automation', order_index: 0 },
+    { id: '00000000-0000-0000-0000-000000000035', column_name: 'services', label: 'Web Dev', href: '/services/web-development', order_index: 1 },
+    { id: '00000000-0000-0000-0000-000000000036', column_name: 'services', label: 'Software Eng', href: '/services/software-engineering', order_index: 2 },
+  ],
+  blog_page_config: [
+    { 
+      id: '00000000-0000-0000-0000-000000000001',
+      hero_label: 'Intelligence Registry', 
+      hero_heading: 'Latest from our Engineering Core.',
+      views_count: '25.4k+',
+      engagement_stat: '98% Positive',
+      cta_label: 'Subscribe to Updates'
+    }
+  ],
+  portfolio_page_config: [
+    { 
+      id: '00000000-0000-0000-0000-000000000002',
+      hero_heading: 'The Proof of Precision.',
+      hero_subheading: 'Explore our gallery of high-performance digital infrastructure.',
+      section_heading: 'Our Portfolio',
+      section_label: 'Case Studies',
+      cta_label: 'Start Your Project',
+      cta_link: '/contact'
+    }
+  ]
 };

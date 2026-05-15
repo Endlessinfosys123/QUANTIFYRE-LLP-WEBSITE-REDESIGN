@@ -1,3 +1,4 @@
+export const revalidate = 0;
 import { Blog as BlogSection } from "@/components/sections/Blog";
 import { getBlogPosts } from "@/lib/supabase/data";
 import Image from "next/image";

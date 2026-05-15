@@ -1,3 +1,4 @@
+export const revalidate = 0;
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
@@ -66,12 +67,12 @@ export default function ContactPage() {
       const { createClient } = await import("@/lib/supabase/client");
       const supabase = createClient();
       
-      const { error } = await supabase.from('inquiries').insert({
-        name: form.name,
+      const { error } = await supabase.from('contact_inquiries').insert({
+        full_name: form.name,
         email: form.email,
         phone: `${selectedCountry.code}${form.phone}`,
-        message: form.message,
-        services: form.services,
+        project_details: form.message,
+        services_interested: form.services,
         status: 'new'
       });
 

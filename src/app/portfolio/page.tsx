@@ -1,3 +1,4 @@
+export const revalidate = 0;
 import { Portfolio as PortfolioSection } from "@/components/sections/Portfolio";
 import { getPortfolio } from "@/lib/supabase/data";
 import Image from "next/image";
