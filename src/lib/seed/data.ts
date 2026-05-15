@@ -1,6 +1,4 @@
-// AUTOMATICALLY GENERATED SEED DATA - LAST SYNC: 15/5/2026, 12:38:18 pm
-// DO NOT MANUALLY EDIT UNLESS YOU KNOW WHAT YOU ARE DOING
-
+// AUTOMATICALLY GENERATED SEED DATA - LAST SYNC: 15/5/2026, 1:10:40 pm
 export const SEED_DATA = {
   "site_config": [
     {
@@ -144,43 +142,43 @@ export const SEED_DATA = {
     {
       "id": "3eb24e2f-edfc-4ba8-a177-8000a48abcbc",
       "key": "show_portfolio_home",
-      "value": "true",
+      "value": "false",
       "updated_at": "2026-05-15T07:03:34.029654+00:00"
     },
     {
       "id": "a595de76-0c57-461e-9419-44c9f26a716a",
       "key": "show_brands_home",
-      "value": "true",
+      "value": "false",
       "updated_at": "2026-05-15T07:03:34.029654+00:00"
     },
     {
       "id": "ce3ad943-cba0-40dc-851b-9e5ff853e61d",
       "key": "show_tech_home",
-      "value": "true",
+      "value": "false",
       "updated_at": "2026-05-15T07:03:34.029654+00:00"
     },
     {
       "id": "c2be2b9e-803f-4f85-b3e4-1295e122487c",
       "key": "show_testimonials_home",
-      "value": "true",
+      "value": "false",
       "updated_at": "2026-05-15T07:03:34.029654+00:00"
     },
     {
       "id": "c6d4b442-c6b8-48d7-b297-57ffecf81da9",
       "key": "show_blog_home",
-      "value": "true",
+      "value": "false",
       "updated_at": "2026-05-15T07:03:34.029654+00:00"
     },
     {
       "id": "b2674062-4cbe-417e-af6a-43e105f4e728",
       "key": "show_process_home",
-      "value": "true",
+      "value": "false",
       "updated_at": "2026-05-15T07:03:34.029654+00:00"
     },
     {
       "id": "4329d186-39a7-4f22-a64f-ed989974322e",
       "key": "show_stats_home",
-      "value": "true",
+      "value": "false",
       "updated_at": "2026-05-15T07:03:34.029654+00:00"
     }
   ],

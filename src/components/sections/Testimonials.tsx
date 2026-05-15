@@ -34,7 +34,7 @@ export const Testimonials = ({ data }: { data?: any[] }) => {
           </motion.h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-8 pb-12 -mx-4 px-4 md:mx-0 md:px-0">
           {displayTestimonials.map((t, i) => (
             <motion.div
               key={i}
@@ -42,8 +42,9 @@ export const Testimonials = ({ data }: { data?: any[] }) => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
+              className="min-w-[85vw] md:min-w-[400px] lg:min-w-[450px] shrink-0 snap-center"
             >
-              <Card className="relative group p-12 bg-white border-primary/5 hover:border-primary/20 transition-all duration-700 shadow-2xl shadow-primary/5 h-full flex flex-col">
+              <Card className="relative group p-10 md:p-12 bg-white border-primary/5 hover:border-primary/20 transition-all duration-700 shadow-2xl shadow-primary/5 h-full flex flex-col">
                 <div className="absolute top-10 right-10 text-primary/5 group-hover:text-primary/10 transition-colors duration-700">
                   <Quote size={80} fill="currentColor" />
                 </div>
@@ -55,16 +56,16 @@ export const Testimonials = ({ data }: { data?: any[] }) => {
                     ))}
                   </div>
                   
-                  <p className="text-dark text-xl font-medium leading-relaxed italic flex-grow">
+                  <p className="text-dark text-lg md:text-xl font-medium leading-relaxed italic flex-grow">
                     "{t.content || t.quote}"
                   </p>
                   
                   <div className="pt-8 border-t border-primary/5 flex items-center gap-6">
-                    <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center font-black text-white text-2xl shadow-xl shadow-primary/20">
+                    <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center font-black text-white text-2xl shadow-xl shadow-primary/20 shrink-0">
                       {(t.client_name || t.author)?.[0]}
                     </div>
                     <div>
-                      <h4 className="text-xl font-black text-dark tracking-tight">{t.client_name || t.author}</h4>
+                      <h4 className="text-lg md:text-xl font-black text-dark tracking-tight">{t.client_name || t.author}</h4>
                       <p className="text-[10px] text-primary font-black uppercase tracking-[0.3em]">
                         {t.client_role || t.role} • {t.client_company || t.company}
                       </p>
@@ -79,6 +80,16 @@ export const Testimonials = ({ data }: { data?: any[] }) => {
           ))}
         </div>
       </div>
+
+      <style dangerouslySetInnerHTML={{__html: `
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}} />
     </section>
   );
 };

@@ -22,10 +22,20 @@ export const Footer = ({ links, config }: FooterProps) => {
     { icon: Twitter, href: config.twitter_url, label: "Twitter" },
   ].filter(link => link.href && link.href !== "#");
 
+  // Helper to deduplicate links by label to fix any dual link issues
+  const deduplicateLinks = (linkArray: any[]) => {
+    const seen = new Set();
+    return linkArray.filter(link => {
+      if (seen.has(link.label)) return false;
+      seen.add(link.label);
+      return true;
+    });
+  };
+
   const columns = {
-    company: links.filter(l => l.column_name === 'company'),
-    services: links.filter(l => l.column_name === 'services'),
-    legal: links.filter(l => l.column_name === 'legal'),
+    company: deduplicateLinks(links.filter(l => l.column_name === 'company')),
+    services: deduplicateLinks(links.filter(l => l.column_name === 'services')),
+    legal: deduplicateLinks(links.filter(l => l.column_name === 'legal')),
   };
 
   return (
