@@ -1,8 +1,11 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState, useMemo } from "react";
-import Image from "next/image";
+import { useEffect, useState, useMemo, lazy, Suspense } from "react";
+
+const Spline = lazy(() => import('@splinetool/react-spline').then(mod => ({ default: mod.default })));
+
+const SPLINE_SPLASH_SCENE = 'https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode';
 
 // ── Particle System ──────────────────────────────────────────────────────
 function FloatingParticle({ delay, x, y, size, color }: { delay: number; x: string; y: string; size: number; color: string }) {
@@ -261,25 +264,32 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
         >
           {/* Character Glow */}
           <motion.div
-            className="absolute -inset-8 rounded-full bg-primary/10 blur-3xl pointer-events-none"
+            className="absolute -inset-12 rounded-full pointer-events-none"
+            style={{ background: 'radial-gradient(circle, rgba(108,63,239,0.15), transparent 70%)' }}
             animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
             transition={{ duration: 3, repeat: Infinity }}
           />
           
-          {/* Character Image */}
+          {/* Spline 3D Character */}
           <motion.div
             animate={{ y: [0, -12, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="relative"
+            className="relative w-[200px] h-[200px] md:w-[280px] md:h-[280px]"
           >
-            <Image
-              src="/characters/splash-character.png"
-              alt="QUANTIFYRE AI Assistant"
-              width={220}
-              height={220}
-              className="relative z-10 drop-shadow-2xl"
-              priority
-            />
+            <Suspense fallback={
+              <motion.div
+                className="w-full h-full flex items-center justify-center text-7xl"
+                animate={{ y: [0, -8, 0], rotate: [0, 5, -5, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                🧑‍💻
+              </motion.div>
+            }>
+              <Spline
+                scene={SPLINE_SPLASH_SCENE}
+                style={{ background: 'transparent', width: '100%', height: '100%' }}
+              />
+            </Suspense>
           </motion.div>
 
           {/* Floating tech icons around character */}
