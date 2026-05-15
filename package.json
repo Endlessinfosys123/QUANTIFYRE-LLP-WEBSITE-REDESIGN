@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "auto-seed": "npx tsx scripts/auto-seed.ts",
-    "fetch-live": "npx tsx scripts/fetch-live.ts"
+    "fetch-live": "npx tsx scripts/fetch-live.ts",
+    "live-sync": "npx tsx scripts/live-sync.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
