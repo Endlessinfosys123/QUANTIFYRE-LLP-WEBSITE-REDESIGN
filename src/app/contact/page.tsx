@@ -1,4 +1,3 @@
-export const revalidate = 0;
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
