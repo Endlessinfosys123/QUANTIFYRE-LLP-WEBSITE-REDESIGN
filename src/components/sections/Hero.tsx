@@ -128,81 +128,81 @@ export const Hero = ({ data, stats }: { data?: any, stats?: any[] }) => {
             </motion.div>
           </div>
 
-          {/* Right: Concrete Tech Visual (Dashboard Mockup) */}
+          {/* Right: 3D Character Visual */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, rotateX: 10 }}
-            animate={{ opacity: 1, scale: 1, rotateX: 0 }}
-            transition={{ delay: 0.2, duration: 1, ease: "easeOut" }}
-            className="relative lg:h-[600px] w-full perspective-1000"
+            initial={{ opacity: 0, scale: 0.8, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 1, ease: "easeOut" }}
+            className="relative lg:h-[600px] w-full flex items-center justify-center"
           >
-             {/* Main Dashboard Window */}
-             <div className="absolute inset-0 bg-white rounded-2xl border border-border shadow-2xl overflow-hidden flex flex-col z-10">
-               {/* Browser/Window Header */}
-               <div className="h-10 bg-surface border-b border-border flex items-center px-4 gap-2">
-                 <div className="flex gap-1.5">
-                   <div className="w-3 h-3 rounded-full bg-red-400" />
-                   <div className="w-3 h-3 rounded-full bg-amber-400" />
-                   <div className="w-3 h-3 rounded-full bg-green-400" />
-                 </div>
-                 <div className="mx-auto bg-white border border-border rounded text-[10px] font-mono px-4 py-1 text-text-secondary flex items-center gap-2">
-                   <Terminal size={10} /> quantifyre-admin.production
-                 </div>
-               </div>
-               {/* Dashboard Content */}
-               <div className="flex-1 p-6 grid grid-cols-3 gap-4 bg-surface/30">
-                 {/* Sidebar */}
-                 <div className="col-span-1 space-y-4">
-                   <div className="h-24 bg-white border border-border rounded-xl shadow-sm p-4">
-                      <div className="w-8 h-8 rounded bg-primary/10 flex items-center justify-center mb-2"><Database size={16} className="text-primary"/></div>
-                      <div className="h-2 w-1/2 bg-surface rounded" />
-                   </div>
-                   <div className="h-48 bg-white border border-border rounded-xl shadow-sm p-4 space-y-3">
-                      {[...Array(4)].map((_, i) => <div key={i} className="h-8 bg-surface rounded-lg" />)}
-                   </div>
-                 </div>
-                 {/* Main Area */}
-                 <div className="col-span-2 space-y-4">
-                   <div className="h-32 bg-white border border-border rounded-xl shadow-sm p-4 flex flex-col justify-between">
-                     <div className="flex justify-between items-center">
-                       <div className="h-3 w-1/3 bg-surface rounded" />
-                       <div className="h-6 w-16 bg-primary/10 rounded-full" />
-                     </div>
-                     <div className="flex items-end gap-2 h-12">
-                       {[40, 70, 45, 90, 65, 80, 50].map((h, i) => (
-                         <div key={i} className="w-full bg-primary/20 rounded-t-sm" style={{ height: `${h}%` }} />
-                       ))}
-                     </div>
-                   </div>
-                   <div className="h-40 bg-white border border-border rounded-xl shadow-sm p-4 relative overflow-hidden group">
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
-                      <div className="relative z-10 flex items-center gap-4">
-                         <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center border border-border">
-                           <Code2 size={24} className="text-primary" />
-                         </div>
-                         <div>
-                           <div className="text-sm font-bold text-dark">System Architecture</div>
-                           <div className="text-xs text-text-secondary mt-1">Next.js 14 • Node.js • PostgreSQL</div>
-                         </div>
-                      </div>
-                   </div>
-                 </div>
-               </div>
-             </div>
-
-             {/* Floating Decorative Elements */}
-             <motion.div 
-               animate={{ y: [0, -15, 0] }} 
+             {/* Background glow behind character */}
+             <motion.div
+               className="absolute w-[400px] h-[400px] rounded-full bg-primary/8 blur-[80px] pointer-events-none"
+               animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] }}
                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-               className="absolute -right-8 top-1/4 w-40 bg-white p-4 rounded-xl shadow-xl border border-border z-20"
+             />
+
+             {/* Character floating animation */}
+             <motion.div
+               animate={{ y: [0, -20, 0] }}
+               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+               className="relative z-10"
+             >
+               <img
+                 src="/characters/hero-character.png"
+                 alt="QUANTIFYRE AI Tech Professional"
+                 className="w-[350px] md:w-[450px] h-auto drop-shadow-2xl relative z-10"
+               />
+             </motion.div>
+
+             {/* Floating Dashboard Card */}
+             <motion.div 
+               animate={{ y: [0, -15, 0], x: [0, 5, 0] }} 
+               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+               className="absolute -right-4 top-1/4 w-48 bg-white p-4 rounded-2xl shadow-2xl border border-border z-20"
              >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600"><LayoutTemplate size={16}/></div>
+                  <div className="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center text-green-600"><LayoutTemplate size={18}/></div>
                   <div>
-                    <div className="text-xs font-bold text-dark">UI Component</div>
-                    <div className="text-[10px] text-text-secondary">Compiled successfully</div>
+                    <div className="text-xs font-black text-dark">UI Component</div>
+                    <div className="text-[10px] text-green-500 font-bold">✓ Compiled</div>
                   </div>
                 </div>
              </motion.div>
+
+             {/* Floating Code Card */}
+             <motion.div 
+               animate={{ y: [0, 12, 0], x: [0, -5, 0] }} 
+               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+               className="absolute -left-4 bottom-1/4 w-44 bg-dark p-4 rounded-2xl shadow-2xl z-20"
+             >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center"><Code2 size={18} className="text-primary"/></div>
+                  <div>
+                    <div className="text-xs font-bold text-white">System Live</div>
+                    <div className="text-[10px] text-primary font-bold">Next.js 16</div>
+                  </div>
+                </div>
+             </motion.div>
+
+             {/* Floating emoji badges */}
+             {["🚀", "⚡", "🔥"].map((emoji, i) => (
+               <motion.div
+                 key={i}
+                 className="absolute text-3xl pointer-events-none z-20"
+                 style={{
+                   right: `${10 + i * 25}%`,
+                   top: `${15 + i * 20}%`,
+                 }}
+                 animate={{
+                   y: [0, -15, 0],
+                   rotate: [0, 10, -10, 0],
+                 }}
+                 transition={{ duration: 3 + i, repeat: Infinity, delay: i * 0.5 }}
+               >
+                 {emoji}
+               </motion.div>
+             ))}
           </motion.div>
 
         </div>

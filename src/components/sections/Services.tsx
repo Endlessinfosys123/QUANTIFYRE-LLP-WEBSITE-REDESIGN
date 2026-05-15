@@ -21,7 +21,8 @@ export const Services = ({ data }: { data?: any[] }) => {
     <section className="section-padding bg-surface tech-grid relative" id="services">
       <div className="container-custom relative z-10">
         
-        <div className="mb-20 space-y-6 max-w-3xl">
+        <div className="mb-20 flex items-end justify-between gap-8">
+          <div className="space-y-6 max-w-3xl">
            <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -39,6 +40,22 @@ export const Services = ({ data }: { data?: any[] }) => {
             >
               Engineered for <span className="text-primary">Scale.</span>
             </motion.h2>
+          </div>
+          {/* Floating services character */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            animate={{ y: [0, -10, 0] }}
+            transition={{ y: { duration: 3, repeat: Infinity, ease: "easeInOut" } }}
+            className="hidden lg:block shrink-0"
+          >
+            <img
+              src="/characters/services-character.png"
+              alt="Services Developer"
+              className="w-40 h-40 object-contain drop-shadow-xl"
+            />
+          </motion.div>
         </div>
 
         {/* Bento Grid Layout */}

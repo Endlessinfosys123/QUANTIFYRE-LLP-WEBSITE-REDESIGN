@@ -1,107 +1,174 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import Image from "next/image";
 
-// ── Cartoon SVG Components ────────────────────────────────────────────────
-
-function QuantifyreLogoMark() {
-  return (
-    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-16 h-16">
-      {/* Outer hex */}
-      <motion.path
-        d="M40 4L72 22V58L40 76L8 58V22L40 4Z"
-        stroke="#6366f1" strokeWidth="3" fill="none"
-        initial={{ pathLength: 0, opacity: 0 }}
-        animate={{ pathLength: 1, opacity: 1 }}
-        transition={{ duration: 1, ease: "easeInOut" }}
-      />
-      {/* Inner Q */}
-      <motion.text
-        x="50%" y="54%" dominantBaseline="middle" textAnchor="middle"
-        fill="#6366f1" fontSize="34" fontWeight="900" fontFamily="system-ui"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.8, type: "spring", stiffness: 200 }}
-      >
-        Q
-      </motion.text>
-    </svg>
-  );
-}
-
-function CartoonRocketLaunch() {
-  return (
-    <motion.svg
-      viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg"
-      className="w-16 h-24"
-      initial={{ y: 0 }}
-      animate={{ y: [-5, -180], opacity: [1, 1, 0] }}
-      transition={{ delay: 2.2, duration: 0.8, ease: [0.6, -0.05, 0.8, 1] }}
-    >
-      {/* Body */}
-      <path d="M40 8C40 8 24 24 24 48H56C56 24 40 8 40 8Z" fill="var(--primary)" stroke="var(--color-dark)" strokeWidth="2.5" strokeLinejoin="round"/>
-      <rect x="28" y="48" width="24" height="22" rx="3" fill="var(--color-accent)" stroke="var(--color-dark)" strokeWidth="2"/>
-      {/* Fins */}
-      <path d="M24 58L14 66L24 72V58Z" fill="#f59e0b" stroke="#b45309" strokeWidth="1.5" strokeLinejoin="round"/>
-      <path d="M56 58L66 66L56 72V58Z" fill="#f59e0b" stroke="#b45309" strokeWidth="1.5" strokeLinejoin="round"/>
-      {/* Window */}
-      <circle cx="40" cy="32" r="8" fill="white" stroke="var(--color-dark)" strokeWidth="2"/>
-      <circle cx="40" cy="32" r="5" fill="#bae6fd"/>
-      <circle cx="38" cy="30" r="1.5" fill="white" opacity="0.8"/>
-      {/* Flame */}
-      <motion.g
-        animate={{ scaleY: [1, 1.5, 0.8, 1.4, 1], scaleX: [1, 0.8, 1.2, 0.9, 1] }}
-        transition={{ duration: 0.3, repeat: Infinity }}
-        style={{ transformOrigin: "40px 72px" }}
-      >
-        <path d="M32 70 Q40 92 48 70" stroke="#f97316" strokeWidth="5" strokeLinecap="round" fill="none"/>
-        <path d="M35 74 Q40 96 45 74" stroke="#fbbf24" strokeWidth="3.5" strokeLinecap="round" fill="none"/>
-        <path d="M38 77 Q40 94 42 77" stroke="#fde68a" strokeWidth="2" strokeLinecap="round" fill="none"/>
-      </motion.g>
-    </motion.svg>
-  );
-}
-
-function StarFloat({ x, y, size, delay, color }: { x: string; y: string; size: number; delay: number; color: string }) {
+// ── Particle System ──────────────────────────────────────────────────────
+function FloatingParticle({ delay, x, y, size, color }: { delay: number; x: string; y: string; size: number; color: string }) {
   return (
     <motion.div
-      className="absolute pointer-events-none"
-      style={{ left: x, top: y }}
-      initial={{ opacity: 0, scale: 0, rotate: -30 }}
-      animate={{ opacity: [0, 1, 0], scale: [0, 1, 0.5], rotate: [0, 180, 360] }}
-      transition={{ delay, duration: 2, ease: "easeInOut" }}
+      className="absolute rounded-full pointer-events-none"
+      style={{ left: x, top: y, width: size, height: size, backgroundColor: color }}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{
+        opacity: [0, 0.8, 0],
+        scale: [0, 1.5, 0],
+        y: [0, -60, -120],
+      }}
+      transition={{ delay, duration: 3, repeat: Infinity, ease: "easeOut" }}
+    />
+  );
+}
+
+// ── Orbital Ring ─────────────────────────────────────────────────────────
+function OrbitalRing({ radius, duration, dotCount, color, delay = 0 }: { radius: number; duration: number; dotCount: number; color: string; delay?: number }) {
+  return (
+    <motion.div
+      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+      style={{ width: radius * 2, height: radius * 2 }}
+      animate={{ rotate: 360 }}
+      transition={{ duration, repeat: Infinity, ease: "linear", delay }}
     >
-      <svg viewBox="0 0 24 24" fill={color} width={size} height={size}>
-        <path d="M12 2l2.4 7.6H22l-6.1 4.8 2.4 7.6L12 17.2 5.7 22l2.4-7.6L2 9.6h7.6L12 2z"/>
-      </svg>
+      {/* Ring border */}
+      <div
+        className="absolute inset-0 rounded-full"
+        style={{ border: `1px solid ${color}20` }}
+      />
+      {/* Dots */}
+      {Array.from({ length: dotCount }).map((_, i) => {
+        const angle = (i / dotCount) * 360;
+        const rad = (angle * Math.PI) / 180;
+        return (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              width: 6,
+              height: 6,
+              backgroundColor: color,
+              left: `calc(50% + ${radius * Math.cos(rad)}px - 3px)`,
+              top: `calc(50% + ${radius * Math.sin(rad)}px - 3px)`,
+              boxShadow: `0 0 12px ${color}`,
+            }}
+            animate={{ scale: [1, 1.5, 1], opacity: [0.6, 1, 0.6] }}
+            transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
+          />
+        );
+      })}
     </motion.div>
   );
 }
 
-// ── Progress Bar ──────────────────────────────────────────────────────────
-
-function LoadingBar({ progress }: { progress: number }) {
+// ── Glitch Text Effect ──────────────────────────────────────────────────
+function GlitchText({ text, className }: { text: string; className?: string }) {
   return (
-    <div className="w-72 h-2 bg-border rounded-full overflow-hidden">
-      <motion.div
-        className="h-full bg-gradient-to-r from-primary to-accent rounded-full"
-        animate={{ width: `${progress}%` }}
-        transition={{ type: "spring", stiffness: 60, damping: 15 }}
-      />
+    <div className={`relative ${className}`}>
+      <motion.span
+        className="relative z-10"
+        animate={{ opacity: [1, 0.8, 1, 0.9, 1] }}
+        transition={{ duration: 0.3, repeat: Infinity, repeatDelay: 3 }}
+      >
+        {text}
+      </motion.span>
+      <motion.span
+        className="absolute top-0 left-0 text-primary/30"
+        style={{ clipPath: "inset(0 0 65% 0)" }}
+        animate={{ x: [0, 3, -2, 0], opacity: [0, 1, 0] }}
+        transition={{ duration: 0.2, repeat: Infinity, repeatDelay: 4 }}
+      >
+        {text}
+      </motion.span>
+      <motion.span
+        className="absolute top-0 left-0 text-accent/30"
+        style={{ clipPath: "inset(65% 0 0 0)" }}
+        animate={{ x: [0, -3, 2, 0], opacity: [0, 1, 0] }}
+        transition={{ duration: 0.2, repeat: Infinity, repeatDelay: 4, delay: 0.1 }}
+      >
+        {text}
+      </motion.span>
     </div>
   );
 }
 
-// ── Main SplashScreen ─────────────────────────────────────────────────────
+// ── Code Rain Effect ─────────────────────────────────────────────────────
+function CodeRain() {
+  const columns = useMemo(() => 
+    Array.from({ length: 12 }).map((_, i) => ({
+      left: `${(i / 12) * 100}%`,
+      delay: Math.random() * 2,
+      duration: 3 + Math.random() * 4,
+      chars: "QFYRe01{}[]<>/=:;".split(""),
+    })), []
+  );
 
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.04]">
+      {columns.map((col, i) => (
+        <motion.div
+          key={i}
+          className="absolute text-primary font-mono text-xs leading-loose whitespace-pre"
+          style={{ left: col.left }}
+          initial={{ y: "-100%" }}
+          animate={{ y: "100%" }}
+          transition={{ duration: col.duration, repeat: Infinity, ease: "linear", delay: col.delay }}
+        >
+          {col.chars.map((c, j) => (
+            <div key={j}>{c}</div>
+          ))}
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
+// ── Progress Bar (Premium) ───────────────────────────────────────────────
+function LoadingBar({ progress }: { progress: number }) {
+  return (
+    <div className="w-80 md:w-96 space-y-3">
+      <div className="relative h-2 bg-dark/5 rounded-full overflow-hidden backdrop-blur-sm">
+        <motion.div
+          className="h-full rounded-full relative overflow-hidden"
+          style={{ background: "linear-gradient(90deg, #6366f1, #8b5cf6, #a855f7, #6366f1)" }}
+          animate={{ width: `${progress}%` }}
+          transition={{ type: "spring", stiffness: 60, damping: 15 }}
+        >
+          {/* Shimmer effect */}
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)",
+            }}
+            animate={{ x: ["-100%", "200%"] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </motion.div>
+        {/* Glow */}
+        <motion.div
+          className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-primary blur-md"
+          animate={{ left: `${progress}%` }}
+          transition={{ type: "spring", stiffness: 60, damping: 15 }}
+        />
+      </div>
+      <div className="flex justify-between items-center px-1">
+        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-text-secondary/60">
+          System Initialization
+        </span>
+        <span className="text-xs font-black text-primary tabular-nums">
+          {progress}%
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// ── Main SplashScreen ────────────────────────────────────────────────────
 export function SplashScreen({ onComplete }: { onComplete: () => void }) {
   const [progress, setProgress] = useState(0);
   const [phase, setPhase] = useState<"loading" | "launching" | "done">("loading");
 
-  // Fake progress
   useEffect(() => {
-    const steps = [15, 30, 45, 60, 75, 88, 95, 100];
+    const steps = [8, 18, 30, 42, 55, 68, 78, 88, 95, 100];
     let i = 0;
     const timer = setInterval(() => {
       if (i < steps.length) {
@@ -112,94 +179,151 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
         setPhase("launching");
         setTimeout(() => {
           setPhase("done");
-          setTimeout(onComplete, 600);
-        }, 1200);
+          setTimeout(onComplete, 500);
+        }, 1000);
       }
-    }, 260);
+    }, 240);
     return () => clearInterval(timer);
   }, [onComplete]);
 
   const loadingMessages = [
-    "Initializing AI Core…",
-    "Loading Design System…",
-    "Connecting Tech Stack…",
-    "Preparing Launch Sequence…",
+    "Booting AI Core…",
+    "Loading Neural Networks…",
+    "Syncing Cloud Infrastructure…",
+    "Compiling Design System…",
+    "Initializing 3D Engine…",
+    "Connecting Databases…",
     "Deploying Interface…",
-    "Almost Ready…",
+    "Calibrating Experience…",
+    "Final System Check…",
     "🚀 Ready for Liftoff!",
   ];
-
-  const msgIndex = Math.min(Math.floor(progress / 15), loadingMessages.length - 1);
+  const msgIndex = Math.min(Math.floor(progress / 10), loadingMessages.length - 1);
 
   return (
     <motion.div
       className="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center overflow-hidden"
-      exit={{ opacity: 0, scale: 1.05 }}
-      transition={{ duration: 0.5, ease: "easeInOut" }}
+      exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
+      transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
     >
-      {/* Tech Grid Background */}
-      <div className="absolute inset-0 tech-grid opacity-40" />
+      {/* Background Effects */}
+      <div className="absolute inset-0 tech-grid opacity-30" />
+      <CodeRain />
 
-      {/* Morphing blobs */}
-      <div className="absolute w-[600px] h-[600px] bg-primary/8 rounded-full blur-[120px] animate-morph-blob pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute w-[400px] h-[400px] bg-accent/6 rounded-full blur-[100px] animate-morph-blob delay-300 pointer-events-none top-1/4 left-1/4" />
+      {/* Morphing gradient blobs */}
+      <motion.div
+        className="absolute w-[500px] h-[500px] rounded-full blur-[150px] pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(99,102,241,0.12), transparent 70%)" }}
+        animate={{ x: [0, 50, -30, 0], y: [0, -30, 40, 0], scale: [1, 1.2, 0.9, 1] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(168,85,247,0.08), transparent 70%)", left: "20%", top: "20%" }}
+        animate={{ x: [0, -40, 30, 0], y: [0, 40, -30, 0], scale: [1, 0.8, 1.1, 1] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
 
-      {/* Floating Stars */}
-      <StarFloat x="10%" y="15%" size={20} delay={0.2} color="#f59e0b" />
-      <StarFloat x="85%" y="20%" size={16} delay={0.5} color="#6366f1" />
-      <StarFloat x="15%" y="75%" size={14} delay={0.8} color="#0ea5e9" />
-      <StarFloat x="80%" y="70%" size={22} delay={0.3} color="#ec4899" />
-      <StarFloat x="50%" y="10%" size={12} delay={1.0} color="#22c55e" />
-      <StarFloat x="5%" y="50%" size={18} delay={0.6} color="#f59e0b" />
-      <StarFloat x="90%" y="45%" size={14} delay={0.9} color="#6366f1" />
+      {/* Orbital Rings */}
+      <OrbitalRing radius={180} duration={12} dotCount={4} color="#6366f1" />
+      <OrbitalRing radius={240} duration={18} dotCount={6} color="#a855f7" delay={1} />
+      <OrbitalRing radius={300} duration={24} dotCount={3} color="#0ea5e9" delay={2} />
 
-      {/* Orbiting dots */}
-      {[0, 60, 120, 180, 240, 300].map((deg, i) => (
-        <motion.div
+      {/* Floating Particles */}
+      {Array.from({ length: 20 }).map((_, i) => (
+        <FloatingParticle
           key={i}
-          className="absolute w-3 h-3 rounded-full bg-primary/30"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 6, repeat: Infinity, ease: "linear", delay: i * 0.2 }}
-          style={{
-            transformOrigin: "center",
-            left: `calc(50% + ${160 * Math.cos((deg * Math.PI) / 180)}px)`,
-            top: `calc(50% + ${160 * Math.sin((deg * Math.PI) / 180)}px)`,
-          }}
+          delay={i * 0.3}
+          x={`${10 + Math.random() * 80}%`}
+          y={`${20 + Math.random() * 60}%`}
+          size={3 + Math.random() * 4}
+          color={["#6366f1", "#a855f7", "#0ea5e9", "#f59e0b", "#22c55e"][i % 5]}
         />
       ))}
 
-      {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center gap-10">
-        
-        {/* Logo + Rocket */}
-        <div className="relative flex flex-col items-center">
+      {/* ═════ Main Content ═════ */}
+      <div className="relative z-10 flex flex-col items-center gap-8">
+
+        {/* 3D Character with floating animation */}
+        <motion.div
+          initial={{ opacity: 0, y: 60, scale: 0.7 }}
+          animate={{
+            opacity: 1,
+            y: phase === "launching" ? -200 : 0,
+            scale: phase === "launching" ? 0.5 : 1,
+          }}
+          transition={{
+            opacity: { duration: 0.8 },
+            y: { duration: phase === "launching" ? 0.8 : 0.6, type: "spring", stiffness: 100 },
+            scale: { duration: phase === "launching" ? 0.8 : 0.6 },
+          }}
+          className="relative"
+        >
+          {/* Character Glow */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 150, damping: 20, delay: 0.1 }}
-            className="flex flex-col items-center gap-6 mb-8"
+            className="absolute -inset-8 rounded-full bg-primary/10 blur-3xl pointer-events-none"
+            animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 3, repeat: Infinity }}
+          />
+          
+          {/* Character Image */}
+          <motion.div
+            animate={{ y: [0, -12, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            className="relative"
           >
-            <img src="/logo.png" alt="QUANTIFYRE" className="h-20 md:h-28 w-auto object-contain" />
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: "100%" }}
-              transition={{ delay: 1.0, duration: 0.8 }}
-              className="h-1.5 bg-gradient-to-r from-primary to-accent rounded-full"
+            <Image
+              src="/characters/splash-character.png"
+              alt="QUANTIFYRE AI Assistant"
+              width={220}
+              height={220}
+              className="relative z-10 drop-shadow-2xl"
+              priority
             />
           </motion.div>
 
-          {/* Rocket */}
-          <AnimatePresence>
-            {phase === "launching" && (
-              <motion.div
-                initial={{ opacity: 1 }}
-                className="mb-2"
-              >
-                <CartoonRocketLaunch />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+          {/* Floating tech icons around character */}
+          {["⚡", "🔮", "💎", "🧠"].map((emoji, i) => (
+            <motion.div
+              key={i}
+              className="absolute text-2xl pointer-events-none"
+              style={{
+                left: `${50 + 70 * Math.cos((i * 90 * Math.PI) / 180)}%`,
+                top: `${50 + 70 * Math.sin((i * 90 * Math.PI) / 180)}%`,
+              }}
+              animate={{
+                y: [0, -10, 0],
+                rotate: [0, 15, -15, 0],
+                scale: [1, 1.2, 1],
+              }}
+              transition={{ duration: 2 + i * 0.5, repeat: Infinity, delay: i * 0.3 }}
+            >
+              {emoji}
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Logo */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3, type: "spring", stiffness: 120 }}
+          className="flex flex-col items-center gap-4"
+        >
+          <img src="/logo.png" alt="QUANTIFYRE" className="h-14 md:h-20 w-auto object-contain" />
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: "100%" }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+            className="h-1 bg-gradient-to-r from-primary via-accent to-primary rounded-full"
+          />
+        </motion.div>
+
+        {/* Glitch Tagline */}
+        <GlitchText
+          text="THE FUTURE, FASTER."
+          className="text-lg md:text-2xl font-black text-dark tracking-[0.4em] uppercase"
+        />
 
         {/* Progress Section */}
         <motion.div
@@ -209,42 +333,47 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
           className="flex flex-col items-center gap-5"
         >
           <LoadingBar progress={progress} />
-          
+
           <div className="flex items-center gap-3">
-            {/* Animated dots */}
             {[0, 1, 2].map((i) => (
               <motion.div
                 key={i}
-                className="w-2 h-2 rounded-full bg-primary"
-                animate={{ scale: [1, 1.6, 1], opacity: [0.4, 1, 0.4] }}
-                transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.2 }}
+                className="w-1.5 h-1.5 rounded-full bg-primary"
+                animate={{ scale: [1, 2, 1], opacity: [0.3, 1, 0.3] }}
+                transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.15 }}
               />
             ))}
-            <motion.span
-              key={msgIndex}
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-sm font-black text-text-secondary uppercase tracking-widest ml-2"
-            >
-              {loadingMessages[msgIndex]}
-            </motion.span>
-          </div>
-
-          <div className="text-xs font-bold text-text-secondary/50 tabular-nums">
-            {progress}%
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={msgIndex}
+                initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -8, filter: "blur(4px)" }}
+                className="text-xs font-black text-text-secondary uppercase tracking-[0.2em] ml-2"
+              >
+                {loadingMessages[msgIndex]}
+              </motion.span>
+            </AnimatePresence>
           </div>
         </motion.div>
-        
       </div>
 
       {/* Bottom decoration */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.8 }}
-        className="absolute bottom-10 text-xs font-black text-text-secondary/40 uppercase tracking-[0.3em]"
+        transition={{ delay: 1 }}
+        className="absolute bottom-8 flex flex-col items-center gap-2"
       >
-        LLPIN: ACG-0636 · Gandhinagar, India
+        <div className="flex items-center gap-3">
+          <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+          <span className="text-[10px] font-black text-text-secondary/40 uppercase tracking-[0.3em]">
+            All Systems Operational
+          </span>
+        </div>
+        <span className="text-[9px] font-bold text-text-secondary/30 tracking-widest">
+          LLPIN: ACG-0636 · Gandhinagar, India
+        </span>
       </motion.div>
     </motion.div>
   );

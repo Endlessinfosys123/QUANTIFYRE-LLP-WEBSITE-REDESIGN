@@ -147,10 +147,18 @@ export const CTA = ({ data }: { data?: any }) => {
             )}
           </div>
 
-          {/* Floating cartoon rocket in corner */}
-          <div className="absolute bottom-8 right-10 hidden lg:block opacity-60">
-            <CartoonRocket />
-          </div>
+          {/* Floating 3D Character in corner */}
+          <motion.div 
+            className="absolute -bottom-4 -right-4 hidden lg:block z-10"
+            animate={{ y: [0, -12, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <img 
+              src="/characters/cta-character.png" 
+              alt="QUANTIFYRE Team" 
+              className="w-48 h-48 object-contain drop-shadow-2xl"
+            />
+          </motion.div>
         </motion.div>
       </div>
     </section>
