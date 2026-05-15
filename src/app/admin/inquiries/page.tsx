@@ -32,7 +32,7 @@ export default function InquiriesManagerPage() {
     const { data, error } = await supabase
       .from('contact_inquiries')
       .select('*')
-      .order('created_at', { ascending: false });
+      .order('submitted_at', { ascending: false });
     
     if (error) toast.error("Failed to intercept inquiries");
     else setInquiries(data || []);
@@ -104,8 +104,7 @@ export default function InquiriesManagerPage() {
 
   const filteredInquiries = inquiries.filter(i => {
     const matchesSearch = i.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      i.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      i.subject?.toLowerCase().includes(searchTerm.toLowerCase());
+      i.email.toLowerCase().includes(searchTerm.toLowerCase());
     
     if (activeFilter === 'new') return matchesSearch && i.status === 'new';
     if (activeFilter === 'archived') return matchesSearch && i.status === 'archived';
@@ -199,12 +198,12 @@ export default function InquiriesManagerPage() {
                       {inquiry.full_name}
                     </h4>
                     <p className={cn("text-[10px] font-bold uppercase tracking-wider mt-0.5", selectedId === inquiry.id ? "text-white/60" : "text-slate-400")}>
-                      {new Date(inquiry.created_at).toLocaleDateString()}
+                      {new Date(inquiry.submitted_at).toLocaleDateString()}
                     </p>
                   </div>
                 </div>
                 <p className={cn("text-[11px] font-bold line-clamp-2 leading-relaxed", selectedId === inquiry.id ? "text-white/80" : "text-slate-500")}>
-                  {inquiry.message}
+                  {inquiry.project_details}
                 </p>
               </button>
             ))}
@@ -274,7 +273,7 @@ export default function InquiriesManagerPage() {
                       <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 relative">
                         <MessageSquare className="absolute top-6 right-6 text-slate-200/50" size={40} />
                         <p className="text-sm font-medium text-slate-700 leading-relaxed relative z-10">
-                          {selectedInquiry?.message}
+                          {selectedInquiry?.project_details}
                         </p>
                       </div>
                     </div>
@@ -283,10 +282,10 @@ export default function InquiriesManagerPage() {
                       <div>
                         <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#6C3FEF] mb-4">Services Interested</h4>
                         <div className="flex flex-wrap gap-2">
-                          {selectedInquiry?.services?.map((service: string) => (
+                          {selectedInquiry?.services_interested?.map((service: string) => (
                             <AdminBadge key={service} variant="primary">{service}</AdminBadge>
                           ))}
-                          {(!selectedInquiry?.services || selectedInquiry.services.length === 0) && (
+                          {(!selectedInquiry?.services_interested || selectedInquiry.services_interested.length === 0) && (
                             <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest">General Inquiry</p>
                           )}
                         </div>
@@ -295,7 +294,7 @@ export default function InquiriesManagerPage() {
                         <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#6C3FEF] mb-4">Logistics</h4>
                         <div className="space-y-2">
                           <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                            <Clock size={12} /> Received: {new Date(selectedInquiry?.created_at).toLocaleString()}
+                            <Clock size={12} /> Received: {new Date(selectedInquiry?.submitted_at).toLocaleString()}
                           </div>
                           <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
                             <CheckCircle2 size={12} /> Status: {selectedInquiry?.status}
