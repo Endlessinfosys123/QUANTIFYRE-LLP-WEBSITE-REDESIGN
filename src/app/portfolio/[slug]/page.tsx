@@ -12,12 +12,14 @@ import * as motion from "framer-motion/client";
 
 export const revalidate = 0;
 
+/*
 export async function generateStaticParams() {
   const projects = await getPortfolio();
   return projects.map((project) => ({
     slug: project.slug,
   }));
 }
+*/
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   // 1. Await params safely

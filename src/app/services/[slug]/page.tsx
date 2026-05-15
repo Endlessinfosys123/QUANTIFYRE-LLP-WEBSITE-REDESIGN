@@ -12,12 +12,14 @@ import { cn } from "@/lib/utils";
 
 export const revalidate = 0;
 
+/*
 export async function generateStaticParams() {
   const services = await getServices();
   return services.map((service) => ({
     slug: service.slug,
   }));
 }
+*/
 
 export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
   // 1. Await params safely

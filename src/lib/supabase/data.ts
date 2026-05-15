@@ -72,7 +72,7 @@ export const getServices = cache(async () => {
   return data || [];
 });
 
-export const getServiceBySlug = cache(async (slug: string) => {
+export const getServiceBySlug = async (slug: string) => {
   const supabase = await createClient();
   const { data } = await supabase
     .from('services')
@@ -80,7 +80,7 @@ export const getServiceBySlug = cache(async (slug: string) => {
     .eq('slug', slug)
     .single();
   return data;
-});
+};
 
 export const getPortfolio = cache(async () => {
   const supabase = await createClient();
@@ -91,7 +91,7 @@ export const getPortfolio = cache(async () => {
   return data || [];
 });
 
-export const getProjectBySlug = cache(async (slug: string) => {
+export const getProjectBySlug = async (slug: string) => {
   const supabase = await createClient();
   const { data } = await supabase
     .from('portfolio_projects')
@@ -99,7 +99,7 @@ export const getProjectBySlug = cache(async (slug: string) => {
     .eq('slug', slug)
     .single();
   return data;
-});
+};
 
 export const getBlogPosts = cache(async (limit?: number) => {
   const supabase = await createClient();
