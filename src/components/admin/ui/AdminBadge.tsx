@@ -9,13 +9,13 @@ interface AdminBadgeProps {
 
 export const AdminBadge = ({ children, variant = "neutral", className }: AdminBadgeProps) => {
   const variants = {
-    success: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
-    warning: "bg-amber-500/10 text-amber-500 border-amber-500/20",
-    error: "bg-red-500/10 text-red-500 border-red-500/20",
-    info: "bg-blue-500/10 text-blue-500 border-blue-500/20",
-    neutral: "bg-[#1E1E2E] text-[#A0A0B0] border-[#3F3F46]",
-    primary: "bg-[#6C3FEF]/10 text-[#6C3FEF] border-[#6C3FEF]/20",
-    secondary: "bg-[#13131F] text-[#3F3F46] border-[#1E1E2E]",
+    success: "bg-emerald-50 text-emerald-600 border-emerald-100",
+    warning: "bg-amber-50 text-amber-600 border-amber-100",
+    error: "bg-red-50 text-red-600 border-red-100",
+    info: "bg-blue-50 text-blue-600 border-blue-100",
+    neutral: "bg-slate-50 text-slate-500 border-slate-200",
+    primary: "bg-[#6C3FEF]/5 text-[#6C3FEF] border-[#6C3FEF]/10",
+    secondary: "bg-slate-100 text-slate-500 border-slate-200",
   };
 
   return (

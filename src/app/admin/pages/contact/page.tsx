@@ -76,16 +76,16 @@ export default function ContactPageEditor() {
     }
   };
 
-  if (loading) return <div className="p-8 text-[#A0A0B0] font-black uppercase tracking-widest animate-pulse">Initializing Communication Uplink...</div>;
+  if (loading) return <div className="p-8 text-slate-400 font-black uppercase tracking-widest animate-pulse">Initializing Communication Uplink...</div>;
 
   return (
     <div className="space-y-8 max-w-6xl mx-auto pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tighter uppercase">
+          <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase">
             Contact <span className="text-[#6C3FEF]">Editor</span>
           </h1>
-          <p className="text-[#A0A0B0] font-medium mt-1 uppercase text-[10px] tracking-widest">Inbound Signal Configuration</p>
+          <p className="text-slate-500 font-bold mt-1 uppercase text-[10px] tracking-widest">Inbound Signal Configuration</p>
         </div>
         <AdminButton 
           onClick={handleSave} 
@@ -106,8 +106,8 @@ export default function ContactPageEditor() {
               className={cn(
                 "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all",
                 activeTab === tab.id 
-                  ? "bg-[#6C3FEF] text-white shadow-lg shadow-[#6C3FEF20]" 
-                  : "text-[#A0A0B0] hover:text-white hover:bg-[#13131F]"
+                  ? "bg-[#6C3FEF] text-white shadow-xl shadow-[#6C3FEF30] translate-x-1" 
+                  : "text-slate-500 hover:text-[#6C3FEF] hover:bg-white"
               )}
             >
               <tab.icon size={16} />
@@ -160,16 +160,16 @@ export default function ContactPageEditor() {
                 <AdminCard title="Notification Protocol" subtitle="Internal signal routing">
                   <div className="space-y-6">
                     <AdminInput label="Destination Email" icon={<Mail size={16} />} value={config?.notification_email || ""} onChange={e => setConfig({ ...config, notification_email: e.target.value })} />
-                    <div className="flex items-center justify-between p-4 bg-[#0A0A0F] border border-[#1E1E2E] rounded-2xl">
+                    <div className="flex items-center justify-between p-4 bg-slate-50 border border-slate-100 rounded-2xl">
                        <div className="flex items-center gap-3">
-                          <CheckCircle2 className={config?.send_auto_reply ? "text-emerald-500" : "text-[#3F3F46]"} size={20} />
-                          <span className="text-[10px] font-black uppercase tracking-widest text-white">Send Auto-Reply to Client</span>
+                          <CheckCircle2 className={config?.send_auto_reply ? "text-emerald-500" : "text-slate-300"} size={20} />
+                          <span className="text-[10px] font-black uppercase tracking-widest text-slate-900">Send Auto-Reply to Client</span>
                        </div>
                        <button 
                         onClick={() => setConfig({ ...config, send_auto_reply: !config.send_auto_reply })}
                         className={cn(
                           "w-12 h-6 rounded-full transition-all relative",
-                          config?.send_auto_reply ? "bg-[#6C3FEF]" : "bg-[#1E1E2E]"
+                          config?.send_auto_reply ? "bg-[#6C3FEF]" : "bg-slate-200"
                         )}
                        >
                           <div className={cn("absolute top-1 w-4 h-4 bg-white rounded-full transition-all", config?.send_auto_reply ? "right-1" : "left-1")} />

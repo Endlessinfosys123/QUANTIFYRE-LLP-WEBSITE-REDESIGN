@@ -78,16 +78,16 @@ export default function SiteConfigPage() {
     setConfig(prev => ({ ...prev, [key]: value }));
   };
 
-  if (loading) return <div className="p-8 text-[#A0A0B0] font-black uppercase tracking-widest animate-pulse">Initializing Data Stream...</div>;
+  if (loading) return <div className="p-8 text-slate-400 font-black uppercase tracking-widest animate-pulse">Initializing Data Stream...</div>;
 
   return (
     <div className="space-y-8 max-w-6xl mx-auto pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tighter uppercase">
+          <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase">
             Site <span className="text-[#6C3FEF]">Configuration</span>
           </h1>
-          <p className="text-[#A0A0B0] font-medium mt-1 uppercase text-[10px] tracking-widest">Master Control Unit</p>
+          <p className="text-slate-500 font-bold mt-1 uppercase text-[10px] tracking-widest">Master Control Unit</p>
         </div>
         <AdminButton 
           onClick={handleSave} 
@@ -109,8 +109,8 @@ export default function SiteConfigPage() {
               className={cn(
                 "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all",
                 activeTab === tab.id 
-                  ? "bg-[#6C3FEF] text-white shadow-lg shadow-[#6C3FEF20]" 
-                  : "text-[#A0A0B0] hover:text-white hover:bg-[#13131F]"
+                  ? "bg-[#6C3FEF] text-white shadow-xl shadow-[#6C3FEF30] translate-x-1" 
+                  : "text-slate-500 hover:text-[#6C3FEF] hover:bg-white"
               )}
             >
               <tab.icon size={16} />

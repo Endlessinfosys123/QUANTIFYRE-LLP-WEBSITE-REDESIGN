@@ -128,7 +128,7 @@ export default function FAQManagerPage() {
     }
   };
 
-  if (loading) return <div className="p-8 text-[#A0A0B0] font-black uppercase tracking-widest animate-pulse">Syncing FAQ Registry...</div>;
+  if (loading) return <div className="p-8 text-slate-400 font-black uppercase tracking-widest animate-pulse">Syncing FAQ Registry...</div>;
 
   if (editingId) {
     return (
@@ -136,7 +136,7 @@ export default function FAQManagerPage() {
         <div className="flex items-center justify-between">
           <button 
             onClick={() => setEditingId(null)}
-            className="text-[10px] font-black uppercase tracking-widest text-[#A0A0B0] hover:text-white transition-colors"
+            className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-[#6C3FEF] transition-colors"
           >
             ← Back to Registry
           </button>
@@ -181,10 +181,10 @@ export default function FAQManagerPage() {
     <div className="space-y-8 max-w-5xl mx-auto pb-20">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tighter uppercase">
+          <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase">
             FAQ <span className="text-[#6C3FEF]">Manager</span>
           </h1>
-          <p className="text-[#A0A0B0] font-medium mt-1 uppercase text-[10px] tracking-widest">Question & Answer Protocol</p>
+          <p className="text-slate-500 font-bold mt-1 uppercase text-[10px] tracking-widest">Question & Answer Protocol</p>
         </div>
         <AdminButton onClick={handleCreate} icon={<Plus size={18} />}>
           Add FAQ
@@ -208,7 +208,7 @@ export default function FAQManagerPage() {
               {faqs.length === 0 && (
                 <AdminTableRow>
                   <AdminTableCell className="text-center py-20" colSpan={4}>
-                    <p className="text-[#3F3F46] font-black uppercase text-xs tracking-widest">No FAQs registered</p>
+                    <p className="text-slate-300 font-black uppercase text-xs tracking-widest italic">No FAQs registered</p>
                   </AdminTableCell>
                 </AdminTableRow>
               )}
@@ -236,19 +236,19 @@ function SortableFAQRow({ faq, onEdit, onDelete }: any) {
     zIndex: isDragging ? 50 : 0,
     position: 'relative' as any,
     opacity: isDragging ? 0.5 : 1,
-    background: isDragging ? '#13131F' : 'transparent'
+    background: isDragging ? '#F8FAFC' : 'transparent'
   };
 
   return (
     <AdminTableRow ref={setNodeRef} style={style}>
       <AdminTableCell>
-        <button {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-[#3F3F46] hover:text-[#6C3FEF] transition-colors p-1">
+        <button {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-slate-300 hover:text-[#6C3FEF] transition-colors p-1">
           <GripVertical size={18} />
         </button>
       </AdminTableCell>
       <AdminTableCell>
-        <p className="font-black text-white uppercase text-[12px] tracking-wider line-clamp-1">{faq.question}</p>
-        <p className="text-[10px] text-[#A0A0B0] font-bold line-clamp-1">{faq.answer}</p>
+        <p className="font-black text-slate-900 uppercase text-[12px] tracking-wider line-clamp-1">{faq.question}</p>
+        <p className="text-[10px] text-slate-400 font-bold line-clamp-1">{faq.answer}</p>
       </AdminTableCell>
       <AdminTableCell>
         <AdminBadge variant={faq.is_active ? "success" : "secondary"}>
@@ -259,13 +259,13 @@ function SortableFAQRow({ faq, onEdit, onDelete }: any) {
         <div className="flex items-center justify-end gap-2">
           <button 
             onClick={() => onEdit(faq)}
-            className="p-2 text-[#A0A0B0] hover:text-[#6C3FEF] hover:bg-[#6C3FEF10] rounded-lg transition-all"
+            className="p-2 text-slate-400 hover:text-[#6C3FEF] hover:bg-[#6C3FEF]/5 rounded-lg transition-all"
           >
             <Edit size={16} />
           </button>
           <button 
             onClick={() => onDelete(faq.id)}
-            className="p-2 text-[#3F3F46] hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
+            className="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50/50 rounded-lg transition-all"
           >
             <Trash2 size={16} />
           </button>

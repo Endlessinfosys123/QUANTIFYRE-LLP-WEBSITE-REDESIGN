@@ -172,7 +172,7 @@ export default function PortfolioManagerPage() {
     }
   };
 
-  if (loading) return <div className="p-8 text-[#A0A0B0] font-black uppercase tracking-widest animate-pulse">Scanning Deployment Registry...</div>;
+  if (loading) return <div className="p-8 text-slate-400 font-black uppercase tracking-widest animate-pulse">Scanning Deployment Registry...</div>;
 
   if (editingId) {
     return (
@@ -180,7 +180,7 @@ export default function PortfolioManagerPage() {
         <div className="flex items-center justify-between">
           <button 
             onClick={() => setEditingId(null)}
-            className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#A0A0B0] hover:text-white transition-colors"
+            className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-[#6C3FEF] transition-colors"
           >
             <ArrowLeft size={16} /> Back to Portfolio
           </button>
@@ -190,8 +190,8 @@ export default function PortfolioManagerPage() {
               className={cn(
                 "px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border",
                 editForm.is_featured 
-                  ? "bg-amber-500/10 border-amber-500/30 text-amber-500" 
-                  : "bg-transparent border-[#1E1E2E] text-[#3F3F46]"
+                  ? "bg-amber-500/10 border-amber-500/30 text-amber-600" 
+                  : "bg-transparent border-slate-200 text-slate-400"
               )}
             >
               {editForm.is_featured ? "Featured Project" : "Standard Project"}
@@ -264,8 +264,8 @@ export default function PortfolioManagerPage() {
                 {/* Thumbnail Section */}
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-[#A0A0B0]">Thumbnail (Mockup)</label>
-                    <span className="text-[9px] font-bold text-[#6C3FEF] bg-[#6C3FEF10] px-2 py-0.5 rounded">1600 x 1000 px</span>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Thumbnail (Mockup)</label>
+                    <span className="text-[9px] font-bold text-[#6C3FEF] bg-[#6C3FEF]/5 px-2 py-0.5 rounded">1600 x 1000 px</span>
                   </div>
                   <div className="flex gap-2">
                     <div className="flex-1">
@@ -275,16 +275,16 @@ export default function PortfolioManagerPage() {
                         onChange={e => setEditForm({ ...editForm, thumbnail_url: e.target.value })} 
                       />
                     </div>
-                    <label className="cursor-pointer bg-[#6C3FEF] hover:bg-[#5B35C9] text-white px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-2 font-black uppercase text-[10px] tracking-widest shadow-lg shadow-primary/20">
-                      <Upload size={14} /> Upload Image
+                    <label className="cursor-pointer bg-[#6C3FEF] hover:bg-[#5B35C9] text-white px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-2 font-black uppercase text-[10px] tracking-widest shadow-lg shadow-[#6C3FEF]/20">
+                      <Upload size={14} /> Upload
                       <input type="file" className="hidden" accept="image/*" onChange={(e) => handleUpload(e, 'thumbnail_url')} />
                     </label>
                   </div>
                   {editForm.thumbnail_url && (
-                    <div className="aspect-[16/10] rounded-xl border border-[#1E1E2E] overflow-hidden bg-[#0A0A0F] group relative">
+                    <div className="aspect-[16/10] rounded-xl border border-slate-100 overflow-hidden bg-slate-50 group relative shadow-inner">
                       <img src={editForm.thumbnail_url} alt="" className="w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <ImageIcon className="text-white/50" size={32} />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <ImageIcon className="text-white/70" size={32} />
                       </div>
                     </div>
                   )}
@@ -293,8 +293,8 @@ export default function PortfolioManagerPage() {
                 {/* Full Image Section */}
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-[#A0A0B0]">Full Page Image</label>
-                    <span className="text-[9px] font-bold text-[#6C3FEF] bg-[#6C3FEF10] px-2 py-0.5 rounded">1920 x 1080 px</span>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Full Page Image</label>
+                    <span className="text-[9px] font-bold text-[#6C3FEF] bg-[#6C3FEF]/5 px-2 py-0.5 rounded">1920 x 1080 px</span>
                   </div>
                   <div className="flex gap-2">
                     <div className="flex-1">
@@ -304,8 +304,8 @@ export default function PortfolioManagerPage() {
                         onChange={e => setEditForm({ ...editForm, full_image_url: e.target.value })} 
                       />
                     </div>
-                    <label className="cursor-pointer bg-[#6C3FEF] hover:bg-[#5B35C9] text-white px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-2 font-black uppercase text-[10px] tracking-widest shadow-lg shadow-primary/20">
-                      <Upload size={14} /> Upload Image
+                    <label className="cursor-pointer bg-[#6C3FEF] hover:bg-[#5B35C9] text-white px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-2 font-black uppercase text-[10px] tracking-widest shadow-lg shadow-[#6C3FEF]/20">
+                      <Upload size={14} /> Upload
                       <input type="file" className="hidden" accept="image/*" onChange={(e) => handleUpload(e, 'full_image_url')} />
                     </label>
                   </div>
@@ -323,10 +323,10 @@ export default function PortfolioManagerPage() {
     <div className="space-y-8 max-w-6xl mx-auto pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tighter uppercase">
+          <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase">
             Project <span className="text-[#6C3FEF]">Portfolio</span>
           </h1>
-          <p className="text-[#A0A0B0] font-medium mt-1 uppercase text-[10px] tracking-widest">Global Deployment Log</p>
+          <p className="text-slate-500 font-bold mt-1 uppercase text-[10px] tracking-widest">Global Deployment Log</p>
         </div>
         <AdminButton onClick={handleCreate} icon={<Plus size={18} />}>
           Register New Project
@@ -350,7 +350,7 @@ export default function PortfolioManagerPage() {
               {projects.length === 0 && (
                 <AdminTableRow>
                   <AdminTableCell className="text-center py-20" colSpan={5}>
-                    <p className="text-[#3F3F46] font-black uppercase text-xs tracking-widest">No projects found in registry</p>
+                    <p className="text-slate-300 font-black uppercase text-xs tracking-widest italic">No projects found in registry</p>
                   </AdminTableCell>
                 </AdminTableRow>
               )}
@@ -378,19 +378,19 @@ function SortableProjectRow({ project, onEdit, onDelete }: any) {
     zIndex: isDragging ? 50 : 0,
     position: 'relative' as any,
     opacity: isDragging ? 0.5 : 1,
-    background: isDragging ? '#13131F' : 'transparent'
+    background: isDragging ? '#F8FAFC' : 'transparent'
   };
 
   return (
     <AdminTableRow ref={setNodeRef} style={style}>
       <AdminTableCell>
-        <button {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-[#3F3F46] hover:text-[#6C3FEF] transition-colors p-1">
+        <button {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-slate-300 hover:text-[#6C3FEF] transition-colors p-1">
           <GripVertical size={18} />
         </button>
       </AdminTableCell>
       <AdminTableCell>
         <div className="flex items-center gap-3">
-          <div className="w-16 h-10 bg-[#0A0A0F] border border-[#1E1E2E] rounded-lg overflow-hidden flex items-center justify-center text-[#3F3F46]">
+          <div className="w-16 h-10 bg-slate-50 border border-slate-100 rounded-lg overflow-hidden flex items-center justify-center text-slate-200 shadow-sm">
             {project.thumbnail_url ? (
               <img src={project.thumbnail_url} alt="" className="w-full h-full object-cover" />
             ) : (
@@ -398,8 +398,8 @@ function SortableProjectRow({ project, onEdit, onDelete }: any) {
             )}
           </div>
           <div>
-            <p className="font-black text-white uppercase text-[12px] tracking-wider">{project.title}</p>
-            <p className="text-[10px] text-[#A0A0B0] font-bold uppercase tracking-widest">{project.client_name}</p>
+            <p className="font-black text-slate-900 uppercase text-[12px] tracking-wider">{project.title}</p>
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{project.client_name}</p>
           </div>
         </div>
       </AdminTableCell>
@@ -407,7 +407,7 @@ function SortableProjectRow({ project, onEdit, onDelete }: any) {
         <AdminBadge variant="primary">{project.category}</AdminBadge>
       </AdminTableCell>
       <AdminTableCell>
-        <span className="text-[10px] font-black uppercase text-[#A0A0B0] tracking-widest flex items-center gap-1">
+        <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest flex items-center gap-1">
           <Calendar size={12} /> {project.project_year}
         </span>
       </AdminTableCell>
@@ -415,13 +415,13 @@ function SortableProjectRow({ project, onEdit, onDelete }: any) {
         <div className="flex items-center justify-end gap-2">
           <button 
             onClick={() => onEdit(project)}
-            className="p-2 text-[#A0A0B0] hover:text-[#6C3FEF] hover:bg-[#6C3FEF10] rounded-lg transition-all"
+            className="p-2 text-slate-400 hover:text-[#6C3FEF] hover:bg-[#6C3FEF]/5 rounded-lg transition-all"
           >
             <Edit size={16} />
           </button>
           <button 
             onClick={() => onDelete(project.id)}
-            className="p-2 text-[#3F3F46] hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
+            className="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50/50 rounded-lg transition-all"
           >
             <Trash2 size={16} />
           </button>

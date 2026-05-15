@@ -92,7 +92,7 @@ export default function BlogManagerPage() {
     }
   };
 
-  if (loading) return <div className="p-8 text-[#A0A0B0] font-black uppercase tracking-widest animate-pulse">Scanning Blog Archives...</div>;
+  if (loading) return <div className="p-8 text-slate-400 font-black uppercase tracking-widest animate-pulse">Scanning Blog Archives...</div>;
 
   if (editingId) {
     return (
@@ -100,7 +100,7 @@ export default function BlogManagerPage() {
         <div className="flex items-center justify-between">
           <button 
             onClick={() => setEditingId(null)}
-            className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#A0A0B0] hover:text-white transition-colors"
+            className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-[#6C3FEF] transition-colors"
           >
             <ArrowLeft size={16} /> Back to Archives
           </button>
@@ -133,7 +133,7 @@ export default function BlogManagerPage() {
                   onChange={e => setEditForm({ ...editForm, title: e.target.value })} 
                 />
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-[#A0A0B0] ml-1">Content Body</label>
+                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Content Body</label>
                   <TipTapEditor 
                     content={editForm.content} 
                     onChange={content => setEditForm({ ...editForm, content })} 
@@ -198,10 +198,10 @@ export default function BlogManagerPage() {
     <div className="space-y-8 max-w-6xl mx-auto pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tighter uppercase">
+          <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase">
             Intelligence <span className="text-[#6C3FEF]">Blog</span>
           </h1>
-          <p className="text-[#A0A0B0] font-medium mt-1 uppercase text-[10px] tracking-widest">Global Insight Management</p>
+          <p className="text-slate-500 font-bold mt-1 uppercase text-[10px] tracking-widest">Global Insight Management</p>
         </div>
         <AdminButton onClick={handleCreate} icon={<Plus size={18} />}>
           Draft New Intelligence
@@ -214,7 +214,7 @@ export default function BlogManagerPage() {
             <AdminTableRow key={post.id}>
               <AdminTableCell>
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-[#0A0A0F] border border-[#1E1E2E] rounded-xl overflow-hidden flex items-center justify-center text-[#3F3F46]">
+                  <div className="w-12 h-12 bg-slate-50 border border-slate-100 rounded-xl overflow-hidden flex items-center justify-center text-slate-200 shadow-sm">
                     {post.cover_image ? (
                       <img src={post.cover_image} alt="" className="w-full h-full object-cover" />
                     ) : (
@@ -222,12 +222,12 @@ export default function BlogManagerPage() {
                     )}
                   </div>
                   <div>
-                    <p className="font-black text-white uppercase text-[12px] tracking-wider">{post.title}</p>
+                    <p className="font-black text-slate-900 uppercase text-[12px] tracking-wider">{post.title}</p>
                     <div className="flex items-center gap-3 mt-1">
-                      <span className="flex items-center gap-1 text-[10px] text-[#3F3F46] font-black uppercase tracking-widest">
+                      <span className="flex items-center gap-1 text-[10px] text-slate-400 font-black uppercase tracking-widest">
                         <User size={10} /> {post.author}
                       </span>
-                      <span className="flex items-center gap-1 text-[10px] text-[#3F3F46] font-black uppercase tracking-widest">
+                      <span className="flex items-center gap-1 text-[10px] text-slate-400 font-black uppercase tracking-widest">
                         <Calendar size={10} /> {new Date(post.created_at).toLocaleDateString()}
                       </span>
                     </div>
@@ -248,13 +248,13 @@ export default function BlogManagerPage() {
                 <div className="flex items-center justify-end gap-2">
                   <button 
                     onClick={() => handleEdit(post)}
-                    className="p-2 text-[#A0A0B0] hover:text-[#6C3FEF] hover:bg-[#6C3FEF10] rounded-lg transition-all"
+                    className="p-2 text-slate-400 hover:text-[#6C3FEF] hover:bg-[#6C3FEF]/5 rounded-lg transition-all"
                   >
                     <Edit size={16} />
                   </button>
                   <button 
                     onClick={() => handleDelete(post.id)}
-                    className="p-2 text-[#3F3F46] hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
+                    className="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50/50 rounded-lg transition-all"
                   >
                     <Trash2 size={16} />
                   </button>
@@ -265,7 +265,7 @@ export default function BlogManagerPage() {
           {posts.length === 0 && (
             <AdminTableRow>
               <AdminTableCell className="text-center py-20" colSpan={4}>
-                <p className="text-[#3F3F46] font-black uppercase text-xs tracking-widest">No blog posts found in archives</p>
+                <p className="text-slate-300 font-black uppercase text-xs tracking-widest italic">No blog posts found in archives</p>
               </AdminTableCell>
             </AdminTableRow>
           )}

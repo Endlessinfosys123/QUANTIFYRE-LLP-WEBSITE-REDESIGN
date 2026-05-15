@@ -12,21 +12,21 @@ export const AdminInput = React.forwardRef<HTMLInputElement, AdminInputProps>(
     return (
       <div className="space-y-2 w-full">
         {label && (
-          <label className="text-[10px] font-black uppercase tracking-widest text-[#71717A] ml-1">
+          <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">
             {label}
           </label>
         )}
         <div className="relative">
           {icon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#3F3F46]">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300">
               {icon}
             </div>
           )}
           <input
             ref={ref}
             className={cn(
-              "w-full h-11 px-4 bg-[#0A0A0F] border border-[#1E1E2E] rounded-xl text-sm text-white outline-none transition-all focus:border-[#6C3FEF] placeholder:text-[#3F3F46]",
-              icon && "pl-10",
+              "w-full h-12 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 outline-none transition-all focus:bg-white focus:ring-4 focus:ring-[#6C3FEF10] focus:border-[#6C3FEF] placeholder:text-slate-400 font-medium",
+              icon && "pl-11",
               error && "border-red-500",
               className
             )}

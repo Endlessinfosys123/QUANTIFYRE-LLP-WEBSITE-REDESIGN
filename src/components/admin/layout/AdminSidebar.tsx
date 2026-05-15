@@ -59,8 +59,8 @@ export const AdminSidebar = () => {
   };
 
   return (
-    <aside className="w-64 h-screen bg-[#0F0F18] border-r border-[#1E1E2E] flex flex-col fixed left-0 top-0 z-50 text-white">
-      <div className="h-20 px-6 flex items-center border-b border-[#1E1E2E]">
+    <aside className="w-64 h-screen bg-white border-r border-slate-200 flex flex-col fixed left-0 top-0 z-50 text-slate-900">
+      <div className="h-20 px-6 flex items-center border-b border-slate-200">
         <Link href="/admin/dashboard" className="flex items-center gap-2">
           <div className="w-8 h-8 bg-[#6C3FEF] rounded-lg flex items-center justify-center">
             <Shield size={18} className="text-white" />
@@ -82,7 +82,7 @@ export const AdminSidebar = () => {
         {/* Categorized Links */}
         {Object.entries(CATEGORIES).map(([key, label]) => (
           <div key={key} className="space-y-2">
-            <h3 className="px-4 text-[10px] font-black uppercase tracking-[0.2em] text-[#3F3F46]">
+            <h3 className="px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
               {label}
             </h3>
             <div className="space-y-1">
@@ -95,7 +95,7 @@ export const AdminSidebar = () => {
       </div>
 
       {/* Logout */}
-      <div className="p-4 border-t border-[#1E1E2E]">
+      <div className="p-4 border-t border-slate-100 bg-slate-50/50">
         <button
           onClick={handleLogout}
           className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-black text-[#EF4444] hover:bg-red-500/10 transition-all uppercase tracking-widest group"
@@ -112,14 +112,14 @@ const SidebarLink = ({ item, active }: { item: any, active: boolean }) => (
   <Link
     href={item.href}
     className={cn(
-      "flex items-center justify-between group px-4 py-2.5 rounded-xl text-xs font-bold transition-all uppercase tracking-wider",
+      "flex items-center justify-between group px-4 py-2.5 rounded-xl text-xs font-black transition-all uppercase tracking-wider",
       active 
-        ? "bg-[#6C3FEF] text-white shadow-lg shadow-[#6C3FEF20]" 
-        : "text-[#A0A0B0] hover:text-white hover:bg-[#1E1E2E]"
+        ? "bg-[#6C3FEF] text-white shadow-xl shadow-[#6C3FEF30] translate-x-1" 
+        : "text-slate-500 hover:text-[#6C3FEF] hover:bg-[#6C3FEF]/5"
     )}
   >
     <div className="flex items-center gap-3">
-      <item.icon size={16} className={cn("transition-colors", active ? "text-white" : "text-[#3F3F46] group-hover:text-[#6C3FEF]")} />
+      <item.icon size={16} className={cn("transition-colors", active ? "text-white" : "text-slate-300 group-hover:text-[#6C3FEF]")} />
       {item.label}
     </div>
     {active && <ChevronRight size={14} />}

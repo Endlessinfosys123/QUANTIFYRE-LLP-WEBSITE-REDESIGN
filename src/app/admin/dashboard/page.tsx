@@ -64,16 +64,16 @@ export default function AdminDashboard() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tighter uppercase">
-            AI Core <span className="text-[#6C3FEF]">Dashboard</span>
+          <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase">
+            Admin <span className="text-[#6C3FEF]">Dashboard</span>
           </h1>
-          <p className="text-[#A0A0B0] font-medium mt-1">Status Report: All systems nominal.</p>
+          <p className="text-slate-500 font-bold mt-1 uppercase text-[10px] tracking-widest">Status Report: All systems nominal.</p>
         </div>
         <div className="flex items-center gap-3">
           <Link 
             href="https://quantifyrellp.space" 
             target="_blank"
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#13131F] border border-[#1E1E2E] rounded-xl text-xs font-black uppercase tracking-widest text-[#A0A0B0] hover:text-white hover:border-[#6C3FEF] transition-all group"
+            className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-500 hover:text-[#6C3FEF] hover:border-[#6C3FEF] transition-all group shadow-sm"
           >
             <ExternalLink size={14} className="group-hover:scale-110 transition-transform" />
             Live View
@@ -95,15 +95,15 @@ export default function AdminDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="bg-[#13131F] border border-[#1E1E2E] p-6 rounded-2xl relative overflow-hidden group hover:border-[#6C3FEF50] transition-all"
+            className="bg-white border border-slate-200 p-6 rounded-2xl relative overflow-hidden group hover:border-[#6C3FEF] transition-all shadow-xl shadow-slate-200/40"
           >
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
               <stat.icon size={48} className={stat.color} />
             </div>
-            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#3F3F46] mb-1">
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-1">
               {stat.label}
             </p>
-            <h3 className="text-3xl font-black text-white">{stat.value}</h3>
+            <h3 className="text-3xl font-black text-slate-900">{stat.value}</h3>
           </motion.div>
         ))}
       </div>
@@ -119,15 +119,15 @@ export default function AdminDashboard() {
               className="bg-[#6C3FEF10] border border-[#6C3FEF30] p-6 rounded-2xl flex items-center justify-between"
             >
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-[#6C3FEF] rounded-xl flex items-center justify-center text-white relative">
+                <div className="w-12 h-12 bg-[#6C3FEF] rounded-xl flex items-center justify-center text-white relative shadow-lg shadow-[#6C3FEF40]">
                   <Mail size={24} />
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-[#13131F] text-[8px] flex items-center justify-center font-bold">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white text-[8px] flex items-center justify-center font-bold">
                     {stats.inquiries}
                   </span>
                 </div>
                 <div>
-                  <h4 className="font-black text-white uppercase text-sm tracking-wider">New Mission Requests</h4>
-                  <p className="text-xs text-[#A0A0B0] font-medium">You have {stats.inquiries} unread inquiries waiting in the inbox.</p>
+                  <h4 className="font-black text-slate-900 uppercase text-sm tracking-wider">New Mission Requests</h4>
+                  <p className="text-xs text-slate-500 font-medium">You have {stats.inquiries} unread inquiries waiting in the inbox.</p>
                 </div>
               </div>
               <Link 
@@ -140,29 +140,29 @@ export default function AdminDashboard() {
           )}
 
           {/* Activity Log Placeholder */}
-          <div className="bg-[#13131F] border border-[#1E1E2E] rounded-3xl overflow-hidden">
-            <div className="p-6 border-b border-[#1E1E2E] flex items-center justify-between">
+          <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xl shadow-slate-200/40">
+            <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
               <div className="flex items-center gap-2">
                 <Activity size={18} className="text-[#6C3FEF]" />
-                <h3 className="font-black text-white uppercase text-sm tracking-widest">System Log</h3>
+                <h3 className="font-black text-slate-900 uppercase text-sm tracking-widest">System Log</h3>
               </div>
-              <button className="text-[10px] font-black text-[#3F3F46] hover:text-[#6C3FEF] uppercase tracking-widest transition-colors">
+              <button className="text-[10px] font-black text-slate-400 hover:text-[#6C3FEF] uppercase tracking-widest transition-colors">
                 View Full Log
               </button>
             </div>
             <div className="p-6 space-y-4">
               {[1, 2, 3].map((_, i) => (
-                <div key={i} className="flex items-center justify-between py-3 border-b border-[#1E1E2E] last:border-0">
+                <div key={i} className="flex items-center justify-between py-3 border-b border-slate-50 last:border-0">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-[#0A0A0F] border border-[#1E1E2E] rounded-lg flex items-center justify-center text-[#6C3FEF]">
+                    <div className="w-8 h-8 bg-slate-50 border border-slate-100 rounded-lg flex items-center justify-center text-[#6C3FEF]">
                       <RefreshCw size={14} />
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-white">System Config Updated</p>
-                      <p className="text-[10px] text-[#3F3F46] font-black uppercase tracking-wider">By Administrator • 2 hours ago</p>
+                      <p className="text-sm font-bold text-slate-900">System Config Updated</p>
+                      <p className="text-[10px] text-slate-400 font-black uppercase tracking-wider">By Administrator • 2 hours ago</p>
                     </div>
                   </div>
-                  <div className="text-[10px] font-black text-[#A0A0B0] bg-[#0A0A0F] px-2 py-1 rounded border border-[#1E1E2E] uppercase tracking-widest">
+                  <div className="text-[10px] font-black text-green-600 bg-green-50 px-2 py-1 rounded border border-green-100 uppercase tracking-widest">
                     Success
                   </div>
                 </div>
@@ -174,10 +174,10 @@ export default function AdminDashboard() {
         {/* Sidebar Area */}
         <div className="space-y-8">
           {/* Quick Actions */}
-          <div className="bg-[#13131F] border border-[#1E1E2E] rounded-3xl p-6">
-            <h3 className="font-black text-white uppercase text-sm tracking-widest mb-6 flex items-center gap-2">
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xl shadow-slate-200/40">
+            <h3 className="font-black text-slate-900 uppercase text-sm tracking-widest mb-6 flex items-center gap-2">
               <Plus size={18} className="text-[#6C3FEF]" />
-              Quick Mission
+              Quick Actions
             </h3>
             <div className="space-y-3">
               <QuickActionButton label="Add Blog Post" icon={FileText} href="/admin/content/blog" />
@@ -187,27 +187,27 @@ export default function AdminDashboard() {
           </div>
 
           {/* System Health */}
-          <div className="bg-[#13131F] border border-[#1E1E2E] rounded-3xl p-6 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity">
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 relative overflow-hidden group shadow-xl shadow-slate-200/40">
+            <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity text-slate-900">
               <Shield size={120} />
             </div>
-            <h3 className="font-black text-white uppercase text-sm tracking-widest mb-6 flex items-center gap-2">
+            <h3 className="font-black text-slate-900 uppercase text-sm tracking-widest mb-6 flex items-center gap-2">
               <Shield size={18} className="text-[#6C3FEF]" />
               Core Integrity
             </h3>
             <div className="space-y-6 relative z-10">
               <div className="flex items-center gap-3">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-[10px] font-black text-green-500 uppercase tracking-widest">
+                <span className="text-[10px] font-black text-green-600 uppercase tracking-widest">
                   Operational
                 </span>
               </div>
               <div className="space-y-2">
-                <div className="flex justify-between text-[10px] font-black text-[#A0A0B0] uppercase tracking-widest">
+                <div className="flex justify-between text-[10px] font-black text-slate-400 uppercase tracking-widest">
                   <span>Resource Sync</span>
-                  <span className="text-white">100%</span>
+                  <span className="text-slate-900">100%</span>
                 </div>
-                <div className="w-full h-1.5 bg-[#0A0A0F] rounded-full overflow-hidden border border-[#1E1E2E]">
+                <div className="w-full h-1.5 bg-slate-50 rounded-full overflow-hidden border border-slate-100">
                   <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: '100%' }}
@@ -215,7 +215,7 @@ export default function AdminDashboard() {
                   />
                 </div>
               </div>
-              <p className="text-[10px] text-[#3F3F46] font-black uppercase tracking-widest">
+              <p className="text-[10px] text-slate-300 font-black uppercase tracking-widest">
                 Last integrity check: Just now
               </p>
             </div>
@@ -229,14 +229,14 @@ export default function AdminDashboard() {
 const QuickActionButton = ({ label, icon: Icon, href }: any) => (
   <Link 
     href={href}
-    className="w-full flex items-center justify-between p-4 bg-[#0A0A0F] border border-[#1E1E2E] rounded-2xl hover:border-[#6C3FEF] transition-all group"
+    className="w-full flex items-center justify-between p-4 bg-slate-50 border border-slate-100 rounded-2xl hover:border-[#6C3FEF] hover:bg-white transition-all group shadow-sm"
   >
     <div className="flex items-center gap-3">
-      <div className="w-8 h-8 bg-[#13131F] border border-[#1E1E2E] rounded-lg flex items-center justify-center text-[#A0A0B0] group-hover:text-[#6C3FEF] transition-colors">
+      <div className="w-8 h-8 bg-white border border-slate-100 rounded-lg flex items-center justify-center text-slate-400 group-hover:text-[#6C3FEF] transition-colors">
         <Icon size={16} />
       </div>
-      <span className="text-xs font-black text-white uppercase tracking-wider">{label}</span>
+      <span className="text-xs font-black text-slate-900 uppercase tracking-wider">{label}</span>
     </div>
-    <Plus size={14} className="text-[#3F3F46] group-hover:text-white transition-colors" />
+    <Plus size={14} className="text-slate-300 group-hover:text-[#6C3FEF] transition-colors" />
   </Link>
 );

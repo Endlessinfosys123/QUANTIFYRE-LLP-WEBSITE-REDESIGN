@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 
 const TABS = [
   { id: 'hero', label: 'Hero Section', icon: Zap },
+  { id: 'layout', label: 'Layout Manager', icon: Layout },
   { id: 'cta', label: 'Global CTA', icon: Rocket },
   { id: 'sister', label: 'Sister Brand', icon: Layers },
 ];
@@ -30,6 +31,7 @@ export default function HomePageEditor() {
   const [hero, setHero] = useState<any>(null);
   const [cta, setCta] = useState<any>(null);
   const [sister, setSister] = useState<any>(null);
+  const [layout, setLayout] = useState<Record<string, string>>({});
 
   const supabase = createClient();
 
@@ -38,15 +40,23 @@ export default function HomePageEditor() {
   }, []);
 
   const fetchData = async () => {
-    const [heroRes, ctaRes, sisterRes] = await Promise.all([
+    const [heroRes, ctaRes, sisterRes, configRes] = await Promise.all([
       supabase.from('hero_sections').select('*').eq('page', 'home').single(),
       supabase.from('cta_sections').select('*').eq('page', 'global').single(),
-      supabase.from('sister_brand').select('*').limit(1).single()
+      supabase.from('sister_brand').select('*').limit(1).single(),
+      supabase.from('site_config').select('*').like('key', 'show_%')
     ]);
 
     setHero(heroRes.data);
     setCta(ctaRes.data);
     setSister(sisterRes.data);
+    
+    const layoutMap: Record<string, string> = {};
+    configRes.data?.forEach(item => {
+      layoutMap[item.key] = item.value;
+    });
+    setLayout(layoutMap);
+    
     setLoading(false);
   };
 
@@ -83,16 +93,34 @@ export default function HomePageEditor() {
     setSaving(false);
   };
 
-  if (loading) return <div className="p-8 text-[#A0A0B0] font-black uppercase tracking-widest animate-pulse">Accessing Page Fragments...</div>;
+  const handleSaveLayout = async () => {
+    setSaving(true);
+    const updates = Object.entries(layout).map(([key, value]) => ({
+      key,
+      value
+    }));
+
+    const { error } = await supabase.from('site_config').upsert(updates, { onConflict: 'key' });
+
+    if (error) {
+      toast.error("Layout update failed");
+    } else {
+      toast.success("Home page layout configured");
+      await fetch('/api/revalidate?tag=global', { method: 'POST' });
+    }
+    setSaving(false);
+  };
+
+  if (loading) return <div className="p-8 text-slate-400 font-black uppercase tracking-widest animate-pulse">Accessing Page Fragments...</div>;
 
   return (
     <div className="space-y-8 max-w-6xl mx-auto pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tighter uppercase">
+          <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase">
             Home <span className="text-[#6C3FEF]">Editor</span>
           </h1>
-          <p className="text-[#A0A0B0] font-medium mt-1 uppercase text-[10px] tracking-widest">Landing Page Matrix</p>
+          <p className="text-slate-500 font-bold mt-1 uppercase text-[10px] tracking-widest">Landing Page Matrix</p>
         </div>
       </div>
 
@@ -106,8 +134,8 @@ export default function HomePageEditor() {
               className={cn(
                 "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all",
                 activeTab === tab.id 
-                  ? "bg-[#6C3FEF] text-white shadow-lg shadow-[#6C3FEF20]" 
-                  : "text-[#A0A0B0] hover:text-white hover:bg-[#13131F]"
+                  ? "bg-[#6C3FEF] text-white shadow-xl shadow-[#6C3FEF30] translate-x-1" 
+                  : "text-slate-500 hover:text-[#6C3FEF] hover:bg-white"
               )}
             >
               <tab.icon size={16} />
@@ -155,7 +183,7 @@ export default function HomePageEditor() {
                       />
                     </div>
                     
-                    <div className="pt-6 border-t border-[#1E1E2E]">
+                    <div className="pt-6 border-t border-slate-100">
                       <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#6C3FEF] mb-4">System Badges (Ticker)</h4>
                       <div className="space-y-3">
                         {hero?.extra_json?.system_badges?.map((badge: string, index: number) => (
@@ -185,7 +213,7 @@ export default function HomePageEditor() {
                             const newBadges = [...(hero?.extra_json?.system_badges || []), "New Badge"];
                             setHero({ ...hero, extra_json: { ...(hero?.extra_json || {}), system_badges: newBadges } });
                           }}
-                          className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#A0A0B0] hover:text-[#6C3FEF] transition-colors"
+                          className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-[#6C3FEF] transition-colors"
                         >
                           <ListPlus size={14} /> Add Badge
                         </button>
@@ -196,6 +224,43 @@ export default function HomePageEditor() {
               </motion.div>
             )}
 
+            {activeTab === 'layout' && (
+              <motion.div key="layout" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
+                <AdminCard 
+                  title="Layout Matrix" 
+                  subtitle="Section visibility control"
+                  headerAction={<AdminButton onClick={handleSaveLayout} isLoading={saving} size="sm">Sync Layout</AdminButton>}
+                >
+                  <div className="space-y-4">
+                    {[
+                      { key: 'show_stats_home', label: 'Experience Statistics' },
+                      { key: 'show_process_home', label: 'Methodology / Process' },
+                      { key: 'show_services_home', label: 'Capability Registry' },
+                      { key: 'show_portfolio_home', label: 'Project Showcase' },
+                      { key: 'show_brands_home', label: 'Client Ecosystem' },
+                      { key: 'show_tech_home', label: 'Tech Stack Matrix' },
+                      { key: 'show_testimonials_home', label: 'User Verification' },
+                      { key: 'show_blog_home', label: 'Intelligence Feed' },
+                    ].map(section => (
+                      <div key={section.key} className="flex items-center justify-between p-4 bg-slate-50 border border-slate-100 rounded-2xl">
+                        <div>
+                          <p className="text-xs font-black text-slate-900 uppercase tracking-wider">{section.label}</p>
+                          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Section Toggle</p>
+                        </div>
+                        <select 
+                          value={layout[section.key] === 'true' ? 'true' : 'false'}
+                          onChange={e => setLayout({ ...layout, [section.key]: e.target.value })}
+                          className="px-4 py-2 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase outline-none cursor-pointer hover:border-[#6C3FEF] transition-colors"
+                        >
+                          <option value="true">Visible</option>
+                          <option value="false">Hidden</option>
+                        </select>
+                      </div>
+                    ))}
+                  </div>
+                </AdminCard>
+              </motion.div>
+            )}
             {activeTab === 'cta' && (
               <motion.div key="cta" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
                 <AdminCard 

@@ -35,10 +35,10 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     if (isAuthPage) return <>{children}</>;
     
     return (
-      <div className="flex h-screen bg-[#0A0A0F]">
+      <div className="flex h-screen bg-[#F8FAFC]">
         <AdminSkeleton className="w-64 h-full rounded-none" />
         <div className="flex-1 flex flex-col">
-          <AdminSkeleton className="h-20 w-full rounded-none" />
+          <AdminSkeleton className="h-20 w-full rounded-none bg-white border-b border-slate-200" />
           <div className="p-8 space-y-6">
             <AdminSkeleton className="h-10 w-48" />
             <AdminSkeleton className="h-[400px] w-full" />
@@ -58,13 +58,13 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#0A0A0F] text-white">
+    <div className="flex min-h-screen bg-[#F8FAFC] text-slate-900 font-sans">
       <AdminSidebar />
       <div className="flex-1 ml-64 flex flex-col min-h-screen relative">
         {/* Background Gradients */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-[#6C3FEF] opacity-[0.03] blur-[150px] rounded-full" />
-          <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-[#0EA5E9] opacity-[0.02] blur-[150px] rounded-full" />
+          <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-[#6C3FEF] opacity-[0.05] blur-[150px] rounded-full" />
+          <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-[#0EA5E9] opacity-[0.05] blur-[150px] rounded-full" />
         </div>
         
         <AdminHeader />

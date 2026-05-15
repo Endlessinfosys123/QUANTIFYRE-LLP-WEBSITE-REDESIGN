@@ -133,7 +133,7 @@ export default function TestimonialManagerPage() {
     }
   };
 
-  if (loading) return <div className="p-8 text-[#A0A0B0] font-black uppercase tracking-widest animate-pulse">Syncing Testimonial Registry...</div>;
+  if (loading) return <div className="p-8 text-slate-400 font-black uppercase tracking-widest animate-pulse">Syncing Testimonial Registry...</div>;
 
   if (editingId) {
     return (
@@ -141,7 +141,7 @@ export default function TestimonialManagerPage() {
         <div className="flex items-center justify-between">
           <button 
             onClick={() => setEditingId(null)}
-            className="text-[10px] font-black uppercase tracking-widest text-[#A0A0B0] hover:text-white transition-colors"
+            className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-[#6C3FEF] transition-colors"
           >
             ← Back to Registry
           </button>
@@ -215,10 +215,10 @@ export default function TestimonialManagerPage() {
     <div className="space-y-8 max-w-5xl mx-auto pb-20">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tighter uppercase">
+          <h1 className="text-3xl font-black text-slate-900 tracking-tighter uppercase">
             Testimonial <span className="text-[#6C3FEF]">Manager</span>
           </h1>
-          <p className="text-[#A0A0B0] font-medium mt-1 uppercase text-[10px] tracking-widest">Client Feedback Protocol</p>
+          <p className="text-slate-500 font-bold mt-1 uppercase text-[10px] tracking-widest">Client Feedback Protocol</p>
         </div>
         <AdminButton onClick={handleCreate} icon={<Plus size={18} />}>
           Add Testimonial
@@ -242,7 +242,7 @@ export default function TestimonialManagerPage() {
               {testimonials.length === 0 && (
                 <AdminTableRow>
                   <AdminTableCell className="text-center py-20" colSpan={5}>
-                    <p className="text-[#3F3F46] font-black uppercase text-xs tracking-widest">No feedback registered</p>
+                    <p className="text-slate-300 font-black uppercase text-xs tracking-widest italic">No feedback registered</p>
                   </AdminTableCell>
                 </AdminTableRow>
               )}
@@ -270,19 +270,19 @@ function SortableTestimonialRow({ t, onEdit, onDelete }: any) {
     zIndex: isDragging ? 50 : 0,
     position: 'relative' as any,
     opacity: isDragging ? 0.5 : 1,
-    background: isDragging ? '#13131F' : 'transparent'
+    background: isDragging ? '#F8FAFC' : 'transparent'
   };
 
   return (
     <AdminTableRow ref={setNodeRef} style={style}>
       <AdminTableCell>
-        <button {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-[#3F3F46] hover:text-[#6C3FEF] transition-colors p-1">
+        <button {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-slate-300 hover:text-[#6C3FEF] transition-colors p-1">
           <GripVertical size={18} />
         </button>
       </AdminTableCell>
       <AdminTableCell>
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-[#0A0A0F] border border-[#1E1E2E] rounded-full flex items-center justify-center text-xs font-black uppercase">
+          <div className="w-10 h-10 bg-slate-100 border border-slate-200 rounded-full flex items-center justify-center text-xs font-black uppercase text-slate-600 shadow-inner">
             {t.avatar_url ? (
               <img src={t.avatar_url} alt="" className="w-full h-full rounded-full object-cover" />
             ) : (
@@ -290,13 +290,13 @@ function SortableTestimonialRow({ t, onEdit, onDelete }: any) {
             )}
           </div>
           <div>
-            <p className="font-black text-white uppercase text-[12px] tracking-wider">{t.author_name}</p>
-            <p className="text-[10px] text-[#A0A0B0] font-bold uppercase tracking-widest">{t.author_role} @ {t.author_company}</p>
+            <p className="font-black text-slate-900 uppercase text-[12px] tracking-wider">{t.author_name}</p>
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{t.author_role} @ {t.author_company}</p>
           </div>
         </div>
       </AdminTableCell>
       <AdminTableCell>
-        <p className="text-[10px] text-[#A0A0B0] font-bold line-clamp-1 italic">"{t.quote}"</p>
+        <p className="text-[10px] text-slate-500 font-bold line-clamp-1 italic">"{t.quote}"</p>
       </AdminTableCell>
       <AdminTableCell>
         <div className="flex gap-1 text-amber-500">
@@ -307,13 +307,13 @@ function SortableTestimonialRow({ t, onEdit, onDelete }: any) {
         <div className="flex items-center justify-end gap-2">
           <button 
             onClick={() => onEdit(t)}
-            className="p-2 text-[#A0A0B0] hover:text-[#6C3FEF] hover:bg-[#6C3FEF10] rounded-lg transition-all"
+            className="p-2 text-slate-400 hover:text-[#6C3FEF] hover:bg-[#6C3FEF]/5 rounded-lg transition-all"
           >
             <Edit size={16} />
           </button>
           <button 
             onClick={() => onDelete(t.id)}
-            className="p-2 text-[#3F3F46] hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
+            className="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50/50 rounded-lg transition-all"
           >
             <Trash2 size={16} />
           </button>

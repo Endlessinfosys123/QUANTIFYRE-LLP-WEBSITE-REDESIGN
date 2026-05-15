@@ -34,11 +34,11 @@ export const AdminButton = ({
   );
   
   const variants = {
-    primary: "bg-[#6C3FEF] text-white hover:bg-[#5B35D1] shadow-lg shadow-[#6C3FEF20]",
-    secondary: "bg-[#13131F] text-white border border-[#1E1E2E] hover:border-[#6C3FEF]",
-    outline: "bg-transparent border border-[#1E1E2E] text-[#A0A0B0] hover:text-white hover:border-[#6C3FEF]",
-    danger: "bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500 hover:text-white",
-    ghost: "bg-transparent text-[#A0A0B0] hover:text-white hover:bg-[#1E1E2E]",
+    primary: "bg-gradient-to-br from-[#6C3FEF] to-[#5B35D1] text-white hover:shadow-2xl hover:shadow-[#6C3FEF40] shadow-xl shadow-[#6C3FEF20] hover:-translate-y-0.5",
+    secondary: "bg-white text-slate-900 border border-slate-200 hover:border-[#6C3FEF] hover:text-[#6C3FEF] shadow-sm",
+    outline: "bg-transparent border border-slate-200 text-slate-500 hover:text-[#6C3FEF] hover:border-[#6C3FEF] hover:bg-[#6C3FEF]/5",
+    danger: "bg-red-50 text-red-600 border border-red-100 hover:bg-red-600 hover:text-white shadow-sm",
+    ghost: "bg-transparent text-slate-500 hover:text-[#6C3FEF] hover:bg-[#6C3FEF]/5",
   };
 
   const content = (
