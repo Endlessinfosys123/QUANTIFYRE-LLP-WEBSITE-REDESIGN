@@ -139,7 +139,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
              <div className="space-y-8 bg-surface rounded-[3rem] p-12 border border-border">
                 <div className="prose prose-xl prose-slate max-w-none">
                   <h3 className="text-3xl font-black text-dark mb-8 tracking-tight uppercase tracking-tighter">Execution Protocol</h3>
-                  <div className="text-text-secondary font-medium" dangerouslySetInnerHTML={{ __html: service.content }} />
+                  <div className="text-text-secondary font-medium" dangerouslySetInnerHTML={{ __html: service.content || "Protocol details are currently being indexed." }} />
                 </div>
              </div>
           </div>

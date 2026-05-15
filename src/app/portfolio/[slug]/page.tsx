@@ -95,7 +95,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               className="relative aspect-square rounded-[4rem] overflow-hidden border-[16px] border-white shadow-2xl group"
             >
                <Image 
-                src={project.thumbnail_url || project.image_url} 
+                src={project.thumbnail_url || project.image_url || "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070"} 
                 alt={project.title} 
                 fill 
                 className="object-cover transition-transform duration-[5s] group-hover:scale-110" 
@@ -149,7 +149,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             {project.content && (
               <div className="prose prose-xl prose-slate max-w-none space-y-12">
                 <div className="text-[10px] font-black uppercase tracking-[0.5em] text-primary mb-8">Implementation Registry</div>
-                <div className="text-text-secondary font-medium" dangerouslySetInnerHTML={{ __html: project.content }} />
+                <div className="text-text-secondary font-medium" dangerouslySetInnerHTML={{ __html: project.content || "Implementation details are currently being archived." }} />
               </div>
             )}
 
