@@ -16,6 +16,7 @@ import {
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
+import { RichTextEditor } from "@/components/admin/modules/RichTextEditor";
 import { cn } from "@/lib/utils";
 
 import { 
@@ -139,6 +140,7 @@ export default function PortfolioManagerPage() {
       project_link: "",
       order_index: projects.length,
       is_featured: false,
+      content: "",
       extra_json: {}
     };
     setEditingId("new");
@@ -247,6 +249,14 @@ export default function PortfolioManagerPage() {
             </AdminCard>
           </div>
 
+          <AdminCard title="Detailed Case Study" subtitle="Full project content (Rich Text)">
+             <RichTextEditor 
+               content={editForm.content || ""} 
+               onChange={content => setEditForm({ ...editForm, content })} 
+               placeholder="Describe the challenges, solutions, and outcomes of this project..."
+             />
+          </AdminCard>
+
           <div className="space-y-8">
           <div className="space-y-8">
             <AdminCard title="Visual Assets" subtitle="Project screenshots">
@@ -265,8 +275,8 @@ export default function PortfolioManagerPage() {
                         onChange={e => setEditForm({ ...editForm, thumbnail_url: e.target.value })} 
                       />
                     </div>
-                    <label className="cursor-pointer bg-[#1E1E2E] hover:bg-[#2A2A3E] text-white p-3 rounded-xl transition-colors flex items-center justify-center">
-                      <Upload size={18} />
+                    <label className="cursor-pointer bg-[#6C3FEF] hover:bg-[#5B35C9] text-white px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-2 font-black uppercase text-[10px] tracking-widest shadow-lg shadow-primary/20">
+                      <Upload size={14} /> Upload Image
                       <input type="file" className="hidden" accept="image/*" onChange={(e) => handleUpload(e, 'thumbnail_url')} />
                     </label>
                   </div>
@@ -294,8 +304,8 @@ export default function PortfolioManagerPage() {
                         onChange={e => setEditForm({ ...editForm, full_image_url: e.target.value })} 
                       />
                     </div>
-                    <label className="cursor-pointer bg-[#1E1E2E] hover:bg-[#2A2A3E] text-white p-3 rounded-xl transition-colors flex items-center justify-center">
-                      <Upload size={18} />
+                    <label className="cursor-pointer bg-[#6C3FEF] hover:bg-[#5B35C9] text-white px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-2 font-black uppercase text-[10px] tracking-widest shadow-lg shadow-primary/20">
+                      <Upload size={14} /> Upload Image
                       <input type="file" className="hidden" accept="image/*" onChange={(e) => handleUpload(e, 'full_image_url')} />
                     </label>
                   </div>

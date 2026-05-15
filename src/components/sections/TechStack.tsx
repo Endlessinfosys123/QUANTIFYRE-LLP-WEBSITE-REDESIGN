@@ -6,13 +6,22 @@ import { TECH_STACK } from "@/lib/constants";
 import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/utils";
 
-export const TechStack = () => {
-  const categories = ["All", ...Object.keys(TECH_STACK)];
+export const TechStack = ({ data }: { data?: any[] }) => {
+  const displayTech = data && data.length > 0 ? data : [];
+
+  // Group by category
+  const techByCategory: Record<string, string[]> = displayTech.reduce((acc: any, item: any) => {
+    if (!acc[item.category]) acc[item.category] = [];
+    acc[item.category].push(item.name);
+    return acc;
+  }, {});
+
+  const categories = ["All", ...Object.keys(techByCategory)];
   const [activeTab, setActiveTab] = React.useState("All");
 
   const filteredTech = activeTab === "All" 
-    ? Array.from(new Set(Object.values(TECH_STACK).flat()))
-    : TECH_STACK[activeTab as keyof typeof TECH_STACK];
+    ? Array.from(new Set(displayTech.map(item => item.name)))
+    : techByCategory[activeTab] || [];
 
   return (
     <section className="section-padding bg-white overflow-hidden">

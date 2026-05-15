@@ -10,13 +10,15 @@ interface ConditionalLayoutProps {
   navItems: any[];
   footerLinks: any[];
   config: Record<string, string>;
+  services: any[];
 }
 
 export const ConditionalLayout = ({ 
   children, 
   navItems, 
   footerLinks, 
-  config 
+  config,
+  services
 }: ConditionalLayoutProps) => {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
@@ -27,7 +29,7 @@ export const ConditionalLayout = ({
 
   return (
     <>
-      <Navbar items={navItems} config={config} />
+      <Navbar items={navItems} config={config} services={services} />
       <main className="flex-grow">{children}</main>
       <Footer links={footerLinks} config={config} />
     </>

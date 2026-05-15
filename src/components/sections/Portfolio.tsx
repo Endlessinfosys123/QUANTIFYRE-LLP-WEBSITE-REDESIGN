@@ -65,20 +65,20 @@ export const Portfolio = ({ data }: { data?: any[] }) => {
                        <div className="h-4 bg-surface border-b border-border flex items-center justify-center">
                          <div className="w-1.5 h-1.5 rounded-full bg-border" />
                        </div>
-                       <div className="relative w-full h-full bg-surface">
-                         {project.thumbnail_url ? (
-                           <Image 
-                             src={project.thumbnail_url}
-                             alt={project.title}
-                             fill
-                             className="object-cover"
-                           />
-                         ) : (
-                           <div className="w-full h-full flex items-center justify-center bg-primary/5 text-primary">
-                             <Monitor size={48} />
-                           </div>
-                         )}
-                       </div>
+                        <Link href={`/portfolio/${project.slug}`} className="relative w-full h-full bg-surface block">
+                          {project.thumbnail_url ? (
+                            <Image 
+                              src={project.thumbnail_url}
+                              alt={project.title}
+                              fill
+                              className="object-cover group-hover:scale-105 transition-transform duration-700"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-primary/5 text-primary">
+                              <Monitor size={48} />
+                            </div>
+                          )}
+                        </Link>
                     </div>
                     <div className="w-[110%] -ml-[5%] h-4 bg-border rounded-b-xl shadow-xl flex justify-center mt-0.5">
                       <div className="w-1/6 h-full bg-text-secondary/20 rounded-b-lg" />
@@ -100,9 +100,11 @@ export const Portfolio = ({ data }: { data?: any[] }) => {
                        </span>
                        <span className="text-xs font-black text-text-secondary uppercase tracking-widest">{project.project_year}</span>
                      </div>
-                     <h3 className="text-4xl md:text-5xl font-black text-dark tracking-tighter">
-                       {project.title}
-                     </h3>
+                      <Link href={`/portfolio/${project.slug}`}>
+                        <h3 className="text-4xl md:text-5xl font-black text-dark tracking-tighter hover:text-primary transition-colors">
+                          {project.title}
+                        </h3>
+                      </Link>
                      <p className="text-xl text-text-secondary font-medium leading-relaxed text-pretty">
                        {project.client_name}
                      </p>
@@ -119,13 +121,16 @@ export const Portfolio = ({ data }: { data?: any[] }) => {
                      </div>
                    </div>
 
-                   {project.project_link && (
-                     <div className="pt-6">
-                        <Link href={project.project_link} target="_blank" className="inline-flex items-center gap-2 text-primary font-black uppercase tracking-widest text-sm hover:gap-4 transition-all">
-                          Launch Experience <ArrowUpRight size={18} />
-                        </Link>
-                     </div>
-                   )}
+                    <div className="pt-6 flex items-center gap-6">
+                       {project.project_link && (
+                          <Link href={project.project_link} target="_blank" className="inline-flex items-center gap-2 text-primary font-black uppercase tracking-widest text-sm hover:gap-4 transition-all">
+                            Launch Experience <ArrowUpRight size={18} />
+                          </Link>
+                       )}
+                       <Link href={`/portfolio/${project.slug}`} className="inline-flex items-center gap-2 text-dark/40 font-black uppercase tracking-widest text-sm hover:text-primary transition-all">
+                         View Case Study <ArrowUpRight size={18} />
+                       </Link>
+                    </div>
                  </motion.div>
               </div>
             );

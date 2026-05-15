@@ -151,3 +151,41 @@ export const getStats = cache(async () => {
     .order('order_index', { ascending: true });
   return data || [];
 });
+
+export const getWhyChooseUs = cache(async () => {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('why_choose_us')
+    .select('*')
+    .order('order_index', { ascending: true });
+  return data || [];
+});
+
+export const getProcessSteps = cache(async () => {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('process_steps')
+    .select('*')
+    .order('order_index', { ascending: true });
+  return data || [];
+});
+
+export const getMissionVision = cache(async () => {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('about_mission_vision')
+    .select('*')
+    .limit(2)
+    .order('order_index', { ascending: true });
+  return data || [];
+});
+
+export const getTechStack = cache(async () => {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('tech_stack')
+    .select('*')
+    .eq('is_active', true)
+    .order('order_index', { ascending: true });
+  return data || [];
+});

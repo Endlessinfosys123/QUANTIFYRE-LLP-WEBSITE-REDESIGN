@@ -13,7 +13,8 @@ import { CTA } from "@/components/sections/CTA";
 import { 
   getHeroSection, getServices, getPortfolio, 
   getBlogPosts, getFAQs, getTestimonials, 
-  getStats, getCTASection, getSisterBrand 
+  getStats, getCTASection, getSisterBrand,
+  getProcessSteps, getTechStack, getWhyChooseUs
 } from "@/lib/supabase/data";
 
 export default async function Home() {
@@ -26,7 +27,10 @@ export default async function Home() {
     testimonials, 
     stats, 
     cta, 
-    sisterBrand
+    sisterBrand,
+    processSteps,
+    techStack,
+    whyChooseUs
   ] = await Promise.all([
     getHeroSection('home'),
     getServices(),
@@ -36,7 +40,10 @@ export default async function Home() {
     getTestimonials(),
     getStats(),
     getCTASection('global'),
-    getSisterBrand()
+    getSisterBrand(),
+    getProcessSteps(),
+    getTechStack(),
+    getWhyChooseUs()
   ]);
 
   return (
@@ -44,10 +51,10 @@ export default async function Home() {
       <Hero data={hero} stats={stats} />
       <TechMarquee />
       <Services data={services} />
-      <Process />
-      <TechStack />
+      <Process data={processSteps} />
+      <TechStack data={techStack} />
       <Portfolio data={portfolio} />
-      <WhyUs stats={stats} />
+      <WhyUs data={whyChooseUs} stats={stats} />
       <Testimonials data={testimonials} />
       <Blog data={blogPosts} />
       <FAQ data={faqs} />

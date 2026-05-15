@@ -15,6 +15,7 @@ import {
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
+import { RichTextEditor } from "@/components/admin/modules/RichTextEditor";
 import { cn } from "@/lib/utils";
 import { 
   DndContext, 
@@ -110,7 +111,8 @@ export default function ServicesManagerPage() {
       detail_page_stats: [],
       detail_page_capabilities: [],
       detail_page_deliverables: [],
-      detail_page_roadmap: []
+      detail_page_roadmap: [],
+      content: ""
     };
     setEditingId("new");
     setEditForm(newService);
@@ -237,6 +239,15 @@ export default function ServicesManagerPage() {
                     value={editForm.detail_page_subtext} 
                     onChange={e => setEditForm({ ...editForm, detail_page_subtext: e.target.value })} 
                   />
+                  
+                  <div className="space-y-4 pt-4">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-[#A0A0B0]">Detailed Service Page Content (Rich Text)</label>
+                    <RichTextEditor 
+                      content={editForm.content || ""} 
+                      onChange={content => setEditForm({ ...editForm, content })} 
+                      placeholder="Enter detailed service methodology, technical specs, etc..."
+                    />
+                  </div>
                 </div>
               </AdminCard>
             </motion.div>

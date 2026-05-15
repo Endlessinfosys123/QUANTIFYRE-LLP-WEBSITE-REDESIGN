@@ -4,7 +4,7 @@ import "./globals.css";
 import { ConditionalLayout } from "@/components/layout/ConditionalLayout";
 import { SplashProvider } from "@/components/ui/SplashProvider";
 import { PageTransitionLoader } from "@/components/ui/PageTransitionLoader";
-import { getSiteConfig, getNavItems, getFooterLinks } from "@/lib/supabase/data";
+import { getSiteConfig, getNavItems, getFooterLinks, getServices } from "@/lib/supabase/data";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -22,10 +22,11 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const [config, navItems, footerLinks] = await Promise.all([
+  const [config, navItems, footerLinks, services] = await Promise.all([
     getSiteConfig(),
     getNavItems(),
-    getFooterLinks()
+    getFooterLinks(),
+    getServices()
   ]);
 
   return (
@@ -38,6 +39,7 @@ export default async function RootLayout({
             navItems={navItems} 
             footerLinks={footerLinks} 
             config={config}
+            services={services}
           >
             {children}
           </ConditionalLayout>

@@ -13,7 +13,9 @@ const iconMap = {
   TrendingUp,
 };
 
-export const Process = () => {
+export const Process = ({ data }: { data?: any[] }) => {
+  const displaySteps = data && data.length > 0 ? data : [];
+
   return (
     <section className="section-padding bg-white relative border-y border-border">
       <div className="container-custom">
@@ -61,12 +63,12 @@ export const Process = () => {
              />
           </div>
 
-          {PROCESS_STEPS.map((step, i) => {
+          {displaySteps.map((step, i) => {
             const Icon = iconMap[step.icon as keyof typeof iconMap] || Cpu;
             
             return (
               <motion.div
-                key={step.step}
+                key={i}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -77,7 +79,7 @@ export const Process = () => {
                     <div className="w-24 h-24 rounded-2xl bg-white border-2 border-primary shadow-xl flex items-center justify-center text-primary relative group">
                        <Icon size={32} strokeWidth={2.5} />
                        <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-dark text-white flex items-center justify-center text-xs font-black shadow-lg">
-                         {step.step}
+                         {i + 1}
                        </div>
                     </div>
                  </div>

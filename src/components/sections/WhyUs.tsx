@@ -15,10 +15,8 @@ const iconMap = {
   FileText,
 };
 
-export const WhyUs = ({ data, stats }: { data?: any, stats?: any[] }) => {
-  const title = data?.title || "Why Leaders Choose QUANTIFYRE.";
-  const description = data?.description || "We merge creative vision with engineering precision to build software that doesn't just work—it dominates.";
-  const badge = data?.badge_text || "Advantage";
+export const WhyUs = ({ data, stats }: { data?: any[], stats?: any[] }) => {
+  const displayFeatures = data && data.length > 0 ? data : [];
   
   const successRate = stats?.find(s => s.label.toLowerCase().includes("success"))?.value || "100%";
   const projectsCount = stats?.find(s => s.label.toLowerCase().includes("project"))?.value || "250+";
@@ -92,7 +90,7 @@ export const WhyUs = ({ data, stats }: { data?: any, stats?: any[] }) => {
                 className="flex items-center gap-3"
               >
                 <div className="w-12 h-px bg-primary" />
-                <span className="text-primary font-black text-xs uppercase tracking-[0.5em]">{badge}</span>
+                <span className="text-primary font-black text-xs uppercase tracking-[0.5em]">Advantage</span>
               </motion.div>
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
@@ -101,7 +99,7 @@ export const WhyUs = ({ data, stats }: { data?: any, stats?: any[] }) => {
                 transition={{ delay: 0.2 }}
                 className="text-5xl md:text-7xl font-black text-dark tracking-tighter leading-none"
               >
-                {title}
+                Why Leaders Choose <span className="text-primary">QUANTIFYRE.</span>
               </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -110,16 +108,16 @@ export const WhyUs = ({ data, stats }: { data?: any, stats?: any[] }) => {
                 transition={{ delay: 0.4 }}
                 className="text-text-secondary text-xl font-medium leading-relaxed max-w-xl"
               >
-                {description}
+                We merge creative vision with engineering precision to build software that doesn't just work—it dominates.
               </motion.p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              {WHY_CHOOSE_US.map((feature, i) => {
+              {displayFeatures.map((feature, i) => {
                 const Icon = iconMap[feature.icon as keyof typeof iconMap] || Zap;
                 return (
                   <motion.div
-                    key={feature.title}
+                    key={i}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
