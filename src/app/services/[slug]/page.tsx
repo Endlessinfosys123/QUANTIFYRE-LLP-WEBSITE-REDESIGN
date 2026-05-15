@@ -145,12 +145,15 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                   </div>
                   
                   <div className="grid grid-cols-1 gap-4">
-                     {capabilities.map((item: any, i: number) => (
-                       <div key={i} className="flex items-center gap-4 p-5 rounded-2xl border border-border hover:bg-surface transition-colors">
-                          <CheckCircle2 size={24} className="text-primary" />
-                          <span className="font-black text-dark uppercase text-xs tracking-wider">{item}</span>
-                       </div>
-                     ))}
+                     {capabilities.map((item: any, i: number) => {
+                       const itemTitle = typeof item === 'string' ? item : (item.title || "Core Capability");
+                       return (
+                         <div key={i} className="flex items-center gap-4 p-5 rounded-2xl border border-border hover:bg-surface transition-colors">
+                            <CheckCircle2 size={24} className="text-primary flex-shrink-0" />
+                            <span className="font-black text-dark uppercase text-xs tracking-wider">{itemTitle}</span>
+                         </div>
+                       );
+                     })}
                   </div>
                </div>
 
