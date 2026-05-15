@@ -13,26 +13,27 @@ export async function runSeed() {
       
       // UPSERT logic: if it has a 'key' (like site_config) or 'slug' or 'page' or 'type', use that as conflict target
       let conflictTarget = 'id';
-      if (table === 'site_config') conflictTarget = 'key';
-      if (table === 'hero_sections') conflictTarget = 'page';
-      if (table === 'services') conflictTarget = 'slug';
-      if (table === 'about_mission_vision') conflictTarget = 'type';
-      if (table === 'blog_posts') conflictTarget = 'slug';
-      if (table === 'portfolio_projects') conflictTarget = 'slug';
-      if (table === 'process_steps') conflictTarget = 'step_number';
-      if (table === 'faqs') conflictTarget = 'question';
-      if (table === 'tech_stack') conflictTarget = 'name';
-      if (table === 'cta_sections') conflictTarget = 'page';
-      if (table === 'contact_form_fields') conflictTarget = 'field_key';
-      if (table === 'about_stats') conflictTarget = 'label';
-      if (table === 'why_choose_us') conflictTarget = 'title';
-      if (table === 'sister_brand') conflictTarget = 'brand_name';
-      if (table === 'nav_items') conflictTarget = 'label';
-      if (table === 'testimonials') conflictTarget = 'id';
-      if (table === 'contact_form_config') conflictTarget = 'id';
-      if (table === 'footer_links') conflictTarget = 'id';
-      if (table === 'blog_page_config') conflictTarget = 'id';
-      if (table === 'portfolio_page_config') conflictTarget = 'id';
+      const t = table as string;
+      if (t === 'site_config') conflictTarget = 'key';
+      if (t === 'hero_sections') conflictTarget = 'page';
+      if (t === 'services') conflictTarget = 'slug';
+      if (t === 'about_mission_vision') conflictTarget = 'type';
+      if (t === 'blog_posts') conflictTarget = 'slug';
+      if (t === 'portfolio_projects') conflictTarget = 'slug';
+      if (t === 'process_steps') conflictTarget = 'step_number';
+      if (t === 'faqs') conflictTarget = 'question';
+      if (t === 'tech_stack') conflictTarget = 'name';
+      if (t === 'cta_sections') conflictTarget = 'page';
+      if (t === 'contact_form_fields') conflictTarget = 'field_key';
+      if (t === 'about_stats') conflictTarget = 'label';
+      if (t === 'why_choose_us') conflictTarget = 'title';
+      if (t === 'sister_brand') conflictTarget = 'brand_name';
+      if (t === 'nav_items') conflictTarget = 'label';
+      if (t === 'testimonials') conflictTarget = 'id';
+      if (t === 'contact_form_config') conflictTarget = 'id';
+      if (t === 'footer_links') conflictTarget = 'id';
+      if (t === 'blog_page_config') conflictTarget = 'id';
+      if (t === 'portfolio_page_config') conflictTarget = 'id';
 
       const { error } = await (supabase.from(table as any) as any)
         .upsert(SEED_DATA[table], { onConflict: conflictTarget });

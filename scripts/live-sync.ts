@@ -23,7 +23,8 @@ const TABLES = [
   'services', 'portfolio_projects', 'blog_posts', 'faqs', 
   'testimonials', 'about_stats', 'why_choose_us', 'process_steps', 
   'about_mission_vision', 'tech_stack', 'sister_brand', 'footer_links',
-  'blog_page_config', 'portfolio_page_config'
+  'blog_page_config', 'portfolio_page_config',
+  'contact_form_config', 'contact_form_fields'
 ];
 
 let isInternalUpdate = false;
