@@ -9,7 +9,7 @@ import {
 import Link from "next/link";
 import * as motion from "framer-motion/client";
 import { cn } from "@/lib/utils";
-import { TechStack3D } from "@/components/ui/TechStack3D";
+import { DynamicService3D } from "@/components/ui/DynamicService3D";
 import { Network, Database, Layers, Bot, Code2 } from "lucide-react";
 
 export const revalidate = 0;
@@ -109,7 +109,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                 transition={{ delay: 0.3, duration: 1 }}
                 className="relative h-[600px] w-full"
               >
-                 <TechStack3D />
+                 <DynamicService3D slug={slug} />
               </motion.div>
             </div>
           </div>

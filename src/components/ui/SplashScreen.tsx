@@ -3,9 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useMemo, lazy, Suspense } from "react";
 
-const Spline = lazy(() => import('@splinetool/react-spline').then(mod => ({ default: mod.default })));
-
-const SPLINE_SPLASH_SCENE = 'https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode';
+import { TechStack3D } from "./TechStack3D";
 
 // ── Particle System ──────────────────────────────────────────────────────
 function FloatingParticle({ delay, x, y, size, color }: { delay: number; x: string; y: string; size: number; color: string }) {
@@ -270,26 +268,15 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
             transition={{ duration: 3, repeat: Infinity }}
           />
           
-          {/* Spline 3D Character */}
+          {/* Custom 3D Animation instead of Spline */}
           <motion.div
             animate={{ y: [0, -12, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="relative w-[200px] h-[200px] md:w-[280px] md:h-[280px]"
+            className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] flex items-center justify-center pointer-events-none"
           >
-            <Suspense fallback={
-              <motion.div
-                className="w-full h-full flex items-center justify-center text-7xl"
-                animate={{ y: [0, -8, 0], rotate: [0, 5, -5, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                🧑‍💻
-              </motion.div>
-            }>
-              <Spline
-                scene={SPLINE_SPLASH_SCENE}
-                style={{ background: 'transparent', width: '100%', height: '100%' }}
-              />
-            </Suspense>
+             <div className="scale-[0.6] md:scale-[0.8] origin-center">
+                <TechStack3D />
+             </div>
           </motion.div>
 
           {/* Floating tech icons around character */}
