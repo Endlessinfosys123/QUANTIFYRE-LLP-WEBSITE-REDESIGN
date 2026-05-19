@@ -156,8 +156,8 @@ export default function ABTestsPage() {
                     <td className="py-4 px-4">
                       <div className="flex items-center gap-3">
                         <div className="w-24 h-2 bg-white/10 rounded-full overflow-hidden flex">
-                          <div className="h-full bg-blue-500" style={{ width: \`\${100 - test.traffic_split}%\` }} />
-                          <div className="h-full bg-[#6C3FEF]" style={{ width: \`\${test.traffic_split}%\` }} />
+                          <div className="h-full bg-blue-500" style={{ width: `${100 - test.traffic_split}%` }} />
+                          <div className="h-full bg-[#6C3FEF]" style={{ width: `${test.traffic_split}%` }} />
                         </div>
                         <span className="text-[10px] font-bold text-slate-400">
                           {100 - test.traffic_split}% / {test.traffic_split}%

@@ -8,7 +8,7 @@ import {
   Briefcase, PenTool, MessageSquare, HelpCircle, 
   Database, Image as ImageIcon, Mail, Shield, 
   ChevronRight, LogOut, FileText, Cpu, Target,
-  Zap, Info, List
+  Zap, Info, List, Search
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
