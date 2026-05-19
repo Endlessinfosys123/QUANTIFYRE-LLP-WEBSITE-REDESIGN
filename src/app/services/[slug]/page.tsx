@@ -9,6 +9,8 @@ import {
 import Link from "next/link";
 import * as motion from "framer-motion/client";
 import { cn } from "@/lib/utils";
+import { TechStack3D } from "@/components/ui/TechStack3D";
+import { Network, Database, Layers, Bot, Code2 } from "lucide-react";
 
 export const revalidate = 0;
 
@@ -55,53 +57,59 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         {/* ═══════════════════════════════════════════
             HERO — Dynamic Service Entry
         ═══════════════════════════════════════════ */}
-        <section className="relative pt-48 pb-32 overflow-hidden bg-surface tech-grid">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-[0.03] pointer-events-none">
-             <div className="w-full h-full flex items-center justify-center text-[40vw] font-black text-dark select-none">
-                {service.icon || "S"}
-             </div>
-          </div>
+        <section className="relative pt-48 pb-32 overflow-hidden bg-surface tech-grid min-h-[90vh] flex items-center">
+          <div className="container-custom relative z-10 w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div className="space-y-10">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white border border-border shadow-sm"
+                >
+                  <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  <span className="text-primary font-black uppercase tracking-[0.2em] text-[10px]">
+                    {pageBadge}
+                  </span>
+                </motion.div>
+                
+                <motion.h1
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1, duration: 0.8 }}
+                  className="text-6xl md:text-8xl lg:text-9xl font-black text-dark tracking-tighter leading-[0.85] text-balance"
+                >
+                  {pageH1}
+                </motion.h1>
 
-          <div className="container-custom relative z-10">
-            <div className="max-w-5xl mx-auto text-center space-y-10">
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-xl md:text-2xl text-text-secondary font-medium leading-relaxed text-pretty"
+                >
+                  {pageSubtext}
+                </motion.p>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="flex flex-wrap items-center gap-4 pt-4"
+                >
+                  <Button href="/contact" size="lg" className="h-16 px-10 rounded-2xl text-lg font-black shadow-2xl shadow-primary/20">
+                    Engage Expertise <ArrowRight className="ml-3" />
+                  </Button>
+                </motion.div>
+              </div>
+
+              {/* Unique 3D Core Services Animation */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white border border-border shadow-sm"
+                transition={{ delay: 0.3, duration: 1 }}
+                className="relative h-[600px] w-full"
               >
-                <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                <span className="text-primary font-black uppercase tracking-[0.2em] text-[10px]">
-                  {pageBadge}
-                </span>
-              </motion.div>
-              
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1, duration: 0.8 }}
-                className="text-6xl md:text-9xl font-black text-dark tracking-tighter leading-[0.85] text-balance"
-              >
-                {pageH1}
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-xl md:text-3xl text-text-secondary font-medium leading-relaxed max-w-3xl mx-auto text-pretty"
-              >
-                {pageSubtext}
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="flex flex-wrap items-center justify-center gap-4"
-              >
-                <Button href="/contact" size="lg" className="h-20 px-12 rounded-2xl text-xl font-black shadow-2xl shadow-primary/20">
-                  Engage Expertise <ArrowRight className="ml-3" />
-                </Button>
+                 <TechStack3D />
               </motion.div>
             </div>
           </div>
@@ -145,22 +153,58 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                   </div>
                   
                   <div className="grid grid-cols-1 gap-4">
-                     {capabilities.map((item: any, i: number) => {
+                     {capabilities.length > 0 ? capabilities.map((item: any, i: number) => {
                        const itemTitle = typeof item === 'string' ? item : (item.title || "Core Capability");
                        return (
-                         <div key={i} className="flex items-center gap-4 p-5 rounded-2xl border border-border hover:bg-surface transition-colors">
+                         <div key={i} className="flex items-center gap-4 p-5 rounded-2xl border border-border hover:bg-surface transition-colors shadow-sm">
                             <CheckCircle2 size={24} className="text-primary flex-shrink-0" />
-                            <span className="font-black text-dark uppercase text-xs tracking-wider">{itemTitle}</span>
+                            <span className="font-black text-dark uppercase text-sm tracking-wider">{itemTitle}</span>
                          </div>
                        );
-                     })}
+                     }) : (
+                       <>
+                         <div className="flex items-center gap-4 p-5 rounded-2xl border border-border hover:bg-surface transition-colors shadow-sm"><CheckCircle2 size={24} className="text-primary flex-shrink-0" /><span className="font-black text-dark uppercase text-sm tracking-wider">Enterprise Scalability</span></div>
+                         <div className="flex items-center gap-4 p-5 rounded-2xl border border-border hover:bg-surface transition-colors shadow-sm"><CheckCircle2 size={24} className="text-primary flex-shrink-0" /><span className="font-black text-dark uppercase text-sm tracking-wider">Military-Grade Security</span></div>
+                         <div className="flex items-center gap-4 p-5 rounded-2xl border border-border hover:bg-surface transition-colors shadow-sm"><CheckCircle2 size={24} className="text-primary flex-shrink-0" /><span className="font-black text-dark uppercase text-sm tracking-wider">Zero-Downtime Deployment</span></div>
+                       </>
+                     )}
                   </div>
                </div>
 
-               <div className="space-y-8 bg-surface rounded-[3rem] p-12 border border-border">
-                  <div className="prose prose-xl prose-slate max-w-none">
-                    <h3 className="text-3xl font-black text-dark mb-8 tracking-tight uppercase tracking-tighter">Execution Protocol</h3>
-                    <div className="text-text-secondary font-medium" dangerouslySetInnerHTML={{ __html: pageContent }} />
+               <div className="space-y-8">
+                  <div className="bg-surface rounded-[3rem] p-12 border border-border shadow-lg relative overflow-hidden">
+                     {/* Decorative background glow */}
+                     <div className="absolute -top-32 -right-32 w-64 h-64 bg-primary/20 blur-[80px] rounded-full pointer-events-none" />
+                     
+                     <div className="prose prose-xl prose-slate max-w-none relative z-10">
+                       <h3 className="text-4xl font-black text-dark mb-8 tracking-tighter uppercase">Execution Protocol</h3>
+                       {pageContent && pageContent.length > 20 ? (
+                         <div className="text-text-secondary font-medium leading-relaxed" dangerouslySetInnerHTML={{ __html: pageContent }} />
+                       ) : (
+                         <div className="text-text-secondary font-medium leading-relaxed space-y-6">
+                           <p>We deploy full-spectrum solutions customized precisely to your operational requirements. Our methodology ensures that every node of your infrastructure is fully optimized.</p>
+                           <p>Through rigorous testing and continuous integration protocols, our engineers deliver highly robust systems capable of processing at massive scale.</p>
+                         </div>
+                       )}
+                     </div>
+                  </div>
+
+                  {/* Add an immersive UI detail section if no content is provided to "fill out" the page */}
+                  <div className="grid grid-cols-2 gap-8">
+                     <div className="bg-dark rounded-[2rem] p-8 aspect-square relative overflow-hidden group">
+                       <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent z-0" />
+                       <Bot size={48} className="text-primary relative z-10 mb-6" />
+                       <h4 className="text-white text-2xl font-black relative z-10 leading-tight">AI Automation Logic</h4>
+                       <p className="text-slate-400 text-sm mt-4 relative z-10 font-bold">Self-healing systems driven by intelligent modeling.</p>
+                       <div className="absolute -bottom-8 -right-8 w-40 h-40 border border-white/5 rounded-full group-hover:scale-150 transition-transform duration-1000" />
+                     </div>
+                     <div className="bg-dark rounded-[2rem] p-8 aspect-square relative overflow-hidden group">
+                       <div className="absolute inset-0 bg-gradient-to-tl from-accent/20 to-transparent z-0" />
+                       <ShieldCheck size={48} className="text-accent relative z-10 mb-6" />
+                       <h4 className="text-white text-2xl font-black relative z-10 leading-tight">Zero-Trust Security</h4>
+                       <p className="text-slate-400 text-sm mt-4 relative z-10 font-bold">End-to-end encryption with quantum-safe policies.</p>
+                       <div className="absolute -bottom-8 -right-8 w-40 h-40 border border-white/5 rounded-full group-hover:scale-150 transition-transform duration-1000" />
+                     </div>
                   </div>
                </div>
             </div>

@@ -1,28 +1,10 @@
 "use client";
 
 import React from "react";
-import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
-import { ArrowRight, Code2, Database, LayoutTemplate, Sparkles, Terminal } from "lucide-react";
-
-const SplineCharacter = dynamic(() => import('@/components/ui/SplineCharacter'), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-[500px] flex items-center justify-center">
-      <motion.div
-        animate={{ y: [0, -15, 0], rotate: [0, 5, -5, 0] }}
-        transition={{ duration: 3, repeat: Infinity }}
-        className="text-8xl"
-      >
-        🧑‍💻
-      </motion.div>
-    </div>
-  ),
-});
-
-// Spline scene URLs — replace with your own custom Spline exports
-const SPLINE_HERO_SCENE = 'https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode';
+import { ArrowRight, Sparkles } from "lucide-react";
+import { TechStack3D } from "@/components/ui/TechStack3D";
 
 export const Hero = ({ data, stats }: { data?: any, stats?: any[] }) => {
   const heroBadge = data?.badge_text || "Enterprise IT Engineering";
@@ -147,7 +129,7 @@ export const Hero = ({ data, stats }: { data?: any, stats?: any[] }) => {
             </motion.div>
           </div>
 
-          {/* Right: Interactive 3D Spline Character */}
+         {/* Right: Interactive 3D Composition */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -162,59 +144,10 @@ export const Hero = ({ data, stats }: { data?: any, stats?: any[] }) => {
                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
              />
 
-             {/* Spline 3D Character (Desktop) */}
-             <div className="relative z-10 hidden md:block">
-               <SplineCharacter
-                 sceneUrl={SPLINE_HERO_SCENE}
-                 width={500}
-                 height={500}
-                 fallbackEmoji="🧑‍💻"
-                 className="drop-shadow-2xl"
-               />
+             {/* Custom 3D Tech Stack Animation */}
+             <div className="relative z-10 w-full">
+               <TechStack3D />
              </div>
-
-             {/* Mobile Fallback — animated static character */}
-             <motion.div
-               className="relative z-10 md:hidden"
-               animate={{ y: [0, -15, 0] }}
-               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-             >
-               <img
-                 src="/characters/hero-character.png"
-                 alt="QUANTIFYRE AI"
-                 className="w-[280px] h-auto drop-shadow-2xl"
-               />
-             </motion.div>
-
-             {/* Floating Dashboard Card */}
-             <motion.div 
-               animate={{ y: [0, -15, 0], x: [0, 5, 0] }} 
-               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-               className="absolute -right-4 top-1/4 w-48 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-2xl border border-primary/10 z-20"
-             >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center text-green-600"><LayoutTemplate size={18}/></div>
-                  <div>
-                    <div className="text-xs font-black text-dark">UI Component</div>
-                    <div className="text-[10px] text-green-500 font-bold">✓ Compiled</div>
-                  </div>
-                </div>
-             </motion.div>
-
-             {/* Floating Code Card */}
-             <motion.div 
-               animate={{ y: [0, 12, 0], x: [0, -5, 0] }} 
-               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-               className="absolute -left-4 bottom-1/4 w-44 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-2xl border border-primary/10 z-20"
-             >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center"><Code2 size={18} className="text-primary"/></div>
-                  <div>
-                    <div className="text-xs font-black text-dark">System Live</div>
-                    <div className="text-[10px] text-primary font-bold">Next.js 16</div>
-                  </div>
-                </div>
-             </motion.div>
 
              {/* Floating emoji badges */}
              {["🚀", "⚡", "🔥"].map((emoji, i) => (
