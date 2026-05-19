@@ -35,13 +35,13 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     if (isAuthPage) return <>{children}</>;
     
     return (
-      <div className="flex h-screen bg-[#F8FAFC]">
-        <AdminSkeleton className="w-64 h-full rounded-none" />
+      <div className="flex h-screen bg-[#0A0A0F]">
+        <AdminSkeleton className="w-64 h-full rounded-none opacity-20" />
         <div className="flex-1 flex flex-col">
-          <AdminSkeleton className="h-20 w-full rounded-none bg-white border-b border-slate-200" />
+          <AdminSkeleton className="h-20 w-full rounded-none bg-[#0A0A0F] border-b border-white/5 opacity-20" />
           <div className="p-8 space-y-6">
-            <AdminSkeleton className="h-10 w-48" />
-            <AdminSkeleton className="h-[400px] w-full" />
+            <AdminSkeleton className="h-10 w-48 opacity-20" />
+            <AdminSkeleton className="h-[400px] w-full opacity-20" />
           </div>
         </div>
       </div>
@@ -58,20 +58,38 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#F8FAFC] text-slate-900 font-sans">
+    <div className="flex min-h-screen bg-[#0A0A0F] text-slate-200 font-sans selection:bg-[#6C3FEF]/30 selection:text-white">
       <AdminSidebar />
       <div className="flex-1 ml-64 flex flex-col min-h-screen relative">
-        {/* Background Gradients */}
-        <div className="fixed inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-[#6C3FEF] opacity-[0.05] blur-[150px] rounded-full" />
-          <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-[#0EA5E9] opacity-[0.05] blur-[150px] rounded-full" />
+        {/* Quantum CMS Ambient Background Gradients */}
+        <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+          <div className="absolute top-[-10%] right-[-5%] w-[40vw] h-[40vw] bg-[#6C3FEF] opacity-[0.08] blur-[150px] rounded-full mix-blend-screen" />
+          <div className="absolute bottom-[-10%] left-[-5%] w-[40vw] h-[40vw] bg-[#0EA5E9] opacity-[0.05] blur-[150px] rounded-full mix-blend-screen" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full neural-grid opacity-[0.15]" />
         </div>
         
-        <AdminHeader />
-        <main className="p-8 flex-1 overflow-y-auto relative z-10">
+        <div className="relative z-20">
+          <AdminHeader />
+        </div>
+        <main className="p-8 flex-1 overflow-y-auto relative z-10 custom-scrollbar">
           {children}
         </main>
       </div>
+      <style dangerouslySetInnerHTML={{__html: `
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.02);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 255, 255, 0.2);
+        }
+      `}} />
     </div>
   );
 };
