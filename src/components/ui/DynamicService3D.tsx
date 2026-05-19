@@ -33,7 +33,7 @@ export const DynamicService3D = ({ slug }: { slug: string }) => {
               rotateZ: [0, 360],
               scale: [1, 1.2, 1]
             }}
-            transition={{ duration: 4 + (i % 3), repeat: Infinity, ease: "easeInOut", yoyo: Infinity }}
+            transition={{ duration: 4 + (i % 3), repeat: Infinity, ease: "easeInOut", repeatType: "reverse" }}
           >
             <Zap size={24} />
           </motion.div>
