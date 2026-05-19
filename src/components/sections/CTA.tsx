@@ -147,17 +147,19 @@ export const CTA = ({ data }: { data?: any }) => {
             )}
           </div>
 
-          {/* Floating 3D Character in corner */}
+          {/* Animated floating stats instead of character */}
           <motion.div 
-            className="absolute -bottom-4 -right-4 hidden lg:block z-10"
-            animate={{ y: [0, -12, 0] }}
+            className="absolute -bottom-2 -right-6 hidden lg:block z-10"
+            animate={{ y: [0, -8, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           >
-            <img 
-              src="/characters/cta-character.png" 
-              alt="QUANTIFYRE Team" 
-              className="w-48 h-48 object-contain drop-shadow-2xl"
-            />
+            <div className="bg-dark text-white rounded-2xl p-4 shadow-2xl border border-white/10 text-left w-36">
+              <div className="text-2xl font-black text-primary">12+</div>
+              <div className="text-[10px] font-black uppercase tracking-widest text-white/50 mt-1">Projects Delivered</div>
+              <div className="flex gap-1 mt-2">
+                {[...Array(5)].map((_, i) => <div key={i} className="text-yellow-400 text-xs">★</div>)}
+              </div>
+            </div>
           </motion.div>
         </motion.div>
       </div>

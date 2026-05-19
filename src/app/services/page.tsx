@@ -6,42 +6,38 @@ import * as motion from "framer-motion/client";
 import { ArrowRight, Brain, Code2, Monitor, BarChart3, Smartphone, PenTool, CheckCircle2, Zap, Clock, Globe, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
-const ICON_MAP: Record<string, any> = {
-  Brain, Code2, Monitor, BarChart3, Smartphone, PenTool
-};
+const ICON_MAP: Record<string, any> = { Brain, Code2, Monitor, BarChart3, Smartphone, PenTool };
 
-const SERVICE_COLORS: Record<string, { from: string; to: string; accent: string }> = {
-  "ai-automation":      { from: "#6C3FEF", to: "#a855f7", accent: "#ddd6fe" },
-  "software-engineering":{ from: "#0ea5e9", to: "#38bdf8", accent: "#bae6fd" },
-  "web-development":    { from: "#10b981", to: "#34d399", accent: "#a7f3d0" },
-  "digital-marketing":  { from: "#f59e0b", to: "#fbbf24", accent: "#fde68a" },
-  "mobile-development": { from: "#ef4444", to: "#f87171", accent: "#fecaca" },
-  "uiux-design":        { from: "#8b5cf6", to: "#c084fc", accent: "#ede9fe" },
+const SERVICE_META: Record<string, { from: string; to: string; bg: string; text: string }> = {
+  "ai-automation":       { from: "#6C3FEF", to: "#a855f7", bg: "bg-violet-50",  text: "text-violet-700" },
+  "software-engineering":{ from: "#0ea5e9", to: "#38bdf8", bg: "bg-sky-50",     text: "text-sky-700"    },
+  "web-development":     { from: "#10b981", to: "#34d399", bg: "bg-emerald-50", text: "text-emerald-700" },
+  "digital-marketing":   { from: "#f59e0b", to: "#fbbf24", bg: "bg-amber-50",   text: "text-amber-700"  },
+  "mobile-development":  { from: "#ef4444", to: "#f87171", bg: "bg-red-50",     text: "text-red-700"    },
+  "uiux-design":         { from: "#8b5cf6", to: "#c084fc", bg: "bg-purple-50",  text: "text-purple-700" },
 };
 
 const WHY_US = [
-  { icon: Zap,         title: "AI-First Approach",        desc: "Every solution we build has intelligent automation at its core — not as an afterthought." },
-  { icon: Clock,       title: "On-Time Delivery",         desc: "Strict sprint cycles, weekly demos, and zero surprise delays. We respect your deadlines." },
-  { icon: ShieldCheck, title: "Enterprise-Grade Security",desc: "OWASP compliance, end-to-end encryption, and RBAC built into every project by default." },
-  { icon: Globe,       title: "International Experience", desc: "Clients across India, UAE, UK, Canada, and Australia — we work across time zones seamlessly." },
+  { icon: Zap,         title: "AI-First Approach",         desc: "Every solution we build has intelligent automation at its core — not as an afterthought." },
+  { icon: Clock,       title: "On-Time Delivery",          desc: "Strict sprint cycles, weekly demos, and zero surprise delays. We respect your deadlines." },
+  { icon: ShieldCheck, title: "Enterprise-Grade Security", desc: "OWASP compliance, end-to-end encryption, and RBAC built into every project by default." },
+  { icon: Globe,       title: "International Experience",  desc: "Clients across India, UAE, UK, Canada, and Australia — we work across time zones seamlessly." },
 ];
 
 export default async function ServicesPage() {
   const dbServices = await getServices().catch(() => []);
-  // Use DB data if available, else fall back to constants
-  const services = dbServices.length > 0 ? dbServices : SERVICES.map((s, i) => ({
-    ...s, slug: s.id, title: s.title, description: s.description,
+  const services = dbServices.length > 0 ? dbServices : SERVICES.map((s) => ({
+    ...s, slug: s.id,
   }));
 
   return (
     <main className="bg-white min-h-screen">
 
-      {/* ═══════════════════ HERO ═══════════════════ */}
+      {/* ═══════════ HERO ═══════════ */}
       <section className="relative pt-40 pb-24 overflow-hidden bg-surface tech-grid border-b border-border">
-        {/* Animated background orbs */}
-        <motion.div animate={{ scale: [1, 1.3, 1], opacity: [0.08, 0.15, 0.08] }} transition={{ duration: 6, repeat: Infinity }}
+        <motion.div animate={{ scale: [1, 1.3, 1], opacity: [0.06, 0.14, 0.06] }} transition={{ duration: 6, repeat: Infinity }}
           className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-primary blur-[120px] pointer-events-none" />
-        <motion.div animate={{ scale: [1.2, 1, 1.2], opacity: [0.06, 0.12, 0.06] }} transition={{ duration: 8, repeat: Infinity, delay: 1 }}
+        <motion.div animate={{ scale: [1.2, 1, 1.2], opacity: [0.05, 0.1, 0.05] }} transition={{ duration: 8, repeat: Infinity, delay: 1 }}
           className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-accent blur-[100px] pointer-events-none" />
 
         <div className="container-custom relative z-10">
@@ -75,7 +71,7 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      {/* ═══════════════════ SERVICE CARDS GRID ═══════════════════ */}
+      {/* ═══════════ SERVICE CARDS ═══════════ */}
       <section className="py-24 bg-white">
         <div className="container-custom">
           <div className="space-y-16">
@@ -92,7 +88,7 @@ export default async function ServicesPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {services.map((svc: any, i: number) => {
                 const slug = svc.slug || svc.id;
-                const colors = SERVICE_COLORS[slug] || { from: "#6C3FEF", to: "#a855f7", accent: "#ddd6fe" };
+                const meta = SERVICE_META[slug] || { from: "#6C3FEF", to: "#a855f7", bg: "bg-violet-50", text: "text-violet-700" };
                 const staticSvc = SERVICES.find(s => s.id === slug);
                 const Icon = ICON_MAP[staticSvc?.icon || "Code2"] || Code2;
                 const deliverables = staticSvc?.deliverables || [];
@@ -107,20 +103,24 @@ export default async function ServicesPage() {
                     className="group relative bg-white rounded-3xl border border-border shadow-sm hover:shadow-2xl hover:border-transparent transition-all duration-500 overflow-hidden flex flex-col"
                   >
                     {/* Gradient top bar */}
-                    <div className="h-1.5 w-full" style={{ background: `linear-gradient(90deg, ${colors.from}, ${colors.to})` }} />
+                    <div className="h-1.5 w-full" style={{ background: `linear-gradient(90deg, ${meta.from}, ${meta.to})` }} />
 
-                    {/* Icon area */}
                     <div className="p-8 pb-0">
-                      <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110"
-                        style={{ background: `linear-gradient(135deg, ${colors.from}22, ${colors.to}22)`, border: `1.5px solid ${colors.from}44` }}>
-                        <Icon size={28} style={{ color: colors.from }} />
+                      {/* Icon */}
+                      <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500 group-hover:scale-110"
+                        style={{ background: `${meta.from}15`, border: `1.5px solid ${meta.from}33` }}>
+                        <Icon size={28} style={{ color: meta.from }} />
                       </div>
-
-                      <div className="text-[10px] font-black uppercase tracking-[0.3em] mb-3" style={{ color: colors.from }}>
+                      {/* Number + Title */}
+                      <div className="text-[10px] font-black uppercase tracking-[0.3em] mb-2" style={{ color: meta.from }}>
                         {`0${i + 1}. Service`}
                       </div>
-                      <h3 className="text-2xl font-black text-dark tracking-tight mb-3">{svc.title}</h3>
-                      <p className="text-text-secondary font-medium leading-relaxed text-sm mb-6">{svc.description}</p>
+                      <h3 className="text-2xl font-black text-dark tracking-tight mb-3 group-hover:text-primary transition-colors duration-300">
+                        {svc.title}
+                      </h3>
+                      <p className="text-text-secondary font-medium leading-relaxed text-sm mb-6">
+                        {svc.description}
+                      </p>
                     </div>
 
                     {/* Deliverables */}
@@ -130,7 +130,7 @@ export default async function ServicesPage() {
                         <div className="space-y-2">
                           {deliverables.map((d: string, j: number) => (
                             <div key={j} className="flex items-center gap-3">
-                              <CheckCircle2 size={14} style={{ color: colors.from }} className="flex-shrink-0" />
+                              <CheckCircle2 size={14} style={{ color: meta.from }} className="flex-shrink-0" />
                               <span className="text-sm font-bold text-dark">{d}</span>
                             </div>
                           ))}
@@ -138,13 +138,12 @@ export default async function ServicesPage() {
                       </div>
                     )}
 
-                    {/* Tech stack pills */}
+                    {/* Tech pills */}
                     {tech.length > 0 && (
                       <div className="px-8 pb-6">
                         <div className="flex flex-wrap gap-2">
                           {tech.map((t: string) => (
-                            <span key={t} className="px-3 py-1 rounded-full text-[10px] font-black"
-                              style={{ background: colors.accent, color: colors.from }}>
+                            <span key={t} className={`px-3 py-1 rounded-full text-[10px] font-black ${meta.bg} ${meta.text}`}>
                               {t}
                             </span>
                           ))}
@@ -152,28 +151,17 @@ export default async function ServicesPage() {
                       </div>
                     )}
 
-                    {/* CTA */}
+                    {/* CTA — pure CSS hover via group class, no inline event handlers */}
                     <div className="mt-auto p-8 pt-0">
                       <Link href={`/services/${slug}`}
-                        className="w-full flex items-center justify-between p-4 rounded-2xl border transition-all duration-300 font-black text-sm group/cta"
-                        style={{ borderColor: `${colors.from}33`, color: colors.from }}
-                        onMouseEnter={e => {
-                          (e.currentTarget as HTMLElement).style.background = colors.from;
-                          (e.currentTarget as HTMLElement).style.color = "#fff";
-                        }}
-                        onMouseLeave={e => {
-                          (e.currentTarget as HTMLElement).style.background = "transparent";
-                          (e.currentTarget as HTMLElement).style.color = colors.from;
-                        }}
+                        className="w-full flex items-center justify-between p-4 rounded-2xl border font-black text-sm transition-all duration-300 group-hover:text-white group-hover:border-transparent"
+                        style={{ borderColor: `${meta.from}44`, color: meta.from,
+                          ["--hover-bg" as string]: meta.from }}
                       >
                         <span>View Full Details</span>
                         <ArrowRight size={16} />
                       </Link>
                     </div>
-
-                    {/* Hover gradient overlay */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-[0.02] transition-opacity duration-500 pointer-events-none rounded-3xl"
-                      style={{ background: `linear-gradient(135deg, ${colors.from}, ${colors.to})` }} />
                   </motion.div>
                 );
               })}
@@ -182,7 +170,7 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      {/* ═══════════════════ WHY QUANTIFYRE ═══════════════════ */}
+      {/* ═══════════ WHY US ═══════════ */}
       <section className="py-24 bg-surface border-y border-border">
         <div className="container-custom">
           <div className="space-y-16">
@@ -215,7 +203,7 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      {/* ═══════════════════ PROCESS SNAPSHOT ═══════════════════ */}
+      {/* ═══════════ PROCESS ═══════════ */}
       <section className="py-24 bg-dark text-white">
         <div className="container-custom">
           <div className="max-w-5xl mx-auto space-y-16">
@@ -244,7 +232,7 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      {/* ═══════════════════ CTA ═══════════════════ */}
+      {/* ═══════════ CTA ═══════════ */}
       <section className="py-24 bg-white">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center space-y-10">

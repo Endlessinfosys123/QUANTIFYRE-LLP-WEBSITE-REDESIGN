@@ -41,21 +41,14 @@ export const Services = ({ data }: { data?: any[] }) => {
               Engineered for <span className="text-primary">Scale.</span>
             </motion.h2>
           </div>
-          {/* Floating services character */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            animate={{ y: [0, -10, 0] }}
-            transition={{ y: { duration: 3, repeat: Infinity, ease: "easeInOut" } }}
-            className="hidden lg:block shrink-0"
-          >
-            <img
-              src="/characters/services-character.png"
-              alt="Services Developer"
-              className="w-40 h-40 object-contain drop-shadow-xl"
-            />
-          </motion.div>
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
+              <span className="text-[10px] font-black text-primary uppercase tracking-widest">6 Disciplines</span>
+            </div>
+            <div className="text-right text-text-secondary font-medium text-sm hidden lg:block">
+              Click any service to see full details →
+            </div>
+          </div>
         </div>
 
         {/* Bento Grid Layout */}
