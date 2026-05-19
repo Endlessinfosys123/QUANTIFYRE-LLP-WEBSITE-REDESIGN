@@ -4,6 +4,7 @@ import "./globals.css";
 import { ConditionalLayout } from "@/components/layout/ConditionalLayout";
 import { SplashProvider } from "@/components/ui/SplashProvider";
 import { PageTransitionLoader } from "@/components/ui/PageTransitionLoader";
+import { ScrollProgressBar } from "@/components/ui/ScrollAnimations";
 import { getSiteConfig, getNavItems, getFooterLinks, getServices } from "@/lib/supabase/data";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -34,6 +35,7 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col font-sans overflow-x-hidden">
         <div className="grain-overlay" />
         <PageTransitionLoader />
+        <ScrollProgressBar />
         <SplashProvider config={config}>
           <ConditionalLayout 
             navItems={navItems} 

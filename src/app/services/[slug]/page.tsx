@@ -222,18 +222,16 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════
-          PROCESS — How We Work
-      ══════════════════════════════════════════════ */}
-      <section className="py-24 bg-dark text-white">
+      {/* ═══ PROCESS — Light Theme ═══ */}
+      <section className="py-24 bg-surface border-y border-border">
         <div className="container-custom">
           <div className="space-y-16">
             <div className="text-center space-y-4">
               <div className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Our Process</div>
-              <h2 className="text-4xl md:text-5xl font-black tracking-tighter">
+              <h2 className="text-4xl md:text-5xl font-black text-dark tracking-tighter">
                 How We <span className="text-primary">Deliver</span>
               </h2>
-              <p className="text-slate-400 font-medium max-w-xl mx-auto">
+              <p className="text-text-secondary font-medium max-w-xl mx-auto">
                 A transparent, structured process so you always know what happens next.
               </p>
             </div>
@@ -246,13 +244,13 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="relative bg-white/5 border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-all"
+                  className="relative bg-white border border-border rounded-3xl p-8 hover:border-primary/30 hover:shadow-lg transition-all"
                 >
-                  <div className="text-5xl font-black text-primary/20 mb-6">{step.step}</div>
-                  <h3 className="text-xl font-black text-white mb-3">{step.title}</h3>
-                  <p className="text-slate-400 font-medium leading-relaxed text-sm">{step.desc}</p>
+                  <div className="text-5xl font-black text-primary/15 mb-6">{step.step}</div>
+                  <h3 className="text-xl font-black text-dark mb-3">{step.title}</h3>
+                  <p className="text-text-secondary font-medium leading-relaxed text-sm">{step.desc}</p>
                   {i < detail.processSteps.length - 1 && (
-                    <ChevronRight size={24} className="absolute top-1/2 -right-3 -translate-y-1/2 text-white/20 hidden lg:block" />
+                    <ChevronRight size={24} className="absolute top-1/2 -right-3 -translate-y-1/2 text-border hidden lg:block" />
                   )}
                 </motion.div>
               ))}
@@ -318,23 +316,21 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════
-          CTA
-      ══════════════════════════════════════════════ */}
-      <section className="py-24 bg-dark">
+      {/* ═══ CTA — Light ═══ */}
+      <section className="py-24 bg-surface border-t border-border">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center space-y-10">
-            <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-none">
+            <h2 className="text-5xl md:text-7xl font-black text-dark tracking-tighter leading-none">
               Ready to Start? <br /><span className="text-primary">Let's Talk.</span>
             </h2>
-            <p className="text-xl text-slate-400 font-medium max-w-2xl mx-auto">
+            <p className="text-xl text-text-secondary font-medium max-w-2xl mx-auto">
               Get a free 30-minute consultation with our {service.title} specialists. We'll assess your requirements and send a detailed proposal within 48 hours.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <Button href="/contact" variant="primary" size="lg" className="h-16 px-10 rounded-2xl text-lg font-black">
+              <Button href="/contact" variant="primary" size="lg" className="h-16 px-10 rounded-2xl text-lg font-black shadow-lg shadow-primary/20">
                 Get Free Consultation
               </Button>
-              <Button href="/portfolio" variant="outline" size="lg" className="h-16 px-10 rounded-2xl text-lg font-black text-white border-slate-700">
+              <Button href="/portfolio" variant="outline" size="lg" className="h-16 px-10 rounded-2xl text-lg font-black">
                 View Case Studies
               </Button>
             </div>
