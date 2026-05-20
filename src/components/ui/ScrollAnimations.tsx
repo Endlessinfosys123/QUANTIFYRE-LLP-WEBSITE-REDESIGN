@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
+import React from "react";
+import { motion, useScroll, useTransform, useSpring, useInView, useMotionValue } from "framer-motion";
 import { useRef, ReactNode } from "react";
 
 /* ─── Fade Up — most common scroll reveal ──────────────────── */
@@ -184,8 +185,98 @@ export function ScrollProgressBar() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
   return (
     <motion.div
-      className="fixed top-0 left-0 right-0 h-0.5 z-[99999] origin-left"
-      style={{ scaleX, background: "linear-gradient(90deg, #6C3FEF, #0ea5e9)" }}
+      className="fixed top-0 left-0 right-0 h-[2px] z-[99999] origin-left"
+      style={{ scaleX, background: "linear-gradient(90deg, #10b981, #22c55e, #6ee7b7)" }}
     />
+  );
+}
+
+/* ─── Blur Reveal ─── text blurs in beautifully ───────────── */
+export function BlurReveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  return (
+    <motion.div ref={ref} className={className}
+      initial={{ opacity: 0, filter: "blur(12px)", y: 20 }}
+      animate={inView ? { opacity: 1, filter: "blur(0px)", y: 0 } : {}}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ─── Spotlight Card ─── green glow follows cursor ────────── */
+export function SpotlightCard({ children, className = "" }: { children: ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const handleMove = (e: React.MouseEvent) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
+  };
+
+  const background = useTransform(
+    [mouseX, mouseY],
+    ([x, y]: number[]) =>
+      `radial-gradient(250px circle at ${x}px ${y}px, rgba(34,197,94,0.08), transparent 80%)`
+  );
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMove}
+      className={`relative overflow-hidden ${className}`}
+      style={{ background } as any}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ─── Typewriter Text ─── chars appear one by one ─────────── */
+export function TypewriterText({ text, delay = 0, className = "" }: { text: string; delay?: number; className?: string }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true });
+  const chars = text.split("");
+  return (
+    <motion.span
+      ref={ref}
+      className={`inline-block ${className}`}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      variants={{ visible: { transition: { staggerChildren: 0.04, delayChildren: delay } } }}
+    >
+      {chars.map((char, i) => (
+        <motion.span
+          key={i}
+          className="inline-block"
+          variants={{
+            hidden: { opacity: 0, y: 8 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
+          }}
+        >
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+    </motion.span>
+  );
+}
+
+/* ─── Slide Up Fade ─── smooth section entrance ────────────── */
+export function SlideUp({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  return (
+    <motion.div ref={ref} className={className}
+      initial={{ opacity: 0, y: 60, scale: 0.97 }}
+      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
   );
 }
