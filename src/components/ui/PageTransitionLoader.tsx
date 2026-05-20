@@ -4,28 +4,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-// Cartoon Rocket that zooms across the top progress bar
-function MiniRocket({ progress }: { progress: number }) {
-  return (
-    <motion.div
-      className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2"
-      animate={{ left: `${Math.min(progress, 97)}%` }}
-      transition={{ type: "spring", stiffness: 80, damping: 18 }}
-    >
-      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-7 h-7 -rotate-90">
-        <path d="M14 2C14 2 8 8 8 16H20C20 8 14 2 14 2Z" fill="#6366f1" stroke="#3730a3" strokeWidth="1.5" strokeLinejoin="round"/>
-        <rect x="10" y="16" width="8" height="7" rx="2" fill="#818cf8" stroke="#3730a3" strokeWidth="1.5"/>
-        <path d="M8 19L4 22L8 24V19Z" fill="#f59e0b" stroke="#b45309" strokeWidth="1" strokeLinejoin="round"/>
-        <path d="M20 19L24 22L20 24V19Z" fill="#f59e0b" stroke="#b45309" strokeWidth="1" strokeLinejoin="round"/>
-        <circle cx="14" cy="10" r="3" fill="white" stroke="#3730a3" strokeWidth="1.5"/>
-        <circle cx="14" cy="10" r="1.5" fill="#bae6fd"/>
-        {/* Flame */}
-        <path d="M11 23 Q14 29 17 23" stroke="#f97316" strokeWidth="2" strokeLinecap="round" fill="none"/>
-      </svg>
-    </motion.div>
-  );
-}
-
 export function PageTransitionLoader() {
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(false);
@@ -36,26 +14,22 @@ export function PageTransitionLoader() {
   useEffect(() => {
     if (pathname !== prevPathname.current) {
       prevPathname.current = pathname;
-      // Start loading
       setIsLoading(true);
       setProgress(0);
 
-      // Rapid progress sequence
-      const steps = [20, 40, 60, 80, 95];
+      const steps = [20, 45, 65, 82, 95];
       steps.forEach((val, i) => {
-        timerRef.current = setTimeout(() => setProgress(val), i * 120);
+        timerRef.current = setTimeout(() => setProgress(val), i * 100);
       });
 
-      // Complete
       timerRef.current = setTimeout(() => {
         setProgress(100);
         setTimeout(() => {
           setIsLoading(false);
           setProgress(0);
-        }, 300);
-      }, steps.length * 120 + 100);
+        }, 250);
+      }, steps.length * 100 + 80);
     }
-
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
@@ -69,24 +43,47 @@ export function PageTransitionLoader() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed top-0 left-0 right-0 z-[9998] h-1.5"
+          className="fixed top-0 left-0 right-0 z-[9998]"
+          style={{ height: 2 }}
         >
-          {/* Track */}
-          <div className="absolute inset-0 bg-border" />
-          {/* Progress Fill */}
+          {/* Glow trail */}
           <motion.div
-            className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%]"
-            animate={{ width: `${progress}%`, backgroundPosition: ["0% 0%", "100% 0%"] }}
-            transition={{ width: { type: "spring", stiffness: 60, damping: 12 }, backgroundPosition: { duration: 1, repeat: Infinity } }}
+            className="absolute inset-y-0 left-0"
+            style={{
+              background: "rgba(34,197,94,0.4)",
+              filter: "blur(6px)",
+              height: 8,
+              top: -3,
+            }}
+            animate={{ width: `${progress}%` }}
+            transition={{ type: "spring", stiffness: 50, damping: 15 }}
           />
-          {/* Rocket Icon */}
-          <div className="absolute inset-0 overflow-visible">
-            <MiniRocket progress={progress} />
-          </div>
-          {/* Glow Effect */}
-          <div
-            className="absolute inset-y-0 bg-primary/30 blur-md transition-all duration-200"
-            style={{ left: 0, width: `${progress}%` }}
+          {/* Sharp bar */}
+          <motion.div
+            className="absolute inset-y-0 left-0"
+            style={{ background: "linear-gradient(90deg, #10b981, #22c55e, #6ee7b7)" }}
+            animate={{ width: `${progress}%` }}
+            transition={{ type: "spring", stiffness: 50, damping: 15 }}
+          >
+            {/* Shimmer */}
+            <motion.div
+              className="absolute inset-0"
+              style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)" }}
+              animate={{ x: ["-100%", "200%"] }}
+              transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+            />
+          </motion.div>
+          {/* Leading glow dot */}
+          <motion.div
+            className="absolute top-1/2 -translate-y-1/2 rounded-full"
+            style={{
+              width: 8, height: 8,
+              background: "#22c55e",
+              boxShadow: "0 0 6px #22c55e, 0 0 14px #22c55e, 0 0 28px rgba(34,197,94,0.4)",
+              marginLeft: -4,
+            }}
+            animate={{ left: `${Math.min(progress, 98)}%` }}
+            transition={{ type: "spring", stiffness: 50, damping: 15 }}
           />
         </motion.div>
       )}
