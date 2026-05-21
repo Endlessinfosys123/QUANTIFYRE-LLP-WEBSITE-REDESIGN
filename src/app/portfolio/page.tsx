@@ -4,14 +4,15 @@ import { PROJECTS } from "@/lib/constants";
 import Link from "next/link";
 import Image from "next/image";
 import * as motion from "framer-motion/client";
-import { ArrowRight, ArrowUpRight, ExternalLink, TrendingUp, Users, Globe, Clock } from "lucide-react";
+import { ArrowRight, ArrowUpRight, ExternalLink, TrendingUp, Users, Globe, Clock, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { TypewriterHeadline, HeroBadge, FloatingShape, HeroGridBg, UnderlineReveal } from "@/components/ui/PageHero";
 
 const STATS = [
-  { icon: TrendingUp, value: "12+", label: "Projects Delivered", color: "#6C3FEF" },
-  { icon: Users,      value: "8+",  label: "Happy Clients",      color: "#0ea5e9" },
-  { icon: Globe,      value: "4",   label: "Countries Served",   color: "#10b981" },
-  { icon: Clock,      value: "100%",label: "On-Time Delivery",   color: "#f59e0b" },
+  { icon: TrendingUp, value: "12+", label: "Projects Delivered", color: "#22c55e" },
+  { icon: Users,      value: "8+",  label: "Happy Clients",      color: "#10b981" },
+  { icon: Globe,      value: "4",   label: "Countries Served",   color: "#6ee7b7" },
+  { icon: Clock,      value: "100%",label: "On-Time Delivery",   color: "#34d399" },
 ];
 
 export default async function PortfolioPage() {
@@ -28,62 +29,79 @@ export default async function PortfolioPage() {
   return (
     <main className="bg-white min-h-screen">
 
-      {/* ═══ HERO — Light Theme ═══ */}
-      <section className="relative pt-40 pb-24 overflow-hidden bg-surface tech-grid border-b border-border">
-        {/* Soft gradient orbs */}
+      {/* ═══ HERO — Typewriter + Animated Stat Burst ═══ */}
+      <section className="relative pt-44 pb-28 overflow-hidden bg-white border-b border-emerald-50">
+        <HeroGridBg variant="dots" />
+        <FloatingShape size={550} x="-12%" y="-20%" color="rgba(34,197,94,0.06)"  blur={110} delay={0} />
+        <FloatingShape size={380} x="68%"  y="55%"  color="rgba(16,185,129,0.05)" blur={80}  delay={2} />
+        <FloatingShape size={240} x="82%"  y="-10%" color="rgba(110,231,183,0.07)" blur={55} delay={1} />
+
+        {/* Accent line */}
         <motion.div
-          animate={{ scale: [1, 1.3, 1], opacity: [0.08, 0.16, 0.08] }}
-          transition={{ duration: 7, repeat: Infinity }}
-          className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full bg-primary blur-[140px] pointer-events-none"
-        />
-        <motion.div
-          animate={{ scale: [1.2, 1, 1.2], opacity: [0.05, 0.12, 0.05] }}
-          transition={{ duration: 9, repeat: Infinity, delay: 1 }}
-          className="absolute bottom-0 left-1/4 w-[400px] h-[400px] rounded-full bg-accent blur-[120px] pointer-events-none"
+          initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute top-0 left-0 right-0 h-[2px] origin-left"
+          style={{ background: "linear-gradient(90deg, #22c55e, #10b981, #6ee7b7, transparent)" }}
         />
 
         <div className="container-custom relative z-10">
-          <div className="space-y-8 max-w-5xl mx-auto text-center">
-            <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white border border-border shadow-sm">
-              <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-primary font-black uppercase tracking-[0.3em] text-[10px]">Case Study Registry — Quantifyre LLP</span>
-            </motion.div>
+          <div className="max-w-5xl mx-auto text-center space-y-10">
 
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.8 }}
-              className="text-7xl md:text-[9rem] font-black text-dark tracking-tighter leading-[0.88]"
+            {/* Badge */}
+            <div className="flex justify-center">
+              <HeroBadge icon={<Briefcase size={14} />} label="Case Study Registry — Quantifyre LLP" />
+            </div>
+
+            {/* Typewriter headline */}
+            <div className="space-y-4">
+              <TypewriterHeadline
+                text="Our Work."
+                className="text-7xl md:text-[9rem] font-black text-dark tracking-tighter leading-[0.88]"
+                delay={0.2}
+                speed={0.06}
+              />
+              <motion.p
+                initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ delay: 1.2, duration: 0.65 }}
+                className="text-xl text-text-secondary font-medium leading-relaxed max-w-2xl mx-auto"
+              >
+                Real projects. Real clients. Real results. Every case study here represents a business problem we solved with precision engineering.
+              </motion.p>
+            </div>
+
+            {/* Animated stat cards */}
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.12, delayChildren: 1.4 } } }}
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto"
             >
-              Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#0ea5e9]">Work.</span>
-            </motion.h1>
-
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
-              className="text-xl text-text-secondary font-medium leading-relaxed max-w-2xl mx-auto">
-              Real projects. Real clients. Real results. Every case study here represents a business problem we solved with precision engineering.
-            </motion.p>
+              {STATS.map((s, i) => {
+                const Icon = s.icon;
+                return (
+                  <motion.div
+                    key={i}
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.7, y: 20 },
+                      visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 220, damping: 16 } },
+                    }}
+                    whileHover={{ y: -5, boxShadow: `0 12px 30px ${s.color}22` }}
+                    className="text-center p-5 rounded-2xl bg-white border border-emerald-100 shadow-sm transition-all cursor-default"
+                  >
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: `${s.color}18` }}>
+                      <Icon size={16} style={{ color: s.color }} />
+                    </div>
+                    <div className="text-2xl font-black mb-0.5" style={{ color: s.color }}>{s.value}</div>
+                    <div className="text-[8px] font-black uppercase tracking-widest text-slate-400">{s.label}</div>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
           </div>
-
-          {/* Stats row — light cards */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 max-w-4xl mx-auto"
-          >
-            {STATS.map((s, i) => {
-              const Icon = s.icon;
-              return (
-                <div key={i} className="text-center p-6 rounded-3xl bg-white border border-border shadow-sm hover:shadow-lg hover:border-primary/30 transition-all">
-                  <div className="w-10 h-10 rounded-2xl flex items-center justify-center mx-auto mb-3" style={{ background: `${s.color}15` }}>
-                    <Icon size={18} style={{ color: s.color }} />
-                  </div>
-                  <div className="text-3xl font-black mb-1" style={{ color: s.color }}>{s.value}</div>
-                  <div className="text-xs font-black text-text-secondary uppercase tracking-widest">{s.label}</div>
-                </div>
-              );
-            })}
-          </motion.div>
         </div>
       </section>
+
 
       {/* ═══ FEATURED PROJECT ═══ */}
       {featured && (

@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { COMPANY_DETAILS, SERVICES } from "@/lib/constants";
-import { Mail, Phone, MapPin, Send, CheckCircle2, Loader2, ChevronDown } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle2, Loader2, ChevronDown, MessageSquare } from "lucide-react";
 import { useState, FormEvent } from "react";
 
 // Top 30 country codes
@@ -34,9 +34,15 @@ function PaperPlaneSVG() {
   );
 }
 
-function StarBurst({ className }: { className?: string }) {
+/* ── Pulse Ring — concentric animated rings ── */
+function PulseRing({ delay, size }: { delay: number; size: number }) {
   return (
-    <div className={`absolute rounded-full opacity-20 animate-morph-blob pointer-events-none ${className}`} />
+    <motion.div
+      className="absolute rounded-full border border-emerald-200/60 pointer-events-none"
+      style={{ width: size, height: size, top: "50%", left: "50%", x: "-50%", y: "-50%" }}
+      animate={{ scale: [1, 1.4, 1], opacity: [0.5, 0, 0.5] }}
+      transition={{ duration: 3.5, repeat: Infinity, delay, ease: "easeOut" }}
+    />
   );
 }
 
@@ -88,52 +94,126 @@ export default function ContactPage() {
     "w-full bg-white border-2 rounded-2xl px-5 py-4 text-dark font-semibold text-base outline-none transition-all duration-300 placeholder:text-text-secondary/40";
   const getInputClass = (field: string) =>
     `${inputBase} ${focusedField === field
-      ? "border-primary shadow-[0_0_0_4px_rgba(99,102,241,0.12)] scale-[1.01]"
-      : "border-border hover:border-primary/40"
+      ? "border-primary shadow-[0_0_0_4px_rgba(34,197,94,0.10)] scale-[1.01]"
+      : "border-emerald-100 hover:border-emerald-300"
     }`;
 
   return (
     <main className="bg-white min-h-screen">
-      <section className="relative pt-36 pb-28 overflow-hidden">
-        {/* Background blobs */}
-        <StarBurst className="w-[500px] h-[500px] -top-40 -left-48 bg-primary" />
-        <StarBurst className="w-[400px] h-[400px] -bottom-32 -right-40 bg-accent delay-300" />
-        {[
-          "top-40 left-1/4 bg-primary", "top-64 right-1/3 bg-accent",
-          "bottom-60 left-1/3 bg-amber-400", "bottom-32 right-1/4 bg-rose-400",
-        ].map((cls, i) => (
-          <div key={i} className={`absolute w-4 h-4 rounded-full opacity-25 pointer-events-none animate-float ${cls}`} style={{ animationDelay: `${i * 0.4}s` }} />
-        ))}
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          HERO — Animated Pulse Center + Word-Split Headline
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className="relative pt-44 pb-16 overflow-hidden bg-white border-b border-emerald-50">
+        {/* Subtle grid */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "radial-gradient(rgba(34,197,94,0.10) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* Animated pulse rings — centered */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+          {[200, 340, 480, 620, 760].map((size, i) => (
+            <PulseRing key={i} size={size} delay={i * 0.6} />
+          ))}
+          {/* Center dot */}
+          <motion.div
+            className="absolute rounded-full bg-primary"
+            style={{ width: 12, height: 12, top: "50%", left: "50%", x: "-50%", y: "-50%" }}
+            animate={{ scale: [1, 1.5, 1], boxShadow: ["0 0 0 0 rgba(34,197,94,0.3)", "0 0 0 12px rgba(34,197,94,0)", "0 0 0 0 rgba(34,197,94,0)"] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+        </div>
+
+        {/* Accent top line */}
+        <motion.div
+          initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
+          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute top-0 left-0 right-0 h-[2px] origin-left"
+          style={{ background: "linear-gradient(90deg, #22c55e, #10b981, transparent)" }}
+        />
 
         <div className="container-custom relative z-10">
+          <div className="text-center mb-16 space-y-6">
 
-          {/* Header */}
-          <div className="text-center mb-20 space-y-5">
+            {/* Badge */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ type: "spring", stiffness: 200, damping: 14 }}
-              className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-primary/10 border-2 border-primary/20 text-primary font-black uppercase tracking-widest text-xs"
+              initial={{ opacity: 0, scale: 0.8, y: -10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-emerald-100 shadow-sm"
             >
-              <span className="animate-bounce-cartoon inline-block">✉️</span> Start A Conversation
+              <MessageSquare size={13} className="text-primary" />
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">Start A Conversation</span>
+              <motion.div
+                className="w-1.5 h-1.5 rounded-full bg-emerald-400"
+                animate={{ scale: [1, 1.5, 1] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              />
             </motion.div>
+
+            {/* Word-by-word headline */}
             <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, type: "spring", stiffness: 120 }}
               className="text-7xl md:text-9xl font-black text-dark tracking-tighter leading-[0.85]"
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } } }}
             >
-              Let&apos;s <span className="text-primary">Build.</span>
+              {["Let's", "Build."].map((word, i) => (
+                <span key={i} className="overflow-hidden inline-block leading-[1.1] mr-4">
+                  <motion.span
+                    className={`inline-block ${i === 1 ? "text-primary" : ""}`}
+                    variants={{
+                      hidden: { y: "110%", opacity: 0 },
+                      visible: { y: "0%", opacity: 1, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+                    }}
+                  >
+                    {word}
+                  </motion.span>
+                </span>
+              ))}
             </motion.h1>
+
             <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
+              initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ delay: 0.55, duration: 0.65 }}
               className="text-xl text-text-secondary font-medium max-w-xl mx-auto leading-relaxed"
             >
               Drop us a message and we&apos;ll respond within one business day with a project blueprint.
             </motion.p>
+
+            {/* Info chips */}
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.1, delayChildren: 0.7 } } }}
+              className="flex flex-wrap justify-center gap-3"
+            >
+              {[
+                { icon: "📧", label: COMPANY_DETAILS.email },
+                { icon: "📍", label: "Kudasan, Gandhinagar" },
+                { icon: "⚡", label: "< 24h Response" },
+              ].map((chip, i) => (
+                <motion.div
+                  key={i}
+                  variants={{
+                    hidden: { opacity: 0, y: 12, scale: 0.9 },
+                    visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 200, damping: 16 } },
+                  }}
+                  className="flex items-center gap-2 px-4 py-2 bg-white border border-emerald-100 rounded-full shadow-sm text-sm font-bold text-slate-600"
+                >
+                  <span>{chip.icon}</span>
+                  <span>{chip.label}</span>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
+
+
 
           {/* Main Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">

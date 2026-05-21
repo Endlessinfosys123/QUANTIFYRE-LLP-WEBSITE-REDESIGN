@@ -3,8 +3,9 @@ import { getServices } from "@/lib/supabase/data";
 import { SERVICES } from "@/lib/constants";
 import Link from "next/link";
 import * as motion from "framer-motion/client";
-import { ArrowRight, Brain, Code2, Monitor, BarChart3, Smartphone, PenTool, CheckCircle2, Zap, Clock, Globe, ShieldCheck } from "lucide-react";
+import { ArrowRight, Brain, Code2, Monitor, BarChart3, Smartphone, PenTool, CheckCircle2, Zap, Clock, Globe, ShieldCheck, Layers } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { SplitHeadline, HeroBadge, FloatingShape, HeroGridBg } from "@/components/ui/PageHero";
 
 const ICON_MAP: Record<string, any> = { Brain, Code2, Monitor, BarChart3, Smartphone, PenTool };
 
@@ -24,6 +25,8 @@ const WHY_US = [
   { icon: Globe,       title: "International Experience",  desc: "Clients across India, UAE, UK, Canada, and Australia — we work across time zones seamlessly." },
 ];
 
+const SERVICE_TAGS = ["AI Automation", "Custom Software", "Web Development", "Mobile Apps", "Digital Marketing", "UI/UX Design"];
+
 export default async function ServicesPage() {
   const dbServices = await getServices().catch(() => []);
   const services = dbServices.length > 0 ? dbServices : SERVICES.map((s) => ({
@@ -33,43 +36,90 @@ export default async function ServicesPage() {
   return (
     <main className="bg-white min-h-screen">
 
-      {/* ═══════════ HERO ═══════════ */}
-      <section className="relative pt-40 pb-24 overflow-hidden bg-surface tech-grid border-b border-border">
-        <motion.div animate={{ scale: [1, 1.3, 1], opacity: [0.06, 0.14, 0.06] }} transition={{ duration: 6, repeat: Infinity }}
-          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-primary blur-[120px] pointer-events-none" />
-        <motion.div animate={{ scale: [1.2, 1, 1.2], opacity: [0.05, 0.1, 0.05] }} transition={{ duration: 8, repeat: Infinity, delay: 1 }}
-          className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-accent blur-[100px] pointer-events-none" />
+      {/* ═══════════ HERO — Staggered Word + Floating Tags ═══════════ */}
+      <section className="relative pt-44 pb-28 overflow-hidden bg-white border-b border-emerald-50">
+        {/* Background */}
+        <HeroGridBg variant="lines" />
+        <FloatingShape size={600} x="-15%" y="-30%" color="rgba(34,197,94,0.05)" blur={120} delay={0} />
+        <FloatingShape size={400} x="70%"  y="50%"  color="rgba(16,185,129,0.06)" blur={90}  delay={3} />
+        <FloatingShape size={280} x="55%"  y="-15%" color="rgba(110,231,183,0.07)" blur={60} delay={1.5} />
+
+        {/* Top accent line */}
+        <motion.div
+          initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
+          transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute top-0 left-0 right-0 h-[2px] origin-left"
+          style={{ background: "linear-gradient(90deg, #22c55e, #10b981, transparent)" }}
+        />
 
         <div className="container-custom relative z-10">
-          <div className="max-w-5xl mx-auto text-center space-y-8">
-            <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white border border-border shadow-sm">
-              <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-primary font-black uppercase tracking-[0.3em] text-[10px]">Service Portfolio — Quantifyre LLP</span>
+          <div className="max-w-5xl mx-auto">
+
+            {/* Badge */}
+            <div className="flex justify-center mb-10">
+              <HeroBadge icon={<Layers size={14} />} label="Service Portfolio — Quantifyre LLP" />
+            </div>
+
+            {/* Giant animated headline */}
+            <div className="text-center space-y-6 mb-12">
+              <SplitHeadline
+                text="What We "
+                highlight="Build."
+                className="text-6xl md:text-8xl lg:text-[7rem] font-black text-dark tracking-tighter leading-[0.88] text-balance"
+                highlightClass="text-transparent bg-clip-text"
+                delay={0.1}
+              />
+              {/* Apply gradient via style on the highlight span — workaround */}
+              <style>{`.services-hero-highlight { background: linear-gradient(135deg,#22c55e,#10b981); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }`}</style>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ delay: 0.55, duration: 0.65 }}
+                className="text-xl md:text-2xl text-text-secondary font-medium leading-relaxed max-w-3xl mx-auto"
+              >
+                Six high-performance engineering disciplines. One team. Complete digital transformation
+                from strategy through launch — for companies that refuse to compromise.
+              </motion.p>
+            </div>
+
+            {/* Staggered floating service tags */}
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.08, delayChildren: 0.6 } } }}
+              className="flex flex-wrap justify-center gap-3"
+            >
+              {SERVICE_TAGS.map((tag, i) => (
+                <motion.span
+                  key={tag}
+                  variants={{
+                    hidden: { opacity: 0, y: 20, scale: 0.85 },
+                    visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 200, damping: 16 } },
+                  }}
+                  whileHover={{ y: -4, boxShadow: "0 8px 24px rgba(34,197,94,0.15)" }}
+                  className="px-5 py-2.5 bg-white border border-emerald-100 rounded-full text-xs font-black text-slate-600 shadow-sm cursor-default transition-shadow"
+                >
+                  {tag}
+                </motion.span>
+              ))}
             </motion.div>
 
-            <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.8 }}
-              className="text-6xl md:text-8xl lg:text-[7rem] font-black text-dark tracking-tighter leading-[0.88] text-balance">
-              What We<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#0ea5e9]">Build.</span>
-            </motion.h1>
-
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
-              className="text-xl md:text-2xl text-text-secondary font-medium leading-relaxed max-w-3xl mx-auto">
-              Six high-performance engineering disciplines. One team. Complete digital transformation
-              from strategy through launch — for companies that refuse to compromise.
-            </motion.p>
-
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
-              className="flex flex-wrap justify-center gap-3">
-              {["AI Automation", "Custom Software", "Web Development", "Mobile Apps", "Digital Marketing", "UI/UX Design"].map((tag) => (
-                <span key={tag} className="px-4 py-2 bg-white border border-border rounded-full text-xs font-black text-text-secondary shadow-sm">
-                  {tag}
-                </span>
-              ))}
+            {/* CTA row */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.1 }}
+              className="flex justify-center gap-4 mt-12"
+            >
+              <Button href="/contact" size="lg" className="h-14 px-10 rounded-2xl font-black text-base shadow-lg shadow-primary/20">
+                Start a Project <ArrowRight className="ml-2" size={18} />
+              </Button>
             </motion.div>
           </div>
         </div>
       </section>
+
 
       {/* ═══════════ SERVICE CARDS ═══════════ */}
       <section className="py-24 bg-white">

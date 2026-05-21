@@ -8,6 +8,7 @@ import Link from "next/link";
 import * as motion from "framer-motion/client";
 import { DynamicService3D } from "@/components/ui/DynamicService3D";
 import { getServiceDetail } from "@/lib/serviceDetailsFallback";
+import { HeroBadge, FloatingShape, HeroGridBg } from "@/components/ui/PageHero";
 
 export const revalidate = 0;
 
@@ -38,64 +39,91 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
     <main className="bg-white min-h-screen">
 
       {/* ══════════════════════════════════════════════
-          HERO — Service-Specific Split Layout
+          HERO — Animated Split Layout, Light Theme
       ══════════════════════════════════════════════ */}
-      <section className="relative pt-48 pb-20 overflow-hidden bg-surface tech-grid min-h-[92vh] flex items-center">
+      <section className="relative pt-44 pb-20 overflow-hidden bg-white border-b border-emerald-50 min-h-[90vh] flex items-center">
+        {/* Background */}
+        <HeroGridBg variant="dots" />
+        <FloatingShape size={500} x="-10%" y="-20%" color="rgba(34,197,94,0.06)" blur={100} delay={0} />
+        <FloatingShape size={350} x="65%"  y="55%"  color="rgba(16,185,129,0.05)" blur={80}  delay={2} />
+        <FloatingShape size={220} x="78%"  y="-10%" color="rgba(110,231,183,0.07)" blur={55} delay={1} />
+
+        {/* Accent top line */}
+        <motion.div
+          initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute top-0 left-0 right-0 h-[2px] origin-left"
+          style={{ background: "linear-gradient(90deg, #22c55e, #10b981, transparent)" }}
+        />
+
         <div className="container-custom relative z-10 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white border border-border shadow-sm"
-              >
-                <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                <span className="text-primary font-black uppercase tracking-[0.2em] text-[10px]">{pageBadge}</span>
-              </motion.div>
+              <HeroBadge icon={<Layers size={13} />} label={pageBadge} />
 
+              {/* Word-by-word animated headline */}
               <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1, duration: 0.7 }}
                 className="text-5xl md:text-7xl lg:text-8xl font-black text-dark tracking-tighter leading-[0.9] text-balance"
+                initial="hidden"
+                animate="visible"
+                variants={{ visible: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } } }}
               >
-                {pageH1}
+                {pageH1.split(" ").map((word: string, i: number) => (
+                  <span key={i} className="overflow-hidden inline-block leading-[1.1] mr-2">
+                    <motion.span
+                      className="inline-block"
+                      variants={{
+                        hidden: { y: "110%", opacity: 0 },
+                        visible: { y: "0%", opacity: 1, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+                      }}
+                    >
+                      {word}
+                    </motion.span>
+                  </span>
+                ))}
               </motion.h1>
 
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
+                initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ delay: 0.55, duration: 0.65 }}
                 className="text-lg md:text-xl text-text-secondary font-medium leading-relaxed max-w-lg"
               >
                 {pageSubtext}
               </motion.p>
 
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+                transition={{ delay: 0.7 }}
                 className="flex flex-wrap items-center gap-4"
               >
                 <Button href="/contact" size="lg" className="h-14 px-8 rounded-2xl text-base font-black shadow-xl shadow-primary/20">
                   Get Free Consultation <ArrowRight className="ml-2" size={18} />
                 </Button>
-                <Button href="/portfolio" variant="outline" size="lg" className="h-14 px-8 rounded-2xl text-base font-black">
+                <Button href="/portfolio" variant="outline" size="lg" className="h-14 px-8 rounded-2xl text-base font-black bg-white border-emerald-100">
                   View Our Work
                 </Button>
               </motion.div>
 
-              {/* Tech badges */}
+              {/* Tech badges with spring pop-in */}
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
+                initial="hidden"
+                animate="visible"
+                variants={{ visible: { transition: { staggerChildren: 0.06, delayChildren: 0.85 } } }}
                 className="flex flex-wrap gap-2"
               >
                 {detail.techStack.slice(0, 6).map((tech) => (
-                  <span key={tech} className="px-3 py-1 bg-white border border-border rounded-full text-xs font-black text-text-secondary shadow-sm">
+                  <motion.span
+                    key={tech}
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.8, y: 8 },
+                      visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 200, damping: 16 } },
+                    }}
+                    className="px-3 py-1.5 bg-white border border-emerald-100 rounded-full text-xs font-black text-slate-600 shadow-sm"
+                  >
                     {tech}
-                  </span>
+                  </motion.span>
                 ))}
               </motion.div>
             </div>
