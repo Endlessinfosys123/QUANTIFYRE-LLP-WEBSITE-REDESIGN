@@ -6,7 +6,7 @@ import { SplashProvider } from "@/components/ui/SplashProvider";
 import { PageTransitionLoader } from "@/components/ui/PageTransitionLoader";
 import { ScrollProgressBar } from "@/components/ui/ScrollAnimations";
 import { getSiteConfig, getNavItems, getFooterLinks, getServices } from "@/lib/supabase/data";
-import { ConnectedDotsCanvas } from "@/components/ui/ConnectedDotsCanvas";
+import { PremiumMeshBg } from "@/components/ui/PremiumMeshBg";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -34,9 +34,9 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${plusJakartaSans.variable} h-full antialiased scroll-smooth`}>
       <body className="min-h-full flex flex-col font-sans overflow-x-hidden">
-        {/* ── Global connected-dots neural network background ── */}
+        {/* ── Global liquid gradient mesh background ── */}
         <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-          <ConnectedDotsCanvas />
+          <PremiumMeshBg />
         </div>
 
         <div className="grain-overlay" />
