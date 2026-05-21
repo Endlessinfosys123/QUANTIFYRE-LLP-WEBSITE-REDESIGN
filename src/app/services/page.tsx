@@ -254,7 +254,7 @@ export default async function ServicesPage() {
                     {/* CTA — pure CSS hover via group class, no inline event handlers */}
                     <div className="mt-auto p-8 pt-0">
                       <Link href={`/services/${slug}`}
-                        className="w-full flex items-center justify-between p-4 rounded-2xl border font-black text-sm transition-all duration-300 group-hover:text-white group-hover:border-transparent"
+                        className="w-full flex items-center justify-between p-4 rounded-2xl border font-black text-sm transition-all duration-300 group-hover:text-white group-hover:border-transparent hover-dynamic-bg"
                         style={{ borderColor: `${meta.from}44`, color: meta.from,
                           ["--hover-bg" as string]: meta.from }}
                       >
