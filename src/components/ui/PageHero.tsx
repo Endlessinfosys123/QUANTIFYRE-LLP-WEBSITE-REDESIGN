@@ -1,7 +1,9 @@
 "use client";
 
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, type Variants } from "framer-motion";
 import { useEffect, useRef, ReactNode } from "react";
+
+const EASE_OUT_EXPO = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    WORD-BY-WORD SPLIT TEXT — each word slides up independently
@@ -20,13 +22,13 @@ export function SplitHeadline({
   delay?: number;
 }) {
   const parts = highlight ? text.split(highlight) : [text];
-  const container = {
+  const container: Variants = {
     hidden: {},
     visible: { transition: { staggerChildren: 0.045, delayChildren: delay } },
   };
-  const word = {
+  const word: Variants = {
     hidden: { y: "110%", opacity: 0 },
-    visible: { y: "0%", opacity: 1, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+    visible: { y: "0%", opacity: 1, transition: { duration: 0.55, ease: EASE_OUT_EXPO } },
   };
 
   const renderWords = (str: string, extra = "") =>
@@ -105,7 +107,7 @@ export function UnderlineReveal({ children, delay = 0.8 }: { children: ReactNode
         style={{ background: "linear-gradient(90deg, #22c55e, #10b981)" }}
         initial={{ width: 0 }}
         animate={{ width: "100%" }}
-        transition={{ delay, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ delay, duration: 0.7, ease: EASE_OUT_EXPO }}
       />
     </span>
   );
