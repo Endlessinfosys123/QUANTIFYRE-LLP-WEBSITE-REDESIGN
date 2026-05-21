@@ -249,3 +249,19 @@ p {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-text-secondary);
 }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   GLOBAL CANVAS BACKGROUND VISIBILITY
+   Makes main pages and sections transparent so that the
+   ConnectedDotsCanvas z-0 network lines and dots show through.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+main,
+main section:not(.opaque-section) {
+  background-color: transparent !important;
+}
+
+/* Ensure header nav drop-down and other specific cards stay opaque */
+.bg-white:not(section):not(main) {
+  background-color: #ffffff;
+}
+

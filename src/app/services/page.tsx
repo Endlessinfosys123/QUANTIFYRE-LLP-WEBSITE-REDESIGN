@@ -36,86 +36,136 @@ export default async function ServicesPage() {
   return (
     <main className="bg-white min-h-screen">
 
-      {/* ═══════════ HERO — Staggered Word + Floating Tags ═══════════ */}
-      <section className="relative pt-44 pb-28 overflow-hidden bg-white border-b border-emerald-50">
-        {/* Background */}
-        <HeroGridBg variant="lines" />
-        <FloatingShape size={600} x="-15%" y="-30%" color="rgba(34,197,94,0.05)" blur={120} delay={0} />
-        <FloatingShape size={400} x="70%"  y="50%"  color="rgba(16,185,129,0.06)" blur={90}  delay={3} />
-        <FloatingShape size={280} x="55%"  y="-15%" color="rgba(110,231,183,0.07)" blur={60} delay={1.5} />
+      {/* ═══════════ HERO — Split: Headline Left + Service Grid Right ═══════════ */}
+      <section className="relative pt-44 pb-16 overflow-hidden bg-white/90 border-b border-emerald-50">
+        {/* Dot grid */}
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ backgroundImage: "radial-gradient(rgba(34,197,94,0.10) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
 
-        {/* Top accent line */}
+        {/* Soft top-left glow */}
+        <div className="absolute -top-20 -left-20 w-[500px] h-[500px] rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(circle, rgba(34,197,94,0.06) 0%, transparent 70%)", filter: "blur(60px)" }} />
+
+        {/* Accent top line */}
         <motion.div
           initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
-          transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] }}
           className="absolute top-0 left-0 right-0 h-[2px] origin-left"
           style={{ background: "linear-gradient(90deg, #22c55e, #10b981, transparent)" }}
         />
 
         <div className="container-custom relative z-10">
-          <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-            {/* Badge */}
-            <div className="flex justify-center mb-10">
+            {/* LEFT — Headline + CTA */}
+            <div className="space-y-8">
               <HeroBadge icon={<Layers size={14} />} label="Service Portfolio — Quantifyre LLP" />
-            </div>
 
-            {/* Giant animated headline */}
-            <div className="text-center space-y-6 mb-12">
-              <SplitHeadline
-                text="What We "
-                highlight="Build."
-                className="text-6xl md:text-8xl lg:text-[7rem] font-black text-dark tracking-tighter leading-[0.88] text-balance"
-                highlightClass="text-transparent bg-clip-text"
-                delay={0.1}
+              {/* Word-by-word stagger headline */}
+              <motion.h1
+                className="text-6xl md:text-7xl lg:text-8xl font-black text-dark tracking-tighter leading-[0.90]"
+                initial="hidden"
+                animate="visible"
+                variants={{ visible: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } } }}
+              >
+                {["What", "We"].map((w, i) => (
+                  <span key={i} className="overflow-hidden inline-block leading-[1.1] mr-3">
+                    <motion.span
+                      className="inline-block"
+                      variants={{ hidden: { y: "110%", opacity: 0 }, visible: { y: "0%", opacity: 1, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] } } }}
+                    >{w}</motion.span>
+                  </span>
+                ))}
+                <span className="block overflow-hidden leading-[1.1]">
+                  <motion.span
+                    className="inline-block text-transparent bg-clip-text"
+                    style={{ backgroundImage: "linear-gradient(135deg, #22c55e, #10b981)" }}
+                    variants={{ hidden: { y: "110%", opacity: 0 }, visible: { y: "0%", opacity: 1, transition: { duration: 0.55, delay: 0.18, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] } } }}
+                  >Build.</motion.span>
+                </span>
+              </motion.h1>
+
+              {/* Animated underline */}
+              <motion.div
+                initial={{ scaleX: 0, originX: 0 }} animate={{ scaleX: 1 }}
+                transition={{ delay: 0.7, duration: 0.55, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] }}
+                className="h-[3px] w-24 rounded-full"
+                style={{ background: "linear-gradient(90deg, #22c55e, #10b981)" }}
               />
-              {/* Apply gradient via style on the highlight span — workaround */}
-              <style>{`.services-hero-highlight { background: linear-gradient(135deg,#22c55e,#10b981); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }`}</style>
 
               <motion.p
                 initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ delay: 0.55, duration: 0.65 }}
-                className="text-xl md:text-2xl text-text-secondary font-medium leading-relaxed max-w-3xl mx-auto"
+                className="text-xl text-text-secondary font-medium leading-relaxed max-w-md"
               >
-                Six high-performance engineering disciplines. One team. Complete digital transformation
-                from strategy through launch — for companies that refuse to compromise.
+                Six engineering disciplines. One team. Complete digital transformation from strategy through launch.
               </motion.p>
+
+              {/* CTA + stat chips */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+                className="flex flex-wrap items-center gap-4"
+              >
+                <Button href="/contact" size="lg" className="h-14 px-8 rounded-2xl font-black text-base shadow-lg shadow-primary/20">
+                  Start a Project <ArrowRight className="ml-2" size={18} />
+                </Button>
+                <Button href="/portfolio" variant="outline" size="lg" className="h-14 px-8 rounded-2xl font-black text-base bg-white border-emerald-100 hover:border-primary hover:text-primary">
+                  View Our Work
+                </Button>
+              </motion.div>
+
+              {/* Service name pills */}
+              <motion.div
+                initial="hidden" animate="visible"
+                variants={{ visible: { transition: { staggerChildren: 0.07, delayChildren: 1.0 } } }}
+                className="flex flex-wrap gap-2"
+              >
+                {SERVICE_TAGS.map((tag) => (
+                  <motion.span key={tag}
+                    variants={{ hidden: { opacity: 0, y: 12, scale: 0.85 }, visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 200, damping: 16 } } }}
+                    whileHover={{ y: -3, boxShadow: "0 6px 18px rgba(34,197,94,0.14)" }}
+                    className="px-4 py-1.5 bg-white border border-emerald-100 rounded-full text-[11px] font-black text-slate-600 shadow-sm cursor-default"
+                  >{tag}</motion.span>
+                ))}
+              </motion.div>
             </div>
 
-            {/* Staggered floating service tags */}
+            {/* RIGHT — Animated service icon grid */}
             <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={{ visible: { transition: { staggerChildren: 0.08, delayChildren: 0.6 } } }}
-              className="flex flex-wrap justify-center gap-3"
+              initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.25, duration: 0.8, ease: "easeOut" }}
+              className="grid grid-cols-2 gap-4"
             >
-              {SERVICE_TAGS.map((tag, i) => (
-                <motion.span
-                  key={tag}
-                  variants={{
-                    hidden: { opacity: 0, y: 20, scale: 0.85 },
-                    visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 200, damping: 16 } },
-                  }}
-                  whileHover={{ y: -4, boxShadow: "0 8px 24px rgba(34,197,94,0.15)" }}
-                  className="px-5 py-2.5 bg-white border border-emerald-100 rounded-full text-xs font-black text-slate-600 shadow-sm cursor-default transition-shadow"
-                >
-                  {tag}
-                </motion.span>
-              ))}
+              {[
+                { icon: Brain,      label: "AI Automation",       desc: "Intelligent process automation", color: "#8b5cf6", bg: "bg-violet-50" },
+                { icon: Code2,      label: "Software Engineering", desc: "Scalable custom software",       color: "#0ea5e9", bg: "bg-sky-50"    },
+                { icon: Zap,        label: "Web Development",      desc: "High-performance web apps",      color: "#22c55e", bg: "bg-emerald-50"},
+                { icon: BarChart3,  label: "Digital Marketing",    desc: "Data-driven growth",             color: "#f59e0b", bg: "bg-amber-50"  },
+                { icon: Smartphone, label: "Mobile Development",   desc: "iOS & Android apps",             color: "#ef4444", bg: "bg-red-50"    },
+                { icon: PenTool,    label: "UI/UX Design",         desc: "Premium user experiences",       color: "#a855f7", bg: "bg-purple-50" },
+              ].map((svc, i) => {
+                const Icon = svc.icon;
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, scale: 0.85, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ delay: 0.35 + i * 0.09, type: "spring", stiffness: 180, damping: 18 }}
+                    whileHover={{ y: -6, boxShadow: `0 16px 32px ${svc.color}22` }}
+                    className="bg-white border border-emerald-100 rounded-2xl p-5 shadow-sm transition-all cursor-default group"
+                  >
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${svc.bg} group-hover:scale-110 transition-transform`}>
+                      <Icon size={18} style={{ color: svc.color }} />
+                    </div>
+                    <div className="text-sm font-black text-dark mb-1 leading-tight">{svc.label}</div>
+                    <div className="text-[10px] text-slate-400 font-bold leading-tight">{svc.desc}</div>
+                  </motion.div>
+                );
+              })}
             </motion.div>
 
-            {/* CTA row */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.1 }}
-              className="flex justify-center gap-4 mt-12"
-            >
-              <Button href="/contact" size="lg" className="h-14 px-10 rounded-2xl font-black text-base shadow-lg shadow-primary/20">
-                Start a Project <ArrowRight className="ml-2" size={18} />
-              </Button>
-            </motion.div>
           </div>
         </div>
       </section>
