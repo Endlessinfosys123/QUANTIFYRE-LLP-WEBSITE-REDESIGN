@@ -35,7 +35,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${plusJakartaSans.variable} h-full antialiased scroll-smooth`}>
-      <head>
+      <body className="min-h-full flex flex-col font-sans overflow-x-hidden">
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-GJ2RW8CF1F"
           strategy="afterInteractive"
@@ -49,8 +49,7 @@ export default async function RootLayout({
             gtag('config', 'G-GJ2RW8CF1F');
           `}
         </Script>
-      </head>
-      <body className="min-h-full flex flex-col font-sans overflow-x-hidden">
+
         {/* ── Global custom cursor ── */}
         <CustomCursor />
 
