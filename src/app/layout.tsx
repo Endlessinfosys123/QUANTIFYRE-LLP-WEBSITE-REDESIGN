@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { ConditionalLayout } from "@/components/layout/ConditionalLayout";
 import { SplashProvider } from "@/components/ui/SplashProvider";
@@ -7,6 +8,7 @@ import { PageTransitionLoader } from "@/components/ui/PageTransitionLoader";
 import { ScrollProgressBar } from "@/components/ui/ScrollAnimations";
 import { getSiteConfig, getNavItems, getFooterLinks, getServices } from "@/lib/supabase/data";
 import { PremiumMeshBg } from "@/components/ui/PremiumMeshBg";
+import { CustomCursor } from "@/components/ui/CustomCursor";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -33,7 +35,25 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${plusJakartaSans.variable} h-full antialiased scroll-smooth`}>
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-GJ2RW8CF1F"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-GJ2RW8CF1F');
+          `}
+        </Script>
+      </head>
       <body className="min-h-full flex flex-col font-sans overflow-x-hidden">
+        {/* ── Global custom cursor ── */}
+        <CustomCursor />
+
         {/* ── Global liquid gradient mesh background ── */}
         <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
           <PremiumMeshBg />

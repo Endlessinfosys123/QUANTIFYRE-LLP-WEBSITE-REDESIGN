@@ -230,25 +230,25 @@ p {
 }
 
 ::selection {
-  background: rgba(99, 102, 241, 0.2);
-  color: var(--primary);
+  background: rgba(34, 197, 94, 0.18);
+  color: #065f46;
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
+  background: rgba(34, 197, 94, 0.25);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-secondary);
+  background: rgba(34, 197, 94, 0.5);
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -264,4 +264,44 @@ main {
 /* Custom utility for dynamic hover backgrounds using CSS variables */
 .hover-dynamic-bg:hover {
   background-color: var(--hover-bg) !important;
+}
+
+/* ── Premium hover lift ── */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -10px rgba(34, 197, 94, 0.2);
+}
+
+/* ── Glass dark variant ── */
+.glass-dark {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ── Smooth image reveal ── */
+@keyframes image-reveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
+}
+.animate-image-reveal {
+  animation: image-reveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Text shimmer effect ── */
+@keyframes text-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.text-shimmer {
+  background: linear-gradient(90deg, #22c55e 0%, #6ee7b7 40%, #22c55e 60%, #10b981 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: text-shimmer 3s linear infinite;
 }
