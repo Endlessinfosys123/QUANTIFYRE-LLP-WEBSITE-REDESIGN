@@ -34,8 +34,8 @@ export default async function RootLayout({
   ]);
 
   return (
-    <html lang="en" className={`${plusJakartaSans.variable} h-full antialiased scroll-smooth`}>
-      <body className="min-h-full flex flex-col font-sans overflow-x-hidden">
+    <html lang="en" className={`${plusJakartaSans.variable} min-h-screen antialiased scroll-smooth`}>
+      <body className="min-h-screen flex flex-col font-sans overflow-x-hidden">
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-GJ2RW8CF1F"
           strategy="afterInteractive"
